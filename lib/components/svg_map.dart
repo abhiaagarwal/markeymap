@@ -2,63 +2,49 @@ import 'dart:ui';
 
 import 'package:built_path_annotations/built_path_annotations.dart';
 
-part 'counties.svg_path.g.dart';
+import 'package:markeymap/models/county.dart';
 
-enum Counties {
-  Barnstable,
-  Berkshire,
-  Bristol,
-  Dukes,
-  Essex,
-  Franklin,
-  Hampden,
-  Hampshire,
-  Nantucket,
-  Middlesex,
-  Norfolk,
-  Plymouth,
-  Suffolk,
-  Worchester,
-}
+part 'svg_map.svg_path.g.dart';
 
-extension NameExtension on Counties {
-  String get name => this.toString().split('.').last;
-}
-
-extension PathExtension on Counties {
+extension PathExtension on County {
   Path get path {
     switch (this) {
-      case Counties.Barnstable:
+      case County.Barnstable:
         return _MapSVGData.Barnstable;
-      case Counties.Berkshire:
+      case County.Berkshire:
         return _MapSVGData.Berkshire;
-      case Counties.Bristol:
+      case County.Bristol:
         return _MapSVGData.Bristol;
-      case Counties.Dukes:
+      case County.Dukes:
         return _MapSVGData.Dukes;
-      case Counties.Essex:
+      case County.Essex:
         return _MapSVGData.Essex;
-      case Counties.Franklin:
+      case County.Franklin:
         return _MapSVGData.Franklin;
-      case Counties.Hampden:
+      case County.Hampden:
         return _MapSVGData.Hampden;
-      case Counties.Hampshire:
+      case County.Hampshire:
         return _MapSVGData.Hampshire;
-      case Counties.Nantucket:
+      case County.Nantucket:
         return _MapSVGData.Nantucket;
-      case Counties.Norfolk:
+      case County.Norfolk:
         return _MapSVGData.Norfolk;
-      case Counties.Middlesex:
+      case County.Middlesex:
         return _MapSVGData.Middlesex;
-      case Counties.Plymouth:
+      case County.Plymouth:
         return _MapSVGData.Plymouth;
-      case Counties.Suffolk:
+      case County.Suffolk:
         return _MapSVGData.Suffolk;
-      case Counties.Worchester:
+      case County.Worchester:
         return _MapSVGData.Worchester;
     }
     return Path();
   }
+}
+
+extension SizeExtension on County {
+  double get width => _MapSVGData.width;
+  double get height => _MapSVGData.height;
 }
 
 class _MapSVGData {

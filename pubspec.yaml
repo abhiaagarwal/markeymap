@@ -23,7 +23,9 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  
+  gsheets: ^0.2.4
+  fluro: ^1.6.3
+  meta: any
   built_path_annotations: ^0.1.0
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -49,6 +51,29 @@ flutter:
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
+
+  assets: 
+    - assets/credentials.json
+
+  fonts:
+    - family: Gotham Narrow
+      fonts:
+      - asset: assets/fonts/GothamNarrow-Black.otf
+      - asset: assets/fonts/GothamNarrow-BlackItalic.otf
+      - asset: assets/fonts/GothamNarrow-Bold.otf
+      - asset: assets/fonts/GothamNarrow-BoldItalic.otf
+      - asset: assets/fonts/GothamNarrow-Book.otf
+      - asset: assets/fonts/GothamNarrow-BookItalic.otf
+      - asset: assets/fonts/GothamNarrow-Light.otf
+      - asset: assets/fonts/GothamNarrow-LightItalic.otf
+      - asset: assets/fonts/GothamNarrow-Medium.otf
+      - asset: assets/fonts/GothamNarrow-MediumItalic.otf
+      - asset: assets/fonts/GothamNarrow-Thin.otf
+      - asset: assets/fonts/GothamNarrow-ThinItalic.otf
+      - asset: assets/fonts/GothamNarrow-Ultra.otf
+      - asset: assets/fonts/GothamNarrow-UltraItalic.otf
+      - asset: assets/fonts/GothamNarrow-XLight.otf
+      - asset: assets/fonts/GothamNarrow-XLightItalic.otf
 
   # To add assets to your application, add an assets section, like this:
   # assets:
