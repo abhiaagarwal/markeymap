@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 
+import 'package:url_launcher/url_launcher.dart' as url_launcher;
+
+import 'package:markeymap/theme.dart';
 import 'package:markeymap/models/action.dart';
 import 'package:markeymap/models/town.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class TownCard extends StatelessWidget {
   final Town town;
@@ -9,20 +14,35 @@ class TownCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        _TownHeader(name: town.name),
-        Expanded(
-          child: SizedBox(
-            height: 500,
-            child: ListView.builder(
-              itemCount: town.actions.length,
-              itemBuilder: (context, index) =>
-                  _ActionTileCard(action: town.actions[index]),
+    return Container(
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.centerLeft,
+          end: Alignment.centerRight,
+          colors: <Color>[
+            Colors.black.withAlpha(64),
+            Colors.transparent,
+          ]
+        )
+      ),
+      child: Column(
+        children: <Widget>[
+          Padding(
+            padding: EdgeInsets.symmetric(vertical: 32),
+            child: _TownHeader(name: town.name),
+          ),
+          Expanded(
+            child: SizedBox(
+              child: ListView.builder(
+                padding: EdgeInsets.symmetric(horizontal: 32),
+                itemCount: town.actions.length,
+                itemBuilder: (context, index) =>
+                    _ActionTileCard(action: town.actions[index]),
+              ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
@@ -36,8 +56,8 @@ class _TownHeader extends StatelessWidget {
     return Stack(
       children: [
         new Text(
-          name,
-          style: TextStyle(),
+          name.toUpperCase(),
+          style: MarkeyMapTheme.cardHeaderStyle,
         ),
       ],
     );
@@ -50,18 +70,40 @@ class _ActionTileCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        Expanded(
-          flex: 2,
-          child: Center(child: Text("Date")),
-        ),
-        Expanded(
-          flex: 6,
-          child: Text(action.description),
-        ),
-      ],
+    return Padding(
+      padding: EdgeInsets.only(bottom: 16),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Expanded(
+            flex: 1,
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 4),
+              child: Text(
+                action.date?.format("dd, MMM yyyy") ?? "",
+                style: MarkeyMapTheme.cardListStyle
+                    .copyWith(fontWeight: FontWeight.w600),
+              ),
+            ),
+          ),
+          Expanded(
+            flex: 5,
+            child: InkWell(
+              mouseCursor: SystemMouseCursors.click,
+              onTap: () async {
+                final String url = action.url;
+                if (await url_launcher.canLaunch(url)) {
+                  await url_launcher.launch(url);
+                }
+              },
+              child: Text(
+                action.description,
+                style: MarkeyMapTheme.cardListStyle,
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:markeymap/components/map.dart';
 
 import 'package:markeymap/data.dart';
-import 'package:markeymap/theme.dart' as theme;
+import 'package:markeymap/theme.dart';
 
 void main() => runApp(MarkeyMapApp());
 
@@ -11,7 +11,7 @@ class MarkeyMapApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) => MaterialApp(
         title: "Markey Map",
-        theme: theme.theme,
+        theme: MarkeyMapTheme.theme,
         home: Scaffold(
           appBar: PreferredSize(
             preferredSize: Size.fromHeight(58),

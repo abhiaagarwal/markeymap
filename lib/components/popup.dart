@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-void showPopup(BuildContext context, {@required Widget widget, @required String title}) {
+void showPopup(BuildContext context,
+    {@required Widget widget, @required String title, Color scaffoldColor}) {
   Navigator.push(
     context,
     PopupLayout(
@@ -10,6 +11,7 @@ void showPopup(BuildContext context, {@required Widget widget, @required String 
       bottom: 50,
       child: PopupContent(
         content: Scaffold(
+          backgroundColor: scaffoldColor,
           appBar: AppBar(
             title: Text(title),
             leading: new Builder(builder: (context) {
@@ -17,14 +19,14 @@ void showPopup(BuildContext context, {@required Widget widget, @required String 
                 icon: Icon(Icons.arrow_back),
                 onPressed: () {
                   try {
-                    Navigator.pop(context); //close the popup
+                    Navigator.pop(context);
                   } catch (e) {}
                 },
               );
             }),
             brightness: Brightness.light,
           ),
-          resizeToAvoidBottomPadding: false,
+          resizeToAvoidBottomInset: false,
           body: widget,
         ),
       ),
@@ -96,7 +98,6 @@ class PopupLayout extends ModalRoute {
         right: this.right,
         top: this.top,
       ),
-      width: 600,
       child: child,
     );
   }

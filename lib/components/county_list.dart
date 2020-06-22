@@ -22,6 +22,7 @@ class CountyList extends StatelessWidget {
             onTap: () => showPopup(
               context,
               title: "Town",
+              scaffoldColor: Theme.of(context).primaryColor,
               widget: TownCard(town: town),
             ),
           );

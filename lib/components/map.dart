@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:markeymap/data.dart';
 import 'package:markeymap/models/town.dart';
 import 'package:markeymap/models/county.dart';
-import 'package:markeymap/components/countylist.dart';
+import 'package:markeymap/components/county_list.dart';
 import 'package:markeymap/components/svg_map.dart';
 import 'package:markeymap/components/popup.dart';
 

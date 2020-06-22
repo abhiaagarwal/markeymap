@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:collection';
 
 import 'package:gsheets/gsheets.dart' as sheets;
+import 'package:jiffy/jiffy.dart';
 
 import 'package:markeymap/models/action.dart';
 import 'package:markeymap/models/county.dart';
@@ -44,7 +45,7 @@ class _MarkeyMapBuilderState extends State<MarkeyMapBuilder> {
       key: (county) => county,
       value: (county) => [],
     );
-    for (County county in [County.Dukes, County.Essex]) {
+    for (County county in [County.Dukes, County.Essex, County.Middlesex]) {
       LinkedHashMap<String, List<EdAction>> towns = LinkedHashMap();
       final sheets.Worksheet worksheet =
           spreadsheet.worksheetByTitle(county.name.toUpperCase());
@@ -61,7 +62,7 @@ class _MarkeyMapBuilderState extends State<MarkeyMapBuilder> {
           }
           towns[townName].add(
             EdAction(
-              date: row[1].isEmpty ? null : DateTime.now(),
+              date: row[1].isEmpty ? null : Jiffy("10/20/2018", "MM/dd/yyyy"), //Jiffy(row[1], "MM/dd/yyyy"),
               actionType: row[2].action,
               description: row[3],
               funding: length < 5 ? 0 : int.tryParse(row[4]),

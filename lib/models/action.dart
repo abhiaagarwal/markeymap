@@ -1,4 +1,5 @@
 import 'package:meta/meta.dart';
+import 'package:jiffy/jiffy.dart';
 
 enum ActionType {
   Grant,
@@ -19,7 +20,7 @@ extension ActionTypeExtension on String {
 }
 
 class EdAction {
-  final DateTime date;
+  final Jiffy date;
   final ActionType actionType;
   final String description;
   final int funding;
