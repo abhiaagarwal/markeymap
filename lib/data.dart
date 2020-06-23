@@ -14,8 +14,17 @@ class MarkeyMapData extends InheritedWidget {
   const MarkeyMapData({Key key, @required Widget child, @required this.data})
       : super(key: key, child: child);
 
-  List<Town> get allTowns =>
-      data.values.expand((List<Town> town) => town).toList();
+  SplayTreeMap<Town, County> get townsByCounty {
+    final SplayTreeMap<Town, County> map = SplayTreeMap<Town, County>(
+      (Town a, Town b) => a.name.compareTo(b.name),
+    );
+    for (final MapEntry<County, List<Town>> entry in data.entries) {
+      for (final Town town in entry.value) {
+        townsByCounty[town] = entry.key;
+      }
+    }
+    return map;
+  }
 
   @override
   bool updateShouldNotify(MarkeyMapData oldWidget) => oldWidget.data != data;
@@ -25,16 +34,15 @@ class MarkeyMapData extends InheritedWidget {
 }
 
 class MarkeyMapBuilder extends StatefulWidget {
-  final sheets.GSheets api;
+  final String credentialsFile;
   final String sheetId;
   final Widget child;
-  MarkeyMapBuilder(
-      {@required String credentials,
+  const MarkeyMapBuilder(
+      {@required this.credentialsFile,
       @required this.sheetId,
       @required this.child,
       Key key})
-      : api = sheets.GSheets(credentials),
-        super(key: key);
+      : super(key: key);
 
   @override
   _MarkeyMapBuilderState createState() => _MarkeyMapBuilderState();
@@ -42,8 +50,11 @@ class MarkeyMapBuilder extends StatefulWidget {
 
 class _MarkeyMapBuilderState extends State<MarkeyMapBuilder> {
   Future<Map<County, List<Town>>> get _data async {
+    final sheets.GSheets api = sheets.GSheets(
+        await DefaultAssetBundle.of(context)
+            .loadString(widget.credentialsFile));
     final sheets.Spreadsheet spreadsheet =
-        await widget.api.spreadsheet(widget.sheetId);
+        await api.spreadsheet(widget.sheetId);
     final Map<County, List<Town>> countiesList =
         // ignore: prefer_for_elements_to_map_fromiterable
         Map<County, List<Town>>.fromIterable(
@@ -66,7 +77,6 @@ class _MarkeyMapBuilderState extends State<MarkeyMapBuilder> {
         final int length = row.length;
         final String townName = row[0];
         if (!towns.containsKey(townName)) {
-          // Add missing key
           towns[townName] = <EdAction>[];
         }
         towns[townName].add(
@@ -85,12 +95,8 @@ class _MarkeyMapBuilderState extends State<MarkeyMapBuilder> {
         );
       }
       towns.forEach(
-        (String name, List<EdAction> actions) => countiesList[county].add(
-          Town(
-            name: name,
-            actions: actions,
-          ),
-        ),
+        (String name, List<EdAction> actions) =>
+            countiesList[county].add(Town(name: name, actions: actions)),
       );
     }
     return countiesList;

@@ -3,9 +3,8 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
 
 import 'package:markeymap/data.dart';
-import 'package:markeymap/models/town.dart';
 import 'package:markeymap/models/county.dart';
-import 'package:markeymap/components/county_list.dart';
+import 'package:markeymap/components/town_list.dart';
 import 'package:markeymap/components/svg_map.dart';
 import 'package:markeymap/components/popup.dart';
 
@@ -17,7 +16,7 @@ class ScaledMap extends StatelessWidget {
     const double navBarHeight = 58;
     final double safeZoneHeight = MediaQuery.of(context).padding.bottom;
 
-    const double scaleFactor = 0.5;
+    const double scaleFactor = 0.8;
 
     final double x = (width / 2.0) - (38.73 / 2.0);
     final double y = (height / 2.0) -
@@ -55,35 +54,26 @@ class _InteractiveMapState extends State<InteractiveMap> {
       );
 
   Widget _buildCounty(County county) => ClipPath(
-        child: Stack(
-          children: <Widget>[
-            CustomPaint(
-              painter: _MapPainter(county),
-            ),
-            Material(
-              child: InkWell(
-                mouseCursor: SystemMouseCursors.click,
-                hoverColor: Theme.of(context).primaryColor,
-                onTap: () {
-                  final List<Town> towns =
-                      MarkeyMapData.of(context).data[county];
-                  showPopup(
-                    context,
-                    title: 'County',
-                    widget: CountyList(
-                      county: county,
-                      towns: towns,
-                    ),
-                  );
-                },
+        child: Material(
+          color: Theme.of(context).accentColor,
+          child: InkWell(
+            mouseCursor: SystemMouseCursors.click,
+            hoverColor: Theme.of(context).primaryColor,
+            onTap: () => showPopup(
+              context,
+              title: '${county.name} County',
+              body: TownList(
+                county: county,
+                towns: MarkeyMapData.of(context).data[county],
               ),
             ),
-          ],
+          ),
         ),
         clipper: _MapClipper(county),
       );
 }
 
+/*
 class _MapPainter extends CustomPainter {
   final County county;
   _MapPainter(this.county);
@@ -102,6 +92,7 @@ class _MapPainter extends CustomPainter {
   @override
   bool shouldRebuildSemantics(_MapPainter old) => false;
 }
+*/
 
 class _MapClipper extends CustomClipper<Path> {
   final County county;

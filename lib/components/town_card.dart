@@ -29,19 +29,27 @@ class TownCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Container(
         decoration: _gradient,
-        child: Column(
-          children: <Widget>[
-            _TownHeader(
-              townName: town.name,
-              countyName: countyName,
-            ),
-            _ActionListView(
-              actions: town.actions,
-            ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(
+            vertical: 16,
+            horizontal: 32,
+          ),
+          child: Column(
+            children: <Widget>[
+              _TownHeader(
+                townName: town.name,
+                countyName: countyName,
+              ),
+              _ActionListView(
+                actions: town.actions,
+              ),
+              /*
             _TotalRaised(
               totalRaised: town.totalFundraised,
             ),
-          ],
+            */
+            ],
+          ),
         ),
       );
 }
@@ -54,26 +62,24 @@ class _TownHeader extends StatelessWidget {
       : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 0),
-      child: Stack(
-        alignment: AlignmentDirectional.center,
-        children: <Widget>[
-          SvgPicture.asset(
-            'town_svgs/$countyName/${townName.replaceAll(' ', '-')}.svg',
-            bundle: DefaultAssetBundle.of(context),
-            height: MarkeyMapTheme.cardHeaderStyle.fontSize * 4,
-            width: MarkeyMapTheme.cardHeaderStyle.fontSize * 4,
-          ),
-          Text(
-            townName.toUpperCase(),
-            style: MarkeyMapTheme.cardHeaderStyle,
-          ),
-        ],
-      ),
-    );
-  }
+  Widget build(BuildContext context) => Padding(
+        padding: const EdgeInsets.symmetric(vertical: 0),
+        child: Stack(
+          alignment: AlignmentDirectional.center,
+          children: <Widget>[
+            SvgPicture.asset(
+              'town_svgs/$countyName/${townName.replaceAll(' ', '-')}.svg',
+              bundle: DefaultAssetBundle.of(context),
+              height: MarkeyMapTheme.cardHeaderStyle.fontSize * 4,
+              width: MarkeyMapTheme.cardHeaderStyle.fontSize * 4,
+            ),
+            Text(
+              townName.toUpperCase(),
+              style: MarkeyMapTheme.cardHeaderStyle,
+            ),
+          ],
+        ),
+      );
 }
 
 class _ActionListView extends StatelessWidget {
@@ -84,7 +90,6 @@ class _ActionListView extends StatelessWidget {
   Widget build(BuildContext context) => Expanded(
         child: SizedBox(
           child: ListView.builder(
-            padding: const EdgeInsets.symmetric(horizontal: 32),
             itemCount: actions.length,
             itemBuilder: (BuildContext context, int index) => _ActionTileCard(
               action: actions[index],
@@ -101,9 +106,10 @@ class _ActionTileCard extends StatelessWidget {
   Widget get _datePart => Expanded(
         flex: 1,
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 4),
+          padding: const EdgeInsets.only(right: 16),
           child: Text(
             action.date?.format('dd, MMM yyyy') ?? '',
+            textAlign: TextAlign.right,
             style: MarkeyMapTheme.cardListStyle
                 .copyWith(fontWeight: FontWeight.w600),
           ),
@@ -134,7 +140,7 @@ class _ActionTileCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Padding(
-        padding: const EdgeInsets.only(bottom: 16),
+        padding: const EdgeInsets.symmetric(vertical: 8),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
@@ -149,20 +155,22 @@ class _TotalRaised extends StatelessWidget {
   final int totalRaised;
   const _TotalRaised({@required this.totalRaised, Key key}) : super(key: key);
 
+  String get _formattedMoney => Money.fromInt(
+        totalRaised,
+        Currency.create(
+          'USD',
+          2,
+          pattern: 'S0,000.00',
+        ),
+      ).toString();
+
   Widget get _text => RichText(
         text: TextSpan(
           text: 'Total Fundrasied: ',
           style: MarkeyMapTheme.cardListStyle,
           children: <TextSpan>[
             TextSpan(
-              text: Money.fromInt(
-                totalRaised,
-                Currency.create(
-                  'USD',
-                  2,
-                  pattern: 'S0,000.00',
-                ),
-              ).toString(),
+              text: _formattedMoney,
               style: MarkeyMapTheme.cardListStyle.copyWith(
                 fontWeight: FontWeight.w600,
               ),
@@ -172,23 +180,17 @@ class _TotalRaised extends StatelessWidget {
       );
 
   @override
-  Widget build(BuildContext context) => Padding(
-        padding: const EdgeInsets.symmetric(
-          vertical: 16,
-          horizontal: 32,
-        ),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            const Expanded(
-              flex: 1,
-              child: SizedBox.shrink(),
-            ),
-            Expanded(
-              flex: 5,
-              child: _text,
-            ),
-          ],
-        ),
+  Widget build(BuildContext context) => Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          const Expanded(
+            flex: 1,
+            child: SizedBox.shrink(),
+          ),
+          Expanded(
+            flex: 5,
+            child: _text,
+          ),
+        ],
       );
 }

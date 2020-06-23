@@ -7,5 +7,5 @@ class Town {
   List<EdAction> actions;
   Town({@required this.name, @required this.actions});
 
-  int get totalFundraised => actions.fold(0, (int p, EdAction c) => p + c.funding);
+  int get totalFundraised => actions.fold<int>(0, (int p, EdAction c) => p + c.funding);
 }
