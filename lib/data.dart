@@ -69,11 +69,10 @@ class _MarkeyMapBuilderState extends State<MarkeyMapBuilder> {
     ]) {
       final LinkedHashMap<String, List<EdAction>> towns =
           LinkedHashMap<String, List<EdAction>>();
-      final sheets.Worksheet worksheet =
-          spreadsheet.worksheetByTitle(county.name.toUpperCase());
-      final List<List<String>> values =
-          await worksheet.values.allRows(fromRow: 2, length: 6);
-      for (final List<String> row in values) {
+      for (final List<String> row in await spreadsheet
+          .worksheetByTitle(county.name.toUpperCase())
+          .values
+          .allRows(fromRow: 2, length: 6)) {
         final int length = row.length;
         final String townName = row[0];
         if (!towns.containsKey(townName)) {
