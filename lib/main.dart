@@ -10,13 +10,13 @@ void main() => runApp(MarkeyMapApp());
 class MarkeyMapApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) => MaterialApp(
-        title: "Markey Map",
+        title: 'Markey Map',
         theme: MarkeyMapTheme.theme,
         home: Scaffold(
           appBar: PreferredSize(
-            preferredSize: Size.fromHeight(58),
+            preferredSize: const Size.fromHeight(58),
             child: AppBar(
-              title: Text("Markey Map"),
+              title: const Text('Markey Map'),
             ),
           ),
           body: PreferencesBuilder(
@@ -28,13 +28,14 @@ class MarkeyMapApp extends StatelessWidget {
 
 class PreferencesBuilder extends StatefulWidget {
   final Widget child;
-  PreferencesBuilder({@required this.child, Key key}) : super(key: key);
+  const PreferencesBuilder({@required this.child, Key key}) : super(key: key);
 
   @override
   _PreferencesBuilderState createState() => _PreferencesBuilderState();
 }
 
 class _PreferencesBuilderState extends State<PreferencesBuilder> {
+  @override
   Widget build(BuildContext context) => FutureBuilder<String>(
         future: DefaultAssetBundle.of(context)
             .loadString('assets/credentials.json'),
@@ -43,11 +44,11 @@ class _PreferencesBuilderState extends State<PreferencesBuilder> {
             case ConnectionState.done:
               return MarkeyMapBuilder(
                 credentials: snapshot.data,
-                sheetId: "18ERHHKICDJ3JGk2NcRjmU38KjXxdmNgDab9iqu_PwSQ",
+                sheetId: '18ERHHKICDJ3JGk2NcRjmU38KjXxdmNgDab9iqu_PwSQ',
                 child: widget.child,
               );
             default:
-              return Center(child: CircularProgressIndicator());
+              return const Center(child: CircularProgressIndicator());
           }
         },
       );

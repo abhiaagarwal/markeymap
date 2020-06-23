@@ -11,12 +11,12 @@ enum ActionType {
 }
 
 extension StringExtension on ActionType {
-  String get name => this.toString().split('.').last;
+  String get name => toString().split('.').last;
 }
 
 extension ActionTypeExtension on String {
   ActionType get action => ActionType.values
-      .firstWhere((element) => element.name == this, orElse: () => null);
+      .firstWhere((ActionType element) => element.name == this, orElse: () => null);
 }
 
 class EdAction {

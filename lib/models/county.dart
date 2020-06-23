@@ -16,10 +16,10 @@ enum County {
 }
 
 extension NameExtension on County {
-  String get name => this.toString().split('.').last;
+  String get name => toString().split('.').last;
 }
 
 extension CountyExtension on String {
   County get county => County.values
-      .firstWhere((element) => element.name == this, orElse: () => null);
+      .firstWhere((County element) => element.name == this, orElse: () => null);
 }

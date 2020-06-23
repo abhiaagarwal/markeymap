@@ -1,42 +1,57 @@
 import 'package:flutter/material.dart';
 
-void showPopup(BuildContext context,
-    {@required Widget widget, @required String title, Color scaffoldColor}) {
-  Navigator.push(
-    context,
-    PopupLayout(
-      top: 30,
-      left: 30,
-      right: 30,
-      bottom: 50,
-      child: PopupContent(
-        content: Scaffold(
-          backgroundColor: scaffoldColor,
-          appBar: AppBar(
-            title: Text(title),
-            leading: new Builder(builder: (context) {
-              return IconButton(
-                icon: Icon(Icons.arrow_back),
-                onPressed: () {
-                  try {
-                    Navigator.pop(context);
-                  } catch (e) {}
-                },
-              );
-            }),
-            brightness: Brightness.light,
+void showPopup(
+  BuildContext context, {
+  @required Widget widget,
+  @required String title,
+  Color scaffoldColor,
+}) =>
+    Navigator.push(
+      context,
+      PopupLayout(
+        top: 30,
+        left: 30,
+        right: 30,
+        bottom: 50,
+        child: PopupContent(
+          content: Scaffold(
+            backgroundColor: scaffoldColor,
+            appBar: AppBar(
+              title: Text(title),
+              leading: Builder(builder: (BuildContext context) {
+                return IconButton(
+                  icon: const Icon(Icons.arrow_back),
+                  onPressed: () => Navigator.pop(context),
+                );
+              }),
+              brightness: Brightness.light,
+            ),
+            resizeToAvoidBottomInset: false,
+            body: widget,
           ),
-          resizeToAvoidBottomInset: false,
-          body: widget,
         ),
       ),
-    ),
-  );
-}
+    );
 
-class PopupLayout extends ModalRoute {
+class PopupLayout extends ModalRoute<void> {
+  final double top;
+  final double bottom;
+  final double left;
+  final double right;
+  final Color backgroundColor;
+  final Widget child;
+
+  PopupLayout({
+    this.backgroundColor,
+    @required this.child,
+    this.top = 10,
+    this.bottom = 20,
+    this.left = 20,
+    this.right = 20,
+  });
+
   @override
-  Duration get transitionDuration => Duration(milliseconds: 300);
+  Duration get transitionDuration => const Duration(milliseconds: 300);
 
   @override
   bool get opaque => false;
@@ -51,77 +66,57 @@ class PopupLayout extends ModalRoute {
   @override
   bool get maintainState => false;
 
-  final double top;
-  final double bottom;
-  final double left;
-  final double right;
-  final Color backgroundColor;
-  final Widget child;
-
-  PopupLayout({
-    Key key,
-    this.backgroundColor,
-    @required this.child,
-    this.top = 10,
-    this.bottom = 20,
-    this.left = 20,
-    this.right = 20,
-  });
-
   @override
   Widget buildPage(
     BuildContext context,
     Animation<double> animation,
     Animation<double> secondaryAnimation,
-  ) {
-    return GestureDetector(
-      /*
+  ) =>
+      GestureDetector(
+        /*
       onTap: () {
         // call this method here to hide soft keyboard
         SystemChannels.textInput.invokeMethod('TextInput.hide');
       },*/
-      child: Material(
-        type: MaterialType.transparency,
-        child: SafeArea(
-          bottom: true,
-          child: _buildOverlayContent(context),
+        child: Material(
+          type: MaterialType.transparency,
+          child: SafeArea(
+            bottom: true,
+            child: _buildOverlayContent(context),
+          ),
         ),
-      ),
-    );
-  }
+      );
 
-  Widget _buildOverlayContent(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.only(
-        bottom: this.bottom,
-        left: this.left,
-        right: this.right,
-        top: this.top,
-      ),
-      child: child,
-    );
-  }
+  Widget _buildOverlayContent(BuildContext context) => Container(
+        margin: EdgeInsets.only(
+          bottom: bottom,
+          left: left,
+          right: right,
+          top: top,
+        ),
+        child: child,
+      );
 
   @override
   Widget buildTransitions(BuildContext context, Animation<double> animation,
-      Animation<double> secondaryAnimation, Widget child) {
-    // You can add your own animations for the overlay content
-    return FadeTransition(
-      opacity: animation,
-      child: ScaleTransition(
-        scale: animation,
-        child: child,
-      ),
-    );
-  }
+          Animation<double> secondaryAnimation, Widget child) =>
+      FadeTransition(
+        opacity: animation,
+        child: ScaleTransition(
+          scale: animation,
+          child: child,
+        ),
+      );
 }
 
 class PopupContent extends StatefulWidget {
   final Widget content;
-  PopupContent({
+  const PopupContent({
     Key key,
     this.content,
   }) : super(key: key);
+
+  @override
   _PopupContentState createState() => _PopupContentState();
 }
 
@@ -132,9 +127,7 @@ class _PopupContentState extends State<PopupContent> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: widget.content,
-    );
-  }
+  Widget build(BuildContext context) => Container(
+        child: widget.content,
+      );
 }

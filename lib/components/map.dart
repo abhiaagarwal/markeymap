@@ -12,26 +12,27 @@ import 'package:markeymap/components/popup.dart';
 class ScaledMap extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
-    double navBarHeight = 58;
-    double safeZoneHeight = MediaQuery.of(context).padding.bottom;
+    final double width = MediaQuery.of(context).size.width;
+    final double height = MediaQuery.of(context).size.height;
+    const double navBarHeight = 58;
+    final double safeZoneHeight = MediaQuery.of(context).padding.bottom;
 
-    double scaleFactor = 0.5;
+    const double scaleFactor = 0.5;
 
-    double x = (width / 2.0) - (38.73 / 2.0);
-    double y = (height / 2.0) -
+    final double x = (width / 2.0) - (38.73 / 2.0);
+    final double y = (height / 2.0) -
         (22.26 / 2.0) -
         (safeZoneHeight / 2.0) -
-        navBarHeight + 28; 
+        navBarHeight +
+        28;
     final Offset offset = Offset(x, y);
 
     return SafeArea(
       child: Transform.scale(
-        scale: ((height / 22.26)) * scaleFactor,
+        scale: (height / 22.26) * scaleFactor,
         child: Transform.translate(
           offset: offset,
-          child: InteractiveMap(),
+          child: const InteractiveMap(),
         ),
       ),
     );
@@ -39,17 +40,17 @@ class ScaledMap extends StatelessWidget {
 }
 
 class InteractiveMap extends StatefulWidget {
-  InteractiveMap({Key key}) : super(key: key);
+  const InteractiveMap({Key key}) : super(key: key);
 
   @override
   _InteractiveMapState createState() => _InteractiveMapState();
 }
 
 class _InteractiveMapState extends State<InteractiveMap> {
-  County _selectedCounty;
-
+  @override
   Widget build(BuildContext context) => Stack(
-        children: MarkeyMapData.of(context).data.keys.map(_buildCounty).toList(),
+        children:
+            MarkeyMapData.of(context).data.keys.map(_buildCounty).toList(),
         fit: StackFit.passthrough,
       );
 
@@ -64,11 +65,11 @@ class _InteractiveMapState extends State<InteractiveMap> {
                 mouseCursor: SystemMouseCursors.click,
                 hoverColor: Theme.of(context).primaryColor,
                 onTap: () {
-                  List<Town> towns =
+                  final List<Town> towns =
                       MarkeyMapData.of(context).data[county];
                   showPopup(
                     context,
-                    title: "County",
+                    title: 'County',
                     widget: CountyList(
                       county: county,
                       towns: towns,
@@ -88,14 +89,12 @@ class _MapPainter extends CustomPainter {
   _MapPainter(this.county);
 
   @override
-  void paint(Canvas canvas, Size size) {
-    canvas.drawPath(
-      county.path,
-      Paint()
-        ..strokeWidth = 0
-        ..style = PaintingStyle.fill,
-    );
-  }
+  void paint(Canvas canvas, Size size) => canvas.drawPath(
+        county.path,
+        Paint()
+          ..strokeWidth = 0
+          ..style = PaintingStyle.fill,
+      );
 
   @override
   bool shouldRepaint(_MapPainter old) => true;

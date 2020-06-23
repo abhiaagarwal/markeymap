@@ -1,4 +1,4 @@
-// ignore_for_file: non_constant_identifier_names
+// ignore_for_file: non_constant_identifier_names, unnecessary_new
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
 part of 'svg_map.dart';
