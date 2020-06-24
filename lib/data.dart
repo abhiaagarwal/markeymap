@@ -63,9 +63,17 @@ class _MarkeyMapBuilderState extends State<MarkeyMapBuilder> {
       value: (dynamic county) => <Town>[],
     );
     for (final County county in <County>[
+      County.Barnstable,
+      County.Bristol,
       County.Dukes,
+      County.Franklin,
       County.Essex,
-      County.Middlesex
+      County.Hampden,
+      County.Hampshire,
+      County.Middlesex,
+      County.Nantucket,
+      County.Norfolk,
+      County.Plymouth,
     ]) {
       final LinkedHashMap<String, List<EdAction>> towns =
           LinkedHashMap<String, List<EdAction>>();
