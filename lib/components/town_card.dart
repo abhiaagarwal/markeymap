@@ -31,24 +31,23 @@ class TownCard extends StatelessWidget {
         decoration: _gradient,
         child: Padding(
           padding: const EdgeInsets.symmetric(
-            vertical: 16,
-            horizontal: 32,
+            horizontal: 16,
           ),
-          child: Column(
-            children: <Widget>[
-              _TownHeader(
-                townName: town.name,
-                countyName: countyName,
-              ),
-              _ActionListView(
-                actions: town.actions,
-              ),
-              /*
-            _TotalRaised(
-              totalRaised: town.totalFundraised,
+          child: SizedBox(
+            child: ListView.builder(
+              itemCount: town.actions.length + 1,
+              itemBuilder: (BuildContext context, int index) {
+                if (index == 0) {
+                  return _TownHeader(
+                    townName: town.name,
+                    countyName: countyName,
+                  );
+                }
+                return _ActionTileCard(
+                  action: town.actions[index - 1],
+                );
+              },
             ),
-            */
-            ],
           ),
         ),
       );
@@ -82,6 +81,7 @@ class _TownHeader extends StatelessWidget {
       );
 }
 
+/*
 class _ActionListView extends StatelessWidget {
   final List<EdAction> actions;
   const _ActionListView({@required this.actions, Key key}) : super(key: key);
@@ -90,14 +90,23 @@ class _ActionListView extends StatelessWidget {
   Widget build(BuildContext context) => Expanded(
         child: SizedBox(
           child: ListView.builder(
-            itemCount: actions.length,
-            itemBuilder: (BuildContext context, int index) => _ActionTileCard(
-              action: actions[index],
-            ),
+            itemCount: actions.length + 1,
+            itemBuilder: (BuildContext context, int index) {
+              if (index == 0) {
+                return _TownHeader(
+                  townName: town.name,
+                  countyName: countyName,
+                );
+              }
+              return _ActionTileCard(
+                action: actions[index - 1],
+              );
+            },
           ),
         ),
       );
 }
+*/
 
 class _ActionTileCard extends StatelessWidget {
   final EdAction action;
@@ -151,6 +160,7 @@ class _ActionTileCard extends StatelessWidget {
       );
 }
 
+/*
 class _TotalRaised extends StatelessWidget {
   final int totalRaised;
   const _TotalRaised({@required this.totalRaised, Key key}) : super(key: key);
@@ -194,3 +204,4 @@ class _TotalRaised extends StatelessWidget {
         ],
       );
 }
+*/

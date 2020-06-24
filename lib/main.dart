@@ -26,7 +26,13 @@ class MarkeyMapApp extends StatelessWidget {
                 ],
               ),
             ),
-            body: const ScaledMap(scaleFactor: 0.9),
+            body: LayoutBuilder(
+              builder: (BuildContext context, BoxConstraints constraints) =>
+                  ScaledMap(
+                scaleFactor: 0.9,
+                size: MediaQuery.of(context).size,
+              ),
+            ),
           ),
         ),
       );

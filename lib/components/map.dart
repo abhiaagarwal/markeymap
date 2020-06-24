@@ -10,21 +10,27 @@ import 'package:markeymap/components/popup.dart';
 
 class ScaledMap extends StatelessWidget {
   final double scaleFactor;
-  const ScaledMap({@required this.scaleFactor});
+  final Size size;
+  const ScaledMap({@required this.scaleFactor, @required this.size, Key key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) => SafeArea(
-      child: Transform.scale(
-        scale: (MediaQuery.of(context).size.height / County.Norfolk.size.height) * scaleFactor,
-        child: Transform.translate(
-          offset: Offset(
-            (MediaQuery.of(context).size.width - County.Norfolk.size.width) / 2.0,
-            (MediaQuery.of(context).size.height - County.Norfolk.size.height - Scaffold.of(context).appBarMaxHeight) / 2.0
+        child: Transform.scale(
+          scale: (size.width /
+                  County.Norfolk.size.width) *
+              scaleFactor,
+          child: Transform.translate(
+            offset: Offset(
+                (size.width - County.Norfolk.size.width) / 2.0,
+                (size.height -
+                        County.Norfolk.size.height -
+                        Scaffold.of(context).appBarMaxHeight) /
+                    2.0),
+            child: const InteractiveMap(),
           ),
-          child: const InteractiveMap(),
         ),
-      ),
-    );
+      );
 }
 
 class InteractiveMap extends StatefulWidget {
@@ -44,7 +50,7 @@ class _InteractiveMapState extends State<InteractiveMap> {
 
   Widget _buildCounty(County county) => ClipPath(
         child: Material(
-          color: Theme.of(context).accentColor,
+          color: Theme.of(context).primaryColor.withOpacity(0.6),
           child: InkWell(
             mouseCursor: SystemMouseCursors.click,
             hoverColor: Theme.of(context).primaryColor,
