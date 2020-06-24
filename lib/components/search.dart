@@ -17,10 +17,9 @@ class SearchButton extends StatelessWidget {
         onPressed: () async {
           final MapEntry<Town, County> town =
               await showSearch<MapEntry<Town, County>>(
-            context: context,
-            delegate:
-                _TownSearchDelegate(MarkeyMapData.of(context).townsByCounty),
-          );
+                  context: context,
+                  delegate: _TownSearchDelegate(
+                      MarkeyMapData.of(context).townsByCounty));
           if (town == null) {
             return;
           }

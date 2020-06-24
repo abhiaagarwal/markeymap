@@ -14,7 +14,7 @@ class TownList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => ListView.builder(
-        itemExtent: 60.0,
+        itemExtent: 50.0,
         itemCount: towns.length,
         itemBuilder: (BuildContext context, final int index) => ListTile(
           title: Text(towns[index].name),

@@ -15,11 +15,11 @@ class ScaledMap extends StatelessWidget {
   @override
   Widget build(BuildContext context) => SafeArea(
       child: Transform.scale(
-        scale: (MediaQuery.of(context).size.height / County.Norfolk.height) * scaleFactor,
+        scale: (MediaQuery.of(context).size.height / County.Norfolk.size.height) * scaleFactor,
         child: Transform.translate(
           offset: Offset(
-            (MediaQuery.of(context).size.width - County.Norfolk.width) / 2.0,
-            (MediaQuery.of(context).size.height - County.Norfolk.height - Scaffold.of(context).appBarMaxHeight) / 2.0
+            (MediaQuery.of(context).size.width - County.Norfolk.size.width) / 2.0,
+            (MediaQuery.of(context).size.height - County.Norfolk.size.height - Scaffold.of(context).appBarMaxHeight) / 2.0
           ),
           child: const InteractiveMap(),
         ),

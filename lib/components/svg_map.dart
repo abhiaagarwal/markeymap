@@ -43,8 +43,7 @@ extension PathExtension on County {
 }
 
 extension SizeExtension on County {
-  double get width => _MapSVGData.width;
-  double get height => _MapSVGData.height;
+  Size get size => Size(_MapSVGData.width, _MapSVGData.height);
 }
 
 class _MapSVGData {

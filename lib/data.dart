@@ -20,7 +20,7 @@ class MarkeyMapData extends InheritedWidget {
     );
     for (final MapEntry<County, List<Town>> entry in data.entries) {
       for (final Town town in entry.value) {
-        townsByCounty[town] = entry.key;
+        map[town] = entry.key;
       }
     }
     return map;

@@ -19,7 +19,6 @@ void showPopup(
                 onPressed: () => Navigator.pop(context),
               ),
             ),
-            brightness: Brightness.light,
           ),
           resizeToAvoidBottomInset: false,
           body: body,
