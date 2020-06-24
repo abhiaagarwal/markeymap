@@ -9,33 +9,22 @@ import 'package:markeymap/components/svg_map.dart';
 import 'package:markeymap/components/popup.dart';
 
 class ScaledMap extends StatelessWidget {
+  final double scaleFactor;
+  const ScaledMap({@required this.scaleFactor});
+
   @override
-  Widget build(BuildContext context) {
-    final double width = MediaQuery.of(context).size.width;
-    final double height = MediaQuery.of(context).size.height;
-    const double navBarHeight = 58;
-    final double safeZoneHeight = MediaQuery.of(context).padding.bottom;
-
-    const double scaleFactor = 0.8;
-
-    final double x = (width / 2.0) - (38.73 / 2.0);
-    final double y = (height / 2.0) -
-        (22.26 / 2.0) -
-        (safeZoneHeight / 2.0) -
-        navBarHeight +
-        28;
-    final Offset offset = Offset(x, y);
-
-    return SafeArea(
+  Widget build(BuildContext context) => SafeArea(
       child: Transform.scale(
-        scale: (height / 22.26) * scaleFactor,
+        scale: (MediaQuery.of(context).size.height / County.Norfolk.height) * scaleFactor,
         child: Transform.translate(
-          offset: offset,
+          offset: Offset(
+            (MediaQuery.of(context).size.width - County.Norfolk.width) / 2.0,
+            (MediaQuery.of(context).size.height - County.Norfolk.height - Scaffold.of(context).appBarMaxHeight) / 2.0
+          ),
           child: const InteractiveMap(),
         ),
       ),
     );
-  }
 }
 
 class InteractiveMap extends StatefulWidget {

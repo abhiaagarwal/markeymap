@@ -26,7 +26,7 @@ class MarkeyMapApp extends StatelessWidget {
                 ],
               ),
             ),
-            body: ScaledMap(),
+            body: const ScaledMap(scaleFactor: 0.9),
           ),
         ),
       );
