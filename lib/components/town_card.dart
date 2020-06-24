@@ -72,9 +72,12 @@ class _TownHeader extends StatelessWidget {
               height: MarkeyMapTheme.cardHeaderStyle.fontSize * 4,
               width: MarkeyMapTheme.cardHeaderStyle.fontSize * 4,
             ),
-            Text(
-              townName.toUpperCase(),
-              style: MarkeyMapTheme.cardHeaderStyle,
+            FittedBox(
+              child: Text(
+                townName.toUpperCase(),
+                textAlign: TextAlign.center,
+                style: MarkeyMapTheme.cardHeaderStyle,
+              ),
             ),
           ],
         ),

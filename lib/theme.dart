@@ -14,19 +14,19 @@ class MarkeyMapTheme {
 
   static const TextStyle cardHeaderStyle = TextStyle(
     fontFamily: 'Gotham Narrow',
-    fontSize: 72,
+    fontSize: 64,
     fontWeight: FontWeight.w900,
     color: Colors.white,
     letterSpacing: 2,
     shadows: <Shadow>[
       Shadow(
-        offset: Offset(0, 6),
+        offset: Offset(0, 64/12),
       ),
     ],
   );
 
   static const TextStyle cardListStyle = TextStyle(
-    fontSize: 24,
+    fontSize: 20,
     color: Colors.white,
   );
 }
