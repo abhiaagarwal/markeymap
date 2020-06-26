@@ -32,16 +32,19 @@ class TownCard extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.symmetric(
             horizontal: 16,
-          ),
+          ).copyWith(bottom: 8),
           child: SizedBox(
             child: ListView.builder(
-              itemCount: town.actions.length + 1,
+              itemCount: town.actions.length + 2,
               itemBuilder: (BuildContext context, int index) {
                 if (index == 0) {
                   return _TownHeader(
                     townName: town.name,
                     countyName: countyName,
                   );
+                }
+                if (index == town.actions.length + 2 - 1) {
+                  return _TotalRaised(totalRaised: town.totalFundraised);
                 }
                 return _ActionTileCard(
                   action: town.actions[index - 1],
@@ -61,26 +64,23 @@ class _TownHeader extends StatelessWidget {
       : super(key: key);
 
   @override
-  Widget build(BuildContext context) => Padding(
-        padding: const EdgeInsets.symmetric(vertical: 0),
-        child: Stack(
-          alignment: AlignmentDirectional.center,
-          children: <Widget>[
-            SvgPicture.asset(
-              'town_svgs/$countyName/${townName.replaceAll(' ', '-')}.svg',
-              bundle: DefaultAssetBundle.of(context),
-              height: MarkeyMapTheme.cardHeaderStyle.fontSize * 4,
-              width: MarkeyMapTheme.cardHeaderStyle.fontSize * 4,
+  Widget build(BuildContext context) => Stack(
+        alignment: AlignmentDirectional.center,
+        children: <Widget>[
+          SvgPicture.asset(
+            'assets/town_svgs/$countyName/${townName.replaceAll(' ', '-')}.svg',
+            bundle: DefaultAssetBundle.of(context),
+            height: MarkeyMapTheme.cardHeaderStyle.fontSize * 4,
+            width: MarkeyMapTheme.cardHeaderStyle.fontSize * 4,
+          ),
+          FittedBox(
+            child: Text(
+              townName.toUpperCase(),
+              textAlign: TextAlign.center,
+              style: MarkeyMapTheme.cardHeaderStyle,
             ),
-            FittedBox(
-              child: Text(
-                townName.toUpperCase(),
-                textAlign: TextAlign.center,
-                style: MarkeyMapTheme.cardHeaderStyle,
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       );
 }
 
@@ -120,7 +120,7 @@ class _ActionTileCard extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.only(right: 16),
           child: Text(
-            action.date?.format('dd, MMM yyyy') ?? '',
+            action.date ?? '',
             textAlign: TextAlign.right,
             style: MarkeyMapTheme.cardListStyle
                 .copyWith(fontWeight: FontWeight.w600),
@@ -163,12 +163,11 @@ class _ActionTileCard extends StatelessWidget {
       );
 }
 
-/*
 class _TotalRaised extends StatelessWidget {
-  final int totalRaised;
+  final double totalRaised;
   const _TotalRaised({@required this.totalRaised, Key key}) : super(key: key);
 
-  String get _formattedMoney => Money.fromInt(
+  String get _formattedMoney => Money.from(
         totalRaised,
         Currency.create(
           'USD',
@@ -193,18 +192,20 @@ class _TotalRaised extends StatelessWidget {
       );
 
   @override
-  Widget build(BuildContext context) => Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          const Expanded(
-            flex: 1,
-            child: SizedBox.shrink(),
-          ),
-          Expanded(
-            flex: 5,
-            child: _text,
-          ),
-        ],
+  Widget build(BuildContext context) => Padding(
+        padding: const EdgeInsets.only(top: 16),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            const Expanded(
+              flex: 1,
+              child: SizedBox.shrink(),
+            ),
+            Expanded(
+              flex: 5,
+              child: _text,
+            ),
+          ],
+        ),
       );
 }
-*/

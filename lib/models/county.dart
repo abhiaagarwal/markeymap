@@ -12,7 +12,7 @@ enum County {
   Norfolk,
   Plymouth,
   Suffolk,
-  Worchester,
+  Worcester,
 }
 
 extension NameExtension on County {

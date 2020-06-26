@@ -3,7 +3,6 @@ import 'dart:collection';
 import 'package:flutter/material.dart';
 
 import 'package:gsheets/gsheets.dart' as sheets;
-import 'package:jiffy/jiffy.dart';
 
 import 'package:markeymap/models/action.dart';
 import 'package:markeymap/models/county.dart';
@@ -62,44 +61,31 @@ class _MarkeyMapBuilderState extends State<MarkeyMapBuilder> {
       key: (dynamic county) => county as County,
       value: (dynamic county) => <Town>[],
     );
-    for (final County county in <County>[
-      County.Barnstable,
-      County.Bristol,
-      County.Dukes,
-      County.Franklin,
-      County.Essex,
-      County.Hampden,
-      County.Hampshire,
-      County.Middlesex,
-      County.Nantucket,
-      County.Norfolk,
-      County.Plymouth,
-    ]) {
+    for (final County county in countiesList.keys) {
       final LinkedHashMap<String, List<EdAction>> towns =
           LinkedHashMap<String, List<EdAction>>();
       for (final List<String> row in await spreadsheet
           .worksheetByTitle(county.name.toUpperCase())
           .values
           .allRows(fromRow: 2, length: 6)) {
-        final int length = row.length;
-        final String townName = row[0];
-        if (!towns.containsKey(townName)) {
-          towns[townName] = <EdAction>[];
+        try {
+          final int length = row.length;
+          final String townName = row[0];
+          if (!towns.containsKey(townName)) {
+            towns[townName] = <EdAction>[];
+          }
+          towns[townName].add(
+            EdAction(
+              date: row[1].isEmpty ? null : row[1],
+              actionType: row[2].action,
+              description: row[3],
+              funding: length < 5 ? 0.0 : (row[4].isEmpty ? 0.0 : double.tryParse(row[4])),
+              url: length < 6 ? '' : row[5],
+            ),
+          );
+        } catch (e) {
+          print(e);
         }
-        towns[townName].add(
-          EdAction(
-            date: row[1].isEmpty
-                ? null
-                : Jiffy(
-                    '10/20/2018',
-                    'MM/dd/yyyy',
-                  ),
-            actionType: row[2].action,
-            description: row[3],
-            funding: length < 5 ? 0 : int.tryParse(row[4]),
-            url: length < 6 ? '' : row[5],
-          ),
-        );
       }
       towns.forEach(
         (String name, List<EdAction> actions) =>

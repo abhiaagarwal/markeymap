@@ -17,16 +17,15 @@ class ScaledMap extends StatelessWidget {
   @override
   Widget build(BuildContext context) => SafeArea(
         child: Transform.scale(
-          scale: (size.width /
-                  County.Norfolk.size.width) *
-              scaleFactor,
+          scale: (size.width / CountySize.size.width) * scaleFactor,
           child: Transform.translate(
             offset: Offset(
-                (size.width - County.Norfolk.size.width) / 2.0,
-                (size.height -
-                        County.Norfolk.size.height -
-                        Scaffold.of(context).appBarMaxHeight) /
-                    2.0),
+                  size.width - CountySize.size.width,
+                  size.height -
+                      CountySize.size.height -
+                      Scaffold.of(context).appBarMaxHeight,
+                ) /
+                2.0,
             child: const InteractiveMap(),
           ),
         ),
@@ -46,11 +45,12 @@ class _InteractiveMapState extends State<InteractiveMap> {
         children:
             MarkeyMapData.of(context).data.keys.map(_buildCounty).toList(),
         fit: StackFit.passthrough,
+        overflow: Overflow.visible,
       );
 
   Widget _buildCounty(County county) => ClipPath(
         child: Material(
-          color: Theme.of(context).primaryColor.withOpacity(0.6),
+          color: const Color(0xFF8BC6FF),
           child: InkWell(
             mouseCursor: SystemMouseCursors.click,
             hoverColor: Theme.of(context).primaryColor,
