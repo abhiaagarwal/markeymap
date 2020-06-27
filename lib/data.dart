@@ -32,7 +32,7 @@ class MarkeyMapData extends InheritedWidget {
       context.dependOnInheritedWidgetOfExactType<MarkeyMapData>();
 }
 
-class MarkeyMapBuilder extends StatefulWidget {
+class MarkeyMapBuilder extends StatelessWidget {
   final String credentialsFile;
   final String sheetId;
   final Widget child;
@@ -43,17 +43,12 @@ class MarkeyMapBuilder extends StatefulWidget {
       Key key})
       : super(key: key);
 
-  @override
-  _MarkeyMapBuilderState createState() => _MarkeyMapBuilderState();
-}
-
-class _MarkeyMapBuilderState extends State<MarkeyMapBuilder> {
-  Future<Map<County, List<Town>>> get _data async {
+  Future<Map<County, List<Town>>> _data(BuildContext context) async {
     final sheets.GSheets api = sheets.GSheets(
         await DefaultAssetBundle.of(context)
-            .loadString(widget.credentialsFile));
+            .loadString(credentialsFile));
     final sheets.Spreadsheet spreadsheet =
-        await api.spreadsheet(widget.sheetId);
+        await api.spreadsheet(sheetId);
     final Map<County, List<Town>> countiesList =
         // ignore: prefer_for_elements_to_map_fromiterable
         Map<County, List<Town>>.fromIterable(
@@ -95,7 +90,7 @@ class _MarkeyMapBuilderState extends State<MarkeyMapBuilder> {
 
   @override
   Widget build(BuildContext context) => FutureBuilder<Map<County, List<Town>>>(
-        future: _data,
+        future: _data(context),
         builder: (
           BuildContext context,
           AsyncSnapshot<Map<County, List<Town>>> snapshot,
@@ -105,7 +100,7 @@ class _MarkeyMapBuilderState extends State<MarkeyMapBuilder> {
               if (snapshot.data != null) {
                 return MarkeyMapData(
                   data: snapshot.data,
-                  child: widget.child,
+                  child: child,
                 );
               } else {
                 return Container();
