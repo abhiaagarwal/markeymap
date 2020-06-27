@@ -70,8 +70,8 @@ class _TownHeader extends StatelessWidget {
           SvgPicture.asset(
             'assets/town_svgs/$countyName/${townName.replaceAll(' ', '-')}.svg',
             bundle: DefaultAssetBundle.of(context),
-            height: MarkeyMapTheme.cardHeaderStyle.fontSize * 4,
-            width: MarkeyMapTheme.cardHeaderStyle.fontSize * 4,
+            height: MarkeyMapTheme.cardHeaderStyle.fontSize * 4.5,
+            width: MarkeyMapTheme.cardHeaderStyle.fontSize * 4.5,
           ),
           FittedBox(
             child: Text(

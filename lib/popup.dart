@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 void showPopup(
   BuildContext context, {
   @required Widget body,
-  @required String title,
+  String title = '',
   Color scaffoldColor,
 }) =>
     Navigator.push(

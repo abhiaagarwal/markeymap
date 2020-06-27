@@ -68,24 +68,22 @@ class _MarkeyMapBuilderState extends State<MarkeyMapBuilder> {
           .worksheetByTitle(county.name.toUpperCase())
           .values
           .allRows(fromRow: 2, length: 6)) {
-        try {
-          final int length = row.length;
-          final String townName = row[0];
-          if (!towns.containsKey(townName)) {
-            towns[townName] = <EdAction>[];
-          }
-          towns[townName].add(
-            EdAction(
-              date: row[1].isEmpty ? null : row[1],
-              actionType: row[2].action,
-              description: row[3],
-              funding: length < 5 ? 0.0 : (row[4].isEmpty ? 0.0 : double.tryParse(row[4])),
-              url: length < 6 ? '' : row[5],
-            ),
-          );
-        } catch (e) {
-          print(e);
+        final int length = row.length;
+        final String townName = row[0];
+        if (!towns.containsKey(townName)) {
+          towns[townName] = <EdAction>[];
         }
+        towns[townName].add(
+          EdAction(
+            date: row[1].isEmpty ? null : row[1],
+            actionType: row[2].action,
+            description: row[3],
+            funding: length < 5
+                ? 0.0
+                : (row[4].isEmpty ? 0.0 : double.tryParse(row[4])),
+            url: length < 6 ? '' : row[5],
+          ),
+        );
       }
       towns.forEach(
         (String name, List<EdAction> actions) =>

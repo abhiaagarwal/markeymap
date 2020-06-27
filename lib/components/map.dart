@@ -6,7 +6,7 @@ import 'package:markeymap/data.dart';
 import 'package:markeymap/models/county.dart';
 import 'package:markeymap/components/town_list.dart';
 import 'package:markeymap/components/svg_map.dart';
-import 'package:markeymap/components/popup.dart';
+import 'package:markeymap/popup.dart';
 
 class ScaledMap extends StatelessWidget {
   final double scaleFactor;
@@ -57,6 +57,7 @@ class _InteractiveMapState extends State<InteractiveMap> {
             onTap: () => showPopup(
               context,
               title: '${county.name} County',
+              scaffoldColor: Theme.of(context).primaryColor,
               body: TownList(
                 county: county,
                 towns: MarkeyMapData.of(context).data[county],

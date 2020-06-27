@@ -3,7 +3,7 @@ import 'dart:collection';
 import 'package:flutter/material.dart';
 
 import 'package:markeymap/data.dart';
-import 'package:markeymap/components/popup.dart';
+import 'package:markeymap/popup.dart';
 import 'package:markeymap/components/town_card.dart';
 import 'package:markeymap/models/town.dart';
 import 'package:markeymap/models/county.dart';
