@@ -15,12 +15,13 @@ class MarkeyMapTheme {
   static const TextStyle appBarStyle = TextStyle(
     fontFamily: 'Gotham Narrow',
     fontWeight: FontWeight.w900,
+    color: Colors.white,
     fontSize: 92,
     letterSpacing: 2,
     shadows: <Shadow>[
       Shadow(
-        offset: Offset(0, 92/12),
-        blurRadius: 6.0,
+        offset: Offset(0, 4),
+        blurRadius: 2.0,
       ),
     ]
   );
@@ -36,7 +37,7 @@ class MarkeyMapTheme {
       Shadow(
         blurRadius: 2.0,
         color: Color(0xFF00044C),
-        offset: Offset(64/16, 64/16),
+        offset: Offset(4, 4),
       ),
     ],
   );
@@ -51,7 +52,7 @@ class MarkeyMapTheme {
       Shadow(
         blurRadius: 2.0,
         color: Color(0xFF00044C),
-        offset: Offset(0, 64/16),
+        offset: Offset(0, 4),
       ),
     ],
   );

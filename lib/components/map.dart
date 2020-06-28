@@ -41,45 +41,63 @@ class InteractiveMap extends StatefulWidget {
 
 class _InteractiveMapState extends State<InteractiveMap> {
   @override
-  Widget build(BuildContext context) => Stack(
-        children:
-            MarkeyMapData.of(context).data.keys.map(_buildCounty).toList(),
-        fit: StackFit.passthrough,
-        overflow: Overflow.visible,
+  Widget build(BuildContext context) => Padding(
+        padding: const EdgeInsets.all(32.0),
+        child: Container(
+          width: CountySize.size.width,
+          height: CountySize.size.height,
+          child: Stack(
+            children:
+                MarkeyMapData.of(context).data.keys.map(_buildCounty).toList(),
+            fit: StackFit.passthrough,
+            overflow: Overflow.visible,
+          ),
+        ),
       );
 
   Widget _buildCounty(County county) => ClipPath(
         child: Material(
           color: const Color(0xFF8BC6FF),
-          child: InkWell(
-            mouseCursor: SystemMouseCursors.click,
-            hoverColor: Theme.of(context).primaryColor,
-            onTap: () => showPopup(
-              context,
-              title: '${county.name} County',
-              scaffoldColor: Theme.of(context).primaryColor,
-              body: TownList(
-                county: county,
-                towns: MarkeyMapData.of(context).data[county],
+          child: Stack(
+            children: <Widget>[
+              CustomPaint(
+                painter: _MapPainter(
+                  county: county,
+                  color: Theme.of(context).primaryColor,
+                ),
               ),
-            ),
+              InkWell(
+                mouseCursor: SystemMouseCursors.click,
+                hoverColor: Theme.of(context).primaryColor,
+                onTap: () => showPopup(
+                  context,
+                  title: '${county.name} County',
+                  scaffoldColor: Theme.of(context).primaryColor,
+                  body: TownList(
+                    county: county,
+                    towns: MarkeyMapData.of(context).data[county],
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
         clipper: _MapClipper(county),
       );
 }
 
-/*
 class _MapPainter extends CustomPainter {
   final County county;
-  _MapPainter(this.county);
+  final Color color;
+  _MapPainter({@required this.county, @required this.color});
 
   @override
   void paint(Canvas canvas, Size size) => canvas.drawPath(
         county.path,
         Paint()
-          ..strokeWidth = 0
-          ..style = PaintingStyle.fill,
+          ..strokeWidth = 12
+          ..style = PaintingStyle.stroke
+          ..color = color,
       );
 
   @override
@@ -88,7 +106,6 @@ class _MapPainter extends CustomPainter {
   @override
   bool shouldRebuildSemantics(_MapPainter old) => false;
 }
-*/
 
 class _MapClipper extends CustomClipper<Path> {
   final County county;

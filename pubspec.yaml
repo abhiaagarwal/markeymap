@@ -48,6 +48,7 @@ flutter:
   uses-material-design: true
 
   assets: 
+    - assets/header.png
     - assets/credentials.json
     - assets/town_svgs/Barnstable/
     - assets/town_svgs/Berkshire/

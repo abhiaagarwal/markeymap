@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'package:markeymap/components/appbar.dart';
 import 'package:markeymap/components/map.dart';
 import 'package:markeymap/components/search.dart';
 import 'package:markeymap/components/welcome.dart';
@@ -18,33 +19,8 @@ class MarkeyMapApp extends StatelessWidget {
           credentialsFile: 'assets/credentials.json',
           sheetId: '18ERHHKICDJ3JGk2NcRjmU38KjXxdmNgDab9iqu_PwSQ',
           child: Scaffold(
-            appBar: PreferredSize(
-              preferredSize: const Size.fromHeight(128),
-              child:
-                  /*
-                  Column(
-                  children: <Widget>[
-                    PreferredSize(
-                      preferredSize: const Size.fromHeight(104),
-                      child: Stack(
-                        //fit: StackFit.expand,
-                        children: <Widget>[
-                          Container(color: MarkeyMapTheme.theme.primaryColor),
-                          Center(
-                            child: Text(
-                              'Markey Map'.toUpperCase(),
-                              style: MarkeyMapTheme.appBarStyle,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    PreferredSize(
-                      preferredSize: const Size.fromHeight(24),
-                      child: Container(color: Colors.red),
-                    ),
-                  ],
-                ),*/
+            appBar: const MainAppBar(),
+            /*
                   AppBar(
                 title: Text(
                   'Markey Map'.toUpperCase(),
@@ -61,14 +37,16 @@ class MarkeyMapApp extends StatelessWidget {
                   preferredSize: const Size.fromHeight(12),
                 ),
               ),
-            ),
+            ),*/
+            /*
             body: LayoutBuilder(
               builder: (BuildContext context, BoxConstraints constraints) =>
                   ScaledMap(
                 scaleFactor: 0.9,
                 size: MediaQuery.of(context).size,
               ),
-            ),
+            ),*/
+            body: const Center(child: FittedBox(child: InteractiveMap())),
           ),
         ),
       );
