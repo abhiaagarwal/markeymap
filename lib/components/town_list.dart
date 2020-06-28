@@ -61,16 +61,17 @@ class TownGridItem extends StatelessWidget {
             scaffoldColor: Theme.of(context).primaryColor,
             body: TownCard(town: town, countyName: countyName),
           ),
-      child: Padding(
+      child: Container(
         padding: const EdgeInsets.all(32),
         child: Stack(
           alignment: Alignment.center,
           children: <Widget>[
             SvgPicture.asset(
-              'assets/town_svgs/$countyName/${town.name.replaceAll(' ', '-')}.svg',
+              'assets/town_svgs/$countyName/${town.name.trim().replaceAll(' ', '-')}.svg',
               bundle: DefaultAssetBundle.of(context),
               height: MarkeyMapTheme.cardHeaderStyle.fontSize * 4,
               width: MarkeyMapTheme.cardHeaderStyle.fontSize * 4,
+              semanticsLabel: town.name,
             ),
             FittedBox(
               child: Text(

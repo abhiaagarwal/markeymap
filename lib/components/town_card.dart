@@ -29,28 +29,26 @@ class TownCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Container(
         decoration: _gradient,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 16,
-          ).copyWith(bottom: 8),
-          child: SizedBox(
-            child: ListView.builder(
-              itemCount: town.actions.length + 2,
-              itemBuilder: (BuildContext context, int index) {
-                if (index == 0) {
-                  return _TownHeader(
-                    townName: town.name,
-                    countyName: countyName,
-                  );
-                }
-                if (index == town.actions.length + 2 - 1) {
-                  return _TotalRaised(totalRaised: town.totalFundraised);
-                }
-                return _ActionTileCard(
-                  action: town.actions[index - 1],
+        padding: const EdgeInsets.symmetric(
+          horizontal: 16,
+        ).copyWith(bottom: 8),
+        child: SizedBox(
+          child: ListView.builder(
+            itemCount: town.actions.length + 2,
+            itemBuilder: (BuildContext context, int index) {
+              if (index == 1 - 1) {
+                return _TownHeader(
+                  townName: town.name,
+                  countyName: countyName,
                 );
-              },
-            ),
+              }
+              if (index == (town.actions.length + 2) - 1) {
+                return _TotalRaised(totalRaised: town.totalFundraised);
+              }
+              return _ActionTileCard(
+                action: town.actions[index - 1],
+              );
+            },
           ),
         ),
       );
@@ -68,7 +66,7 @@ class _TownHeader extends StatelessWidget {
         alignment: AlignmentDirectional.center,
         children: <Widget>[
           SvgPicture.asset(
-            'assets/town_svgs/$countyName/${townName.replaceAll(' ', '-')}.svg',
+            'assets/town_svgs/$countyName/${townName.trim().replaceAll(' ', '-')}.svg',
             bundle: DefaultAssetBundle.of(context),
             height: MarkeyMapTheme.cardHeaderStyle.fontSize * 4.5,
             width: MarkeyMapTheme.cardHeaderStyle.fontSize * 4.5,
