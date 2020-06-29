@@ -13,7 +13,6 @@ class InteractiveMap extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Container(
-        padding: const EdgeInsets.all(32.0),
         width: CountySize.size.width,
         height: CountySize.size.height,
         child: Stack(
@@ -22,7 +21,6 @@ class InteractiveMap extends StatelessWidget {
               .keys
               .map<_CountyObject>((County county) => _CountyObject(county))
               .toList(),
-          fit: StackFit.passthrough,
           overflow: Overflow.visible,
         ),
       );

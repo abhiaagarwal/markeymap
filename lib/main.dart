@@ -21,8 +21,11 @@ class MarkeyMapApp extends StatelessWidget {
           child: Scaffold(
             appBar: MainAppBar(),
             body: Center(
-              child: FittedBox(
-                child: InteractiveMap(),
+              child: Padding(
+                padding: EdgeInsets.all(16),
+                child:  FittedBox(
+                  child: InteractiveMap(),
+                ),
               ),
             ),
           ),
