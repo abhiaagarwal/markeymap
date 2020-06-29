@@ -43,6 +43,10 @@ class TownCard extends StatelessWidget {
                 );
               }
               if (index == (town.actions.length + 2) - 1) {
+                final double totalFundraised = town.totalFundraised;
+                if (totalFundraised == null || totalFundraised == 0.0) {
+                  return null;
+                }
                 return _TotalRaised(totalRaised: town.totalFundraised);
               }
               return _ActionTileCard(
@@ -176,7 +180,7 @@ class _TotalRaised extends StatelessWidget {
 
   Widget get _text => RichText(
         text: TextSpan(
-          text: 'Total Fundrasied: ',
+          text: 'Total Secured: ',
           style: MarkeyMapTheme.cardListStyle,
           children: <TextSpan>[
             TextSpan(

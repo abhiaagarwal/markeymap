@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:markeymap/theme.dart';
+import 'package:markeymap/components/search.dart';
 
 class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
   const MainAppBar({Key key}) : super(key: key);
@@ -10,6 +11,7 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
         children: <Widget>[
           Container(
             height: 12,
+            width: double.infinity,
             color: MarkeyMapTheme.theme.accentColor,
           ),
           const _Header(),
@@ -56,8 +58,27 @@ class _SearchBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Container(
-    height: 48,
-    color: const Color(0xFF00345C),
-    child: Container(),
-  );
+        height: 48,
+        width: double.infinity,
+        color: const Color(0xFF00345C),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(
+            vertical: 8.0,
+            horizontal: 32.0,
+          ),
+          child: InkWell(
+            onTap: () => handleSearch(context),
+            child: FittedBox(
+              child: Text(
+                'Search your town, city, or county to find out what Ed has done for your community',
+                style: TextStyle(
+                  fontStyle: FontStyle.italic,
+                  color: Colors.white,
+                  fontSize: 24,
+                ),
+              ),
+            ),
+          ),
+        ),
+      );
 }

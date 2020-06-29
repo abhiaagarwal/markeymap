@@ -8,17 +8,11 @@ import 'package:markeymap/components/town_card.dart';
 import 'package:markeymap/models/town.dart';
 import 'package:markeymap/models/county.dart';
 
-class SearchButton extends StatelessWidget {
-  const SearchButton({Key key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) => IconButton(
-        icon: const Icon(Icons.search),
-        onPressed: () async {
-          final MapEntry<Town, County> town =
+Future<void> handleSearch(BuildContext context) async {
+final MapEntry<Town, County> town =
               await showSearch<MapEntry<Town, County>>(
                   context: context,
-                  delegate: _TownSearchDelegate(
+                  delegate: TownSearchDelegate(
                       MarkeyMapData.of(context).townsByCounty));
           if (town == null) {
             return;
@@ -32,13 +26,21 @@ class SearchButton extends StatelessWidget {
             ),
             title: '',
           );
-        },
+}
+
+class SearchButton extends StatelessWidget {
+  const SearchButton({Key key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) => IconButton(
+        icon: const Icon(Icons.search),
+        onPressed: () => handleSearch(context),
       );
 }
 
-class _TownSearchDelegate extends SearchDelegate<MapEntry<Town, County>> {
+class TownSearchDelegate extends SearchDelegate<MapEntry<Town, County>> {
   final SplayTreeMap<Town, County> towns;
-  _TownSearchDelegate(this.towns);
+  TownSearchDelegate(this.towns);
 
   @override
   List<Widget> buildActions(BuildContext context) => <Widget>[
