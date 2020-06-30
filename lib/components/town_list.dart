@@ -15,13 +15,17 @@ class TownList extends StatelessWidget {
   const TownList({@required this.county, @required this.towns, Key key})
       : super(key: key);
 
-  /*
   @override
   Widget build(BuildContext context) => ListView.builder(
         itemExtent: 50.0,
         itemCount: towns.length,
         itemBuilder: (BuildContext context, final int index) => ListTile(
-          title: Text(towns[index].name),
+          title: Text(
+            towns[index].name,
+            style: TextStyle(
+              color: Colors.white,
+            ),
+          ),
           onTap: () => showPopup(
             context,
             title: '',
@@ -33,8 +37,8 @@ class TownList extends StatelessWidget {
           ),
         ),
       );
-  */
 
+  /*
   @override
   Widget build(BuildContext context) => GridView.builder(
         gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
@@ -44,6 +48,7 @@ class TownList extends StatelessWidget {
         itemBuilder: (BuildContext context, final int index) =>
             TownGridItem(town: towns[index], countyName: county.name),
       );
+  */
 }
 
 class TownGridItem extends StatelessWidget {

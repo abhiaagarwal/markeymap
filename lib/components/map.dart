@@ -31,41 +31,46 @@ class _CountyObject extends StatelessWidget {
   @override
   const _CountyObject(this.county, {Key key}) : super(key: key);
 
+  Widget _painter(BuildContext context) => CustomPaint(
+        painter: _CountyPainter(
+          county,
+          Theme.of(context).primaryColor,
+        ),
+      );
+
+  Widget _inkWell(BuildContext context) => InkWell(
+        mouseCursor: SystemMouseCursors.click,
+        hoverColor: Theme.of(context).primaryColor,
+        highlightColor: const Color(0xFF00345C),
+        onTap: () => showPopup(
+          context,
+          title: '${county.name} County',
+          scaffoldColor: Theme.of(context).primaryColor,
+          body: TownList(
+            county: county,
+            towns: MarkeyMapData.of(context).data[county],
+          ),
+        ),
+      );
+
   @override
   Widget build(BuildContext context) => Semantics(
-    label: 'Interactive County',
-    hint: 'Press to view all actions',
-    value: county.name,
-      child: ClipPath(
+        label: 'Interactive County',
+        hint: 'Press to view all actions',
+        value: county.name,
+        child: ClipPath(
           child: Material(
             color: const Color(0xFF8BC6FF),
             child: Stack(
               children: <Widget>[
-                CustomPaint(
-                  painter: _CountyPainter(
-                    county,
-                    Theme.of(context).primaryColor,
-                  ),
-                ),
-                InkWell(
-                  mouseCursor: SystemMouseCursors.click,
-                  hoverColor: Theme.of(context).primaryColor,
-                  onTap: () => showPopup(
-                    context,
-                    title: '${county.name} County',
-                    scaffoldColor: Theme.of(context).primaryColor,
-                    body: TownList(
-                      county: county,
-                      towns: MarkeyMapData.of(context).data[county],
-                    ),
-                  ),
-                ),
+                _painter(context),
+                _inkWell(context),
               ],
             ),
           ),
           clipper: _CountyClipper(county),
         ),
-  );
+      );
 }
 
 class _CountyPainter extends CustomPainter {
@@ -79,7 +84,7 @@ class _CountyPainter extends CustomPainter {
         Paint()
           ..strokeWidth = 4
           ..style = PaintingStyle.stroke
-          ..color = const Color(0xFF8CB9E6),
+          ..color = const Color(0xFF00345C),
       );
 
   @override

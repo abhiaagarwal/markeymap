@@ -8,9 +8,11 @@ import 'package:markeymap/components/welcome.dart';
 import 'package:markeymap/data.dart';
 import 'package:markeymap/theme.dart';
 
-void main() => runApp(MarkeyMapApp());
+void main() => runApp(const MarkeyMapApp());
 
 class MarkeyMapApp extends StatelessWidget {
+  const MarkeyMapApp({Key key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) => MaterialApp(
         title: 'Markey Map',

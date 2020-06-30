@@ -50,9 +50,11 @@ flutter:
 
   assets: 
     - assets/header.png
+    - assets/compass.svg
     - assets/credentials.json
     - assets/town_svgs/Barnstable/
     - assets/town_svgs/Berkshire/
+    - assets/town_svgs/Bristol/
     - assets/town_svgs/Dukes/
     - assets/town_svgs/Essex/
     - assets/town_svgs/Franklin/

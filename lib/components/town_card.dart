@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
@@ -125,7 +127,12 @@ class _ActionTileCard extends StatelessWidget {
             action.date ?? '',
             textAlign: TextAlign.right,
             style: MarkeyMapTheme.cardListStyle
-                .copyWith(fontWeight: FontWeight.w600),
+                .copyWith(
+                  fontWeight: FontWeight.w600,
+                  fontFeatures: <FontFeature>[
+                    const FontFeature.tabularFigures(),
+                  ],
+                ),
           ),
         ),
       );

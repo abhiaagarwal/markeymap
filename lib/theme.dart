@@ -16,10 +16,11 @@ class MarkeyMapTheme {
     fontFamily: 'Gotham Narrow',
     fontWeight: FontWeight.w900,
     color: Colors.white,
-    fontSize: 92,
+    fontSize: 46,
     letterSpacing: 2,
     shadows: <Shadow>[
       Shadow(
+        color: Color(0xFF005196),
         offset: Offset(0, 4),
         blurRadius: 2.0,
       ),
