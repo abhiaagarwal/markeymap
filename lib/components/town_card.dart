@@ -29,35 +29,39 @@ class TownCard extends StatelessWidget {
       );
 
   @override
-  Widget build(BuildContext context) => Container(
-        decoration: _gradient,
-        padding: const EdgeInsets.symmetric(
-          horizontal: 16,
-        ).copyWith(bottom: 8),
-        child: SizedBox(
-          child: ListView.builder(
-            itemCount: town.actions.length + 2,
-            itemBuilder: (BuildContext context, int index) {
-              if (index == 1 - 1) {
-                return _TownHeader(
-                  townName: town.name,
-                  countyName: countyName,
-                );
-              }
-              if (index == (town.actions.length + 2) - 1) {
-                final double totalFundraised = town.totalFundraised;
-                if (totalFundraised == null || totalFundraised == 0.0) {
-                  return null;
+  Widget build(BuildContext context) => Title(
+      title: town.name,
+      color: Theme.of(context).primaryColor,
+      child: Container(
+          decoration: _gradient,
+          padding: const EdgeInsets.symmetric(
+            horizontal: 16,
+          ).copyWith(bottom: 8),
+          child: SizedBox(
+            child: ListView.builder(
+              itemCount: town.actions.length + 2,
+              itemBuilder: (BuildContext context, int index) {
+                if (index == 1 - 1) {
+                  return _TownHeader(
+                    townName: town.name,
+                    countyName: countyName,
+                  );
                 }
-                return _TotalRaised(totalRaised: town.totalFundraised);
-              }
-              return _ActionTileCard(
-                action: town.actions[index - 1],
-              );
-            },
+                if (index == (town.actions.length + 2) - 1) {
+                  final double totalFundraised = town.totalFundraised;
+                  if (totalFundraised == null || totalFundraised == 0.0) {
+                    return null;
+                  }
+                  return _TotalRaised(totalRaised: town.totalFundraised);
+                }
+                return _ActionTileCard(
+                  action: town.actions[index - 1],
+                );
+              },
+            ),
           ),
         ),
-      );
+  );
 }
 
 class _TownHeader extends StatelessWidget {
@@ -87,33 +91,6 @@ class _TownHeader extends StatelessWidget {
         ],
       );
 }
-
-/*
-class _ActionListView extends StatelessWidget {
-  final List<EdAction> actions;
-  const _ActionListView({@required this.actions, Key key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) => Expanded(
-        child: SizedBox(
-          child: ListView.builder(
-            itemCount: actions.length + 1,
-            itemBuilder: (BuildContext context, int index) {
-              if (index == 0) {
-                return _TownHeader(
-                  townName: town.name,
-                  countyName: countyName,
-                );
-              }
-              return _ActionTileCard(
-                action: actions[index - 1],
-              );
-            },
-          ),
-        ),
-      );
-}
-*/
 
 class _ActionTileCard extends StatelessWidget {
   final EdAction action;

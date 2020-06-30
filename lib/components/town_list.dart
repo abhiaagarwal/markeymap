@@ -16,23 +16,27 @@ class TownList extends StatelessWidget {
       : super(key: key);
 
   @override
-  Widget build(BuildContext context) => ListView.builder(
-        itemExtent: 50.0,
-        itemCount: towns.length,
-        itemBuilder: (BuildContext context, final int index) => ListTile(
-          title: Text(
-            towns[index].name,
-            style: TextStyle(
-              color: Colors.white,
+  Widget build(BuildContext context) => Title(
+        title: '${county.name} County',
+        color: Theme.of(context).primaryColor,
+        child: ListView.builder(
+          itemExtent: 50.0,
+          itemCount: towns.length,
+          itemBuilder: (BuildContext context, final int index) => ListTile(
+            title: Text(
+              towns[index].name,
+              style: TextStyle(
+                color: Colors.white,
+              ),
             ),
-          ),
-          onTap: () => showPopup(
-            context,
-            title: '',
-            scaffoldColor: Theme.of(context).primaryColor,
-            body: TownCard(
-              town: towns[index],
-              countyName: county.name,
+            onTap: () => showPopup(
+              context,
+              title: '',
+              scaffoldColor: Theme.of(context).primaryColor,
+              body: TownCard(
+                town: towns[index],
+                countyName: county.name,
+              ),
             ),
           ),
         ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_svg/svg.dart';
 
 import 'package:markeymap/theme.dart';
@@ -124,6 +125,7 @@ class _SearchBar extends StatelessWidget {
           ),
           child: InkWell(
             onTap: () => handleSearch(context),
+            mouseCursor: SystemMouseCursors.text,
             child: FittedBox(
               child: Row(
                 children: <Widget>[

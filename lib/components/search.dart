@@ -9,23 +9,21 @@ import 'package:markeymap/models/town.dart';
 import 'package:markeymap/models/county.dart';
 
 Future<void> handleSearch(BuildContext context) async {
-final MapEntry<Town, County> town =
-              await showSearch<MapEntry<Town, County>>(
-                  context: context,
-                  delegate: TownSearchDelegate(
-                      MarkeyMapData.of(context).townsByCounty));
-          if (town == null) {
-            return;
-          }
-          showPopup(
-            context,
-            scaffoldColor: Theme.of(context).primaryColor,
-            body: TownCard(
-              town: town.key,
-              countyName: town.value.name,
-            ),
-            title: '',
-          );
+  final MapEntry<Town, County> town = await showSearch<MapEntry<Town, County>>(
+    context: context,
+    delegate: TownSearchDelegate(MarkeyMapData.of(context).townsByCounty),
+  );
+  if (town == null) {
+    return;
+  }
+  showPopup(
+    context,
+    scaffoldColor: Theme.of(context).primaryColor,
+    body: TownCard(
+      town: town.key,
+      countyName: town.value.name,
+    ),
+  );
 }
 
 class SearchButton extends StatelessWidget {
@@ -63,18 +61,22 @@ class TownSearchDelegate extends SearchDelegate<MapEntry<Town, County>> {
   Widget buildSuggestions(BuildContext context) {
     final Map<Town, County> results = Map<Town, County>.from(towns)
       ..removeWhere((Town key, County value) =>
-          !key.name.toLowerCase().startsWith(query.toLowerCase()));
-    return ListView.builder(
-      itemExtent: 60.0,
-      itemCount: results.length,
-      itemBuilder: (BuildContext context, final int index) {
-        final MapEntry<Town, County> entry = results.entries.elementAt(index);
-        return ListTile(
-          title: Text(entry.key.name),
-          subtitle: Text(entry.value.name),
-          onTap: () => close(context, entry),
-        );
-      },
+          !key.name.toLowerCase().contains(query.toLowerCase()));
+    return Title(
+      title: 'Search',
+      color: Theme.of(context).primaryColor,
+      child: ListView.builder(
+        itemExtent: 60.0,
+        itemCount: results.length,
+        itemBuilder: (BuildContext context, final int index) {
+          final MapEntry<Town, County> entry = results.entries.elementAt(index);
+          return ListTile(
+            title: Text(entry.key.name),
+            subtitle: Text(entry.value.name),
+            onTap: () => close(context, entry),
+          );
+        },
+      ),
     );
   }
 }

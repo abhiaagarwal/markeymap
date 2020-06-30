@@ -32,10 +32,7 @@ class _CountyObject extends StatelessWidget {
   const _CountyObject(this.county, {Key key}) : super(key: key);
 
   Widget _painter(BuildContext context) => CustomPaint(
-        painter: _CountyPainter(
-          county,
-          Theme.of(context).primaryColor,
-        ),
+        painter: _CountyPainter(county),
       );
 
   Widget _inkWell(BuildContext context) => InkWell(
@@ -75,8 +72,7 @@ class _CountyObject extends StatelessWidget {
 
 class _CountyPainter extends CustomPainter {
   final County county;
-  final Color color;
-  _CountyPainter(this.county, this.color);
+  _CountyPainter(this.county);
 
   @override
   void paint(Canvas canvas, Size size) => canvas.drawPath(
