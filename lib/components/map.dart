@@ -88,7 +88,7 @@ class _CountyPainter extends CustomPainter {
         Paint()
           ..strokeWidth = 4
           ..style = PaintingStyle.stroke
-          ..color = const Color(0xFF00345C),
+          ..color = Colors.white,
       );
 
   @override

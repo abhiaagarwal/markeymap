@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:markeymap/components/appbar.dart';
 import 'package:markeymap/components/map.dart';
 import 'package:markeymap/components/bottombar.dart';
-import 'package:markeymap/components/search.dart';
-import 'package:markeymap/components/welcome.dart';
 
 import 'package:markeymap/data.dart';
 import 'package:markeymap/theme.dart';

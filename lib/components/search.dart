@@ -4,12 +4,12 @@ import 'package:flutter/material.dart';
 
 import 'package:markeymap/data.dart';
 import 'package:markeymap/popup.dart';
-import 'package:markeymap/components/town_card.dart';
+import 'package:markeymap/components/action_card.dart';
 import 'package:markeymap/models/town.dart';
 import 'package:markeymap/models/county.dart';
 
 Future<void> handleSearch(BuildContext context) async {
-  final MapEntry<Town, County> town = await showSearch<MapEntry<Town, County>>(
+  final Town town = await showSearch<Town>(
     context: context,
     delegate: TownSearchDelegate(MarkeyMapData.of(context).townsByCounty),
   );
@@ -19,24 +19,14 @@ Future<void> handleSearch(BuildContext context) async {
   showPopup(
     context,
     scaffoldColor: Theme.of(context).primaryColor,
-    body: TownCard(
-      town: town.key,
-      countyName: town.value.name,
+    body: ActionCard(
+      name: town.name,
+      actions: town.actions,
     ),
   );
 }
 
-class SearchButton extends StatelessWidget {
-  const SearchButton({Key key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) => IconButton(
-        icon: const Icon(Icons.search),
-        onPressed: () => handleSearch(context),
-      );
-}
-
-class TownSearchDelegate extends SearchDelegate<MapEntry<Town, County>> {
+class TownSearchDelegate extends SearchDelegate<Town> {
   final SplayTreeMap<Town, County> towns;
   TownSearchDelegate(this.towns);
 
@@ -73,7 +63,7 @@ class TownSearchDelegate extends SearchDelegate<MapEntry<Town, County>> {
           return ListTile(
             title: Text(entry.key.name),
             subtitle: Text(entry.value.name),
-            onTap: () => close(context, entry),
+            onTap: () => close(context, entry.key),
           );
         },
       ),

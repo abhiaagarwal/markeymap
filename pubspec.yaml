@@ -52,20 +52,7 @@ flutter:
     - assets/header.png
     - assets/compass.svg
     - assets/credentials.json
-    - assets/town_svgs/Barnstable/
-    - assets/town_svgs/Berkshire/
-    - assets/town_svgs/Bristol/
-    - assets/town_svgs/Dukes/
-    - assets/town_svgs/Essex/
-    - assets/town_svgs/Franklin/
-    - assets/town_svgs/Hampden/
-    - assets/town_svgs/Hampshire/
-    - assets/town_svgs/Middlesex/
-    - assets/town_svgs/Nantucket/
-    - assets/town_svgs/Norfolk/
-    - assets/town_svgs/Plymouth/
-    - assets/town_svgs/Suffolk/
-    - assets/town_svgs/Worcester/
+    - assets/town_svgs/
 
   fonts:
     - family: Gotham Narrow

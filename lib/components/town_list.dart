@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
-import 'package:flutter_svg/flutter_svg.dart';
+//import 'package:flutter_svg/flutter_svg.dart';
 
-import 'package:markeymap/components/town_card.dart';
+import 'package:markeymap/components/action_card.dart';
 import 'package:markeymap/popup.dart';
-import 'package:markeymap/theme.dart';
+//import 'package:markeymap/theme.dart';
 import 'package:markeymap/models/county.dart';
 import 'package:markeymap/models/town.dart';
 
@@ -25,7 +25,7 @@ class TownList extends StatelessWidget {
           itemBuilder: (BuildContext context, final int index) => ListTile(
             title: Text(
               towns[index].name,
-              style: TextStyle(
+              style: const TextStyle(
                 color: Colors.white,
               ),
             ),
@@ -33,9 +33,9 @@ class TownList extends StatelessWidget {
               context,
               title: '',
               scaffoldColor: Theme.of(context).primaryColor,
-              body: TownCard(
-                town: towns[index],
-                countyName: county.name,
+              body: ActionCard(
+                name: towns[index].name,
+                actions: towns[index].actions,
               ),
             ),
           ),
@@ -55,6 +55,7 @@ class TownList extends StatelessWidget {
   */
 }
 
+/*
 class TownGridItem extends StatelessWidget {
   final Town town;
   final String countyName;
@@ -68,7 +69,7 @@ class TownGridItem extends StatelessWidget {
             context,
             title: '',
             scaffoldColor: Theme.of(context).primaryColor,
-            body: TownCard(town: town, countyName: countyName),
+            body: ActionCard(name: town.name, actions: town.actions),
           ),
       child: Container(
         padding: const EdgeInsets.all(32),
@@ -93,3 +94,4 @@ class TownGridItem extends StatelessWidget {
         ),
       ));
 }
+*/

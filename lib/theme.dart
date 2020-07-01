@@ -73,7 +73,7 @@ class MarkeyMapTheme {
   static const TextStyle buttonStyle = TextStyle(
     fontFamily: 'Gotham Narrow',
     color: Colors.white,
-    fontSize: 16,
+    fontSize: 20,
     shadows: <Shadow>[
       Shadow(
         offset: Offset(1, 1),

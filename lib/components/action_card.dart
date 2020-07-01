@@ -9,12 +9,12 @@ import 'package:money2/money2.dart';
 
 import 'package:markeymap/theme.dart';
 import 'package:markeymap/models/action.dart';
-import 'package:markeymap/models/town.dart';
 
-class TownCard extends StatelessWidget {
-  final Town town;
-  final String countyName;
-  const TownCard({@required this.town, @required this.countyName, Key key})
+class ActionCard extends StatelessWidget {
+  final String name;
+  final List<EdAction> actions;
+  final double totalSecured;
+  const ActionCard({@required this.name, @required this.actions, this.totalSecured, Key key})
       : super(key: key);
 
   BoxDecoration get _gradient => BoxDecoration(
@@ -30,7 +30,7 @@ class TownCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Title(
-      title: town.name,
+      title: name,
       color: Theme.of(context).primaryColor,
       child: Container(
           decoration: _gradient,
@@ -39,23 +39,21 @@ class TownCard extends StatelessWidget {
           ).copyWith(bottom: 8),
           child: SizedBox(
             child: ListView.builder(
-              itemCount: town.actions.length + 2,
+              itemCount: actions.length + 2,
               itemBuilder: (BuildContext context, int index) {
                 if (index == 1 - 1) {
-                  return _TownHeader(
-                    townName: town.name,
-                    countyName: countyName,
+                  return _ActionHeader(
+                    name: name,
                   );
                 }
-                if (index == (town.actions.length + 2) - 1) {
-                  final double totalFundraised = town.totalFundraised;
-                  if (totalFundraised == null || totalFundraised == 0.0) {
+                if (index == (actions.length + 2) - 1) {
+                  if (totalSecured == null || totalSecured == 0.0) {
                     return null;
                   }
-                  return _TotalRaised(totalRaised: town.totalFundraised);
+                  return _TotalSecured(totalSecured: totalSecured);
                 }
                 return _ActionTileCard(
-                  action: town.actions[index - 1],
+                  action: actions[index - 1],
                 );
               },
             ),
@@ -64,11 +62,10 @@ class TownCard extends StatelessWidget {
   );
 }
 
-class _TownHeader extends StatelessWidget {
-  final String townName;
-  final String countyName;
-  const _TownHeader(
-      {@required this.townName, @required this.countyName, Key key})
+class _ActionHeader extends StatelessWidget {
+  final String name;
+  const _ActionHeader(
+      {@required this.name, Key key})
       : super(key: key);
 
   @override
@@ -76,14 +73,14 @@ class _TownHeader extends StatelessWidget {
         alignment: AlignmentDirectional.center,
         children: <Widget>[
           SvgPicture.asset(
-            'assets/town_svgs/$countyName/${townName.trim().replaceAll(' ', '-')}.svg',
+            'assets/town_svgs/${name.trim().replaceAll(' ', '-')}.svg',
             bundle: DefaultAssetBundle.of(context),
             height: MarkeyMapTheme.cardHeaderStyle.fontSize * 4.5,
             width: MarkeyMapTheme.cardHeaderStyle.fontSize * 4.5,
           ),
           FittedBox(
             child: Text(
-              townName.toUpperCase(),
+              name.toUpperCase(),
               textAlign: TextAlign.center,
               style: MarkeyMapTheme.cardHeaderStyle,
             ),
@@ -149,12 +146,12 @@ class _ActionTileCard extends StatelessWidget {
       );
 }
 
-class _TotalRaised extends StatelessWidget {
-  final double totalRaised;
-  const _TotalRaised({@required this.totalRaised, Key key}) : super(key: key);
+class _TotalSecured extends StatelessWidget {
+  final double totalSecured;
+  const _TotalSecured({@required this.totalSecured, Key key}) : super(key: key);
 
   String get _formattedMoney => Money.from(
-        totalRaised,
+        totalSecured,
         Currency.create(
           'USD',
           2,
