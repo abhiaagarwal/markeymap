@@ -27,6 +27,13 @@ class MarkeyMapTheme {
     ]
   );
 
+  static const TextStyle searchBarStyle = TextStyle(
+          fontStyle: FontStyle.italic,
+          color: Colors.white,
+          fontSize: 12,
+          fontWeight: FontWeight.w200,
+        );
+
   static const TextStyle welcomeHeaderStyle = TextStyle(
     color: Colors.white,
     fontFamily: 'Gotham Narrow',
@@ -61,5 +68,16 @@ class MarkeyMapTheme {
   static const TextStyle cardListStyle = TextStyle(
     fontSize: 20,
     color: Colors.white,
+  );
+
+  static const TextStyle buttonStyle = TextStyle(
+    fontFamily: 'Gotham Narrow',
+    color: Colors.white,
+    fontSize: 16,
+    shadows: <Shadow>[
+      Shadow(
+        offset: Offset(1, 1),
+      ),
+    ]
   );
 }

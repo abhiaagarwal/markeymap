@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:markeymap/components/appbar.dart';
 import 'package:markeymap/components/map.dart';
+import 'package:markeymap/components/bottombar.dart';
 import 'package:markeymap/components/search.dart';
 import 'package:markeymap/components/welcome.dart';
 
@@ -24,12 +25,13 @@ class MarkeyMapApp extends StatelessWidget {
             appBar: MainAppBar(),
             body: Center(
               child: Padding(
-                padding: EdgeInsets.all(16),
+                padding: EdgeInsets.all(8),
                 child:  FittedBox(
                   child: InteractiveMap(),
                 ),
               ),
             ),
+            bottomSheet: BottomBar(),
           ),
         ),
       );

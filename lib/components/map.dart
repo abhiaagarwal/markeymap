@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
@@ -15,13 +17,19 @@ class InteractiveMap extends StatelessWidget {
   Widget build(BuildContext context) => Container(
         width: CountySize.size.width,
         height: CountySize.size.height,
-        child: Stack(
-          children: MarkeyMapData.of(context)
-              .data
-              .keys
-              .map<_CountyObject>((County county) => _CountyObject(county))
-              .toList(),
-          overflow: Overflow.visible,
+        child: Transform.rotate(
+          angle: (-math.pi / 180.0) * 10,
+          child: Transform.scale(
+            scale: 0.9,
+            child: Stack(
+              children: MarkeyMapData.of(context)
+                  .data
+                  .keys
+                  .map<_CountyObject>((County county) => _CountyObject(county))
+                  .toList(),
+              overflow: Overflow.visible,
+            ),
+          ),
         ),
       );
 }

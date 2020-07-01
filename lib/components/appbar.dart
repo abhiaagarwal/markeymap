@@ -12,7 +12,7 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) => Column(
         children: <Widget>[
           Container(
-            height: 12,
+            height: 24,
             width: double.infinity,
             color: MarkeyMapTheme.theme.accentColor,
           ),
@@ -22,7 +22,7 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
       );
 
   @override
-  Size get preferredSize => const Size.fromHeight(12.0 + 196.0 + 48.0);
+  Size get preferredSize => const Size.fromHeight(24.0 + 196.0 + 48.0);
 }
 
 class _Header extends StatelessWidget {
@@ -61,7 +61,6 @@ class _HeaderText extends StatelessWidget {
 
   Widget _compass(BuildContext context) => SvgPicture.asset(
         'assets/compass.svg',
-        bundle: DefaultAssetBundle.of(context),
         height: 42,
         width: 42,
       );
@@ -106,11 +105,7 @@ class _SearchBar extends StatelessWidget {
 
   Widget get _searchText => const Text(
         'Search your town, city, or county to find out what Ed has done for your community',
-        style: TextStyle(
-          fontStyle: FontStyle.italic,
-          color: Colors.white,
-          fontSize: 12,
-        ),
+        style: MarkeyMapTheme.searchBarStyle,
       );
 
   @override

@@ -63,6 +63,7 @@ class MarkeyMapBuilder extends StatelessWidget {
           .worksheetByTitle(county.name.toUpperCase())
           .values
           .allRows(fromRow: 2, length: 6)) {
+        try {
         final int length = row.length;
         final String townName = row[0];
         if (!towns.containsKey(townName)) {
@@ -79,6 +80,9 @@ class MarkeyMapBuilder extends StatelessWidget {
             url: length < 6 ? '' : row[5],
           ),
         );
+        } catch(e) {
+          print(e);
+        }
       }
       towns.forEach(
         (String name, List<EdAction> actions) =>
