@@ -37,8 +37,9 @@ extension PathExtension on County {
         return _MapSVGData.Suffolk;
       case County.Worcester:
         return _MapSVGData.Worcester;
+      default:
+        return Path();
     }
-    return Path();
   }
 }
 

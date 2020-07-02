@@ -13,8 +13,7 @@ enum County {
   Plymouth,
   Suffolk,
   Worcester,
-  National,
-  Statewide,
+  Other,
 }
 
 extension NameExtension on County {

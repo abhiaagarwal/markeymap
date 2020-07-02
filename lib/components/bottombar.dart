@@ -5,6 +5,9 @@ import 'package:url_launcher/url_launcher.dart' as url_launcher;
 import 'package:markeymap/theme.dart';
 
 import 'package:markeymap/popup.dart';
+import 'package:markeymap/components/town_list.dart';
+import 'package:markeymap/data.dart';
+import 'package:markeymap/models/county.dart';
 import 'package:markeymap/components/welcome.dart';
 
 class BottomBar extends StatelessWidget implements PreferredSizeWidget {
@@ -23,8 +26,17 @@ class BottomBar extends StatelessWidget implements PreferredSizeWidget {
               onTap: () => showPopup(context, body: const WelcomeScreen()),
             ),
             _BottomButton(
-              text: 'Statewide Accomplishments',
+              text: 'Other Accomplishments',
               color: Theme.of(context).primaryColor,
+              onTap: () => showPopup(
+          context,
+          title: 'Other Accomplishments',
+          scaffoldColor: Theme.of(context).primaryColor,
+          body: TownList(
+            county: County.Other,
+            towns: MarkeyMapData.of(context).data[County.Other],
+          ),
+        ),
             ),
             _BottomButton(
               text: 'Donate',
