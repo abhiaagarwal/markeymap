@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 
+import 'package:url_launcher/url_launcher.dart' as url_launcher;
+
 import 'package:markeymap/theme.dart';
+
+import 'package:markeymap/popup.dart';
+import 'package:markeymap/components/welcome.dart';
 
 class BottomBar extends StatelessWidget implements PreferredSizeWidget {
   const BottomBar({Key key}) : super(key: key);
@@ -10,23 +15,26 @@ class BottomBar extends StatelessWidget implements PreferredSizeWidget {
         height: 48,
         color: Colors.transparent,
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             _BottomButton(
               text: 'Info',
-              color: Colors.red,
+              color: Theme.of(context).primaryColor,
+              onTap: () => showPopup(context, body: const WelcomeScreen()),
             ),
             _BottomButton(
               text: 'Statewide Accomplishments',
-              color: Colors.blue,
+              color: Theme.of(context).primaryColor,
             ),
             _BottomButton(
               text: 'Donate',
-              color: Colors.green,
+              color: Theme.of(context).accentColor,
+              onTap: () => url_launcher.launch('https://secure.actblue.com/donate/ejm2020'),
             ),
             _BottomButton(
-              text: 'Join us',
-              color: Colors.yellow,
+              text: 'Get involved',
+              color: Theme.of(context).accentColor,
+              onTap: () => url_launcher.launch('https://www.edmarkey.com/volunteer/'),
             ),
           ],
         ),
@@ -38,24 +46,28 @@ class BottomBar extends StatelessWidget implements PreferredSizeWidget {
 
 class _BottomButton extends StatelessWidget {
   final String text;
-  final Function function;
+  final Function onTap;
   final Color color;
   const _BottomButton(
-      {@required this.text, @required this.function, this.color, Key key})
+      {@required this.text, @required this.onTap, this.color, Key key})
       : super(key: key);
 
   @override
-  Widget build(BuildContext context) =>
-      RaisedButton(
-        padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 4.0),
-        color: color, 
-        child: Text(
-          text.toUpperCase(),
-          style: MarkeyMapTheme.buttonStyle,
+  Widget build(BuildContext context) => Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8),
+        child: RaisedButton(
+          color: color,
+          child: Container(
+            padding: const EdgeInsets.all(4),
+            child: Text(
+              text.toUpperCase(),
+              style: MarkeyMapTheme.buttonStyle,
+            ),
+          ),
+          onPressed: () => onTap(),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8),
+          ),
         ),
-        onPressed: () => function(),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8),
-        )
       );
 }

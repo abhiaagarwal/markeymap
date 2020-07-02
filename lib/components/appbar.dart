@@ -61,6 +61,7 @@ class _HeaderText extends StatelessWidget {
 
   Widget _compass(BuildContext context) => SvgPicture.asset(
         'assets/compass.svg',
+        bundle: DefaultAssetBundle.of(context),
         height: 42,
         width: 42,
       );
