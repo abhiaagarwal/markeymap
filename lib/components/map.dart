@@ -22,9 +22,16 @@ class InteractiveMap extends StatelessWidget {
           child: Transform.scale(
             scale: 0.9,
             child: Stack(
-              children: MarkeyMapData.of(context)
-                  .data
-                  .keys
+              children: () {
+                final List<County> counties = MarkeyMapData.of(context)
+                    .data
+                    .keys
+                    .toList()
+                      ..remove(County.National)
+                      ..remove(County.Statewide);
+                      // Let's ignore how hacky this is
+                return counties;
+              }()
                   .map<_CountyObject>((County county) => _CountyObject(county))
                   .toList(),
               overflow: Overflow.visible,

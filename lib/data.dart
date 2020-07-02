@@ -72,7 +72,7 @@ class MarkeyMapBuilder extends StatelessWidget {
         towns[townName].add(
           EdAction(
             date: row[1].isEmpty ? null : row[1],
-            actionType: row[2].action,
+            type: row[2].action,
             description: row[3],
             funding: length < 5
                 ? 0.0

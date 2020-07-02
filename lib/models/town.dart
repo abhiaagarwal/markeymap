@@ -7,5 +7,5 @@ class Town {
   List<EdAction> actions;
   Town({@required this.name, @required this.actions});
 
-  double get totalFundraised => actions.fold<double>(0, (double p, EdAction c) => p + c.funding);
+  double get totalSecured => actions.fold<double>(0, (double p, EdAction c) => p + c.funding);
 }

@@ -46,7 +46,7 @@ class BottomBar extends StatelessWidget implements PreferredSizeWidget {
 
 class _BottomButton extends StatelessWidget {
   final String text;
-  final Function onTap;
+  final void Function() onTap;
   final Color color;
   const _BottomButton(
       {@required this.text, @required this.onTap, this.color, Key key})
@@ -64,7 +64,7 @@ class _BottomButton extends StatelessWidget {
               style: MarkeyMapTheme.buttonStyle,
             ),
           ),
-          onPressed: () => onTap(),
+          onPressed: onTap,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(8),
           ),

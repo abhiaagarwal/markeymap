@@ -14,7 +14,8 @@ class ActionCard extends StatelessWidget {
   final String name;
   final List<EdAction> actions;
   final double totalSecured;
-  const ActionCard({@required this.name, @required this.actions, this.totalSecured, Key key})
+  const ActionCard(
+      {@required this.name, @required this.actions, this.totalSecured, Key key})
       : super(key: key);
 
   BoxDecoration get _gradient => BoxDecoration(
@@ -30,9 +31,9 @@ class ActionCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Title(
-      title: name,
-      color: Theme.of(context).primaryColor,
-      child: Container(
+        title: name,
+        color: Theme.of(context).primaryColor,
+        child: Container(
           decoration: _gradient,
           padding: const EdgeInsets.symmetric(
             horizontal: 16,
@@ -59,14 +60,12 @@ class ActionCard extends StatelessWidget {
             ),
           ),
         ),
-  );
+      );
 }
 
 class _ActionHeader extends StatelessWidget {
   final String name;
-  const _ActionHeader(
-      {@required this.name, Key key})
-      : super(key: key);
+  const _ActionHeader({@required this.name, Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) => Stack(
@@ -100,13 +99,12 @@ class _ActionTileCard extends StatelessWidget {
           child: Text(
             action.date ?? '',
             textAlign: TextAlign.right,
-            style: MarkeyMapTheme.cardListStyle
-                .copyWith(
-                  fontWeight: FontWeight.w600,
-                  fontFeatures: <FontFeature>[
-                    const FontFeature.tabularFigures(),
-                  ],
-                ),
+            style: MarkeyMapTheme.cardListStyle.copyWith(
+              fontWeight: FontWeight.w700,
+              fontFeatures: <FontFeature>[
+                const FontFeature.tabularFigures(),
+              ],
+            ),
           ),
         ),
       );
@@ -119,6 +117,28 @@ class _ActionTileCard extends StatelessWidget {
           child: Text(
             action.description,
             style: MarkeyMapTheme.cardListStyle,
+          ),
+        ),
+      );
+
+  Widget get _endorsedPart => Expanded(
+        flex: 5,
+        child: RichText(
+          text: TextSpan(
+            text: 'Local Endorsements: ',
+            style: MarkeyMapTheme.cardListStyle.copyWith(
+              fontStyle: FontStyle.italic,
+              fontWeight: FontWeight.w700,
+            ),
+            children: <TextSpan>[
+              TextSpan(
+                text: action.description,
+                style: MarkeyMapTheme.cardListStyle.copyWith(
+                  fontStyle: FontStyle.normal,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ],
           ),
         ),
       );
@@ -140,7 +160,13 @@ class _ActionTileCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             _datePart,
-            _descriptionPart,
+            () {
+              if (action.type == ActionType.Endorsement) {
+                return _endorsedPart;
+              } else {
+                return _descriptionPart;
+              }
+            }(),
           ],
         ),
       );
@@ -162,12 +188,16 @@ class _TotalSecured extends StatelessWidget {
   Widget get _text => RichText(
         text: TextSpan(
           text: 'Total Secured: ',
-          style: MarkeyMapTheme.cardListStyle,
+          style: MarkeyMapTheme.cardListStyle.copyWith(
+            fontStyle: FontStyle.italic,
+            fontWeight: FontWeight.w700,
+          ),
           children: <TextSpan>[
             TextSpan(
               text: _formattedMoney,
               style: MarkeyMapTheme.cardListStyle.copyWith(
-                fontWeight: FontWeight.w600,
+                fontStyle: FontStyle.normal,
+                fontWeight: FontWeight.w500,
               ),
             ),
           ],
