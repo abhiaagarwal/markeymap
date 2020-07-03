@@ -29,24 +29,26 @@ class BottomBar extends StatelessWidget implements PreferredSizeWidget {
               text: 'Other Accomplishments',
               color: Theme.of(context).primaryColor,
               onTap: () => showPopup(
-          context,
-          title: 'Other Accomplishments',
-          scaffoldColor: Theme.of(context).primaryColor,
-          body: TownList(
-            county: County.Other,
-            towns: MarkeyMapData.of(context).data[County.Other],
-          ),
-        ),
+                context,
+                title: 'Other Accomplishments',
+                scaffoldColor: Theme.of(context).primaryColor,
+                body: TownList(
+                  county: County.Other,
+                  towns: MarkeyMapData.of(context).data[County.Other],
+                ),
+              ),
             ),
             _BottomButton(
               text: 'Donate',
               color: Theme.of(context).accentColor,
-              onTap: () => url_launcher.launch('https://secure.actblue.com/donate/ejm2020'),
+              onTap: () => url_launcher
+                  .launch('https://secure.actblue.com/donate/markeymap'),
             ),
             _BottomButton(
               text: 'Get involved',
               color: Theme.of(context).accentColor,
-              onTap: () => url_launcher.launch('https://www.edmarkey.com/volunteer/'),
+              onTap: () =>
+                  url_launcher.launch('https://www.edmarkey.com/volunteer/'),
             ),
           ],
         ),

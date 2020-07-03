@@ -10,6 +10,16 @@ import 'package:money2/money2.dart';
 import 'package:markeymap/theme.dart';
 import 'package:markeymap/models/action.dart';
 
+Future<void> _launchUrl(final String url) async {
+  if (url == null) {
+    return;
+  }
+  if (await url_launcher.canLaunch(url)) {
+    await url_launcher.launch(url);
+  }
+  return;
+}
+
 class ActionCard extends StatelessWidget {
   final String name;
   final List<EdAction> actions;
@@ -29,6 +39,56 @@ class ActionCard extends StatelessWidget {
         ),
       );
 
+  Widget get _actionList => Expanded(
+        child: ListView.builder(
+          itemCount: actions.length + 2,
+          itemBuilder: (BuildContext context, int index) {
+            if (index == 1 - 1) {
+              return _ActionHeader(
+                name: name,
+              );
+            }
+            if (index == (actions.length + 2) - 1) {
+              if (totalSecured == null || totalSecured == 0.0) {
+                return null;
+              }
+              return _TotalSecured(totalSecured: totalSecured);
+            }
+            return _ActionTileCard(
+              action: actions[index - 1],
+            );
+          },
+        ),
+      );
+
+  Widget get _donationButton => InkWell(
+        child: Text(
+          'Help Ed continue to fight for $name'.toUpperCase(),
+          style: MarkeyMapTheme.cardListStyle,
+        ),
+        onTap: () async => _launchUrl(_donationLink),
+      );
+
+  String get _donationLink => Uri.https(
+        'secure.actblue.com',
+        '/donate/markeymap',
+        <String, String>{'refcode': name},
+      ).toString();
+
+  String get _volunteerLink {
+    final Uri link = Uri.https(
+      'edmarkey.com',
+      '/volunteer',
+      <String, String>{
+        'pc': '18682',
+        'results': true.toString(),
+        'radius': 25.toString(),
+        'date_start': '',
+      },
+    );
+    return link.toString();
+  }
+
   @override
   Widget build(BuildContext context) => Title(
         title: name,
@@ -38,26 +98,11 @@ class ActionCard extends StatelessWidget {
           padding: const EdgeInsets.symmetric(
             horizontal: 16,
           ).copyWith(bottom: 8),
-          child: SizedBox(
-            child: ListView.builder(
-              itemCount: actions.length + 2,
-              itemBuilder: (BuildContext context, int index) {
-                if (index == 1 - 1) {
-                  return _ActionHeader(
-                    name: name,
-                  );
-                }
-                if (index == (actions.length + 2) - 1) {
-                  if (totalSecured == null || totalSecured == 0.0) {
-                    return null;
-                  }
-                  return _TotalSecured(totalSecured: totalSecured);
-                }
-                return _ActionTileCard(
-                  action: actions[index - 1],
-                );
-              },
-            ),
+          child: Column(
+            children: <Widget>[
+              _actionList,
+              _donationButton,
+            ],
           ),
         ),
       );
@@ -113,7 +158,7 @@ class _ActionTileCard extends StatelessWidget {
         flex: 5,
         child: InkWell(
           mouseCursor: SystemMouseCursors.click,
-          onTap: () async => launchUrl(action.url),
+          onTap: () async => _launchUrl(action.url),
           child: Text(
             action.description,
             style: MarkeyMapTheme.cardListStyle,
@@ -142,16 +187,6 @@ class _ActionTileCard extends StatelessWidget {
           ),
         ),
       );
-
-  Future<void> launchUrl(final String url) async {
-    if (url == null) {
-      return;
-    }
-    if (await url_launcher.canLaunch(url)) {
-      await url_launcher.launch(url);
-    }
-    return;
-  }
 
   @override
   Widget build(BuildContext context) => Padding(
