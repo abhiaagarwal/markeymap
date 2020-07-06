@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 void showPopup(
   BuildContext context, {
   @required Widget body,
-  String title = '',
+  String title,
   Color scaffoldColor,
 }) =>
     Navigator.push(
@@ -12,7 +12,7 @@ void showPopup(
         child: Scaffold(
           backgroundColor: scaffoldColor,
           appBar: AppBar(
-            title: Text(title),
+            title: Text(title ?? ''),
             leading: Builder(
               builder: (BuildContext context) => IconButton(
                 icon: const Icon(Icons.arrow_back),

@@ -31,7 +31,6 @@ class TownList extends StatelessWidget {
             ),
             onTap: () => showPopup(
               context,
-              title: '',
               scaffoldColor: Theme.of(context).primaryColor,
               body: ActionCard(
                 name: towns[index].name,
