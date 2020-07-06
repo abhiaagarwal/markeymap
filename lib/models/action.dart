@@ -25,5 +25,5 @@ class EdAction {
   final double funding;
   final String url;
 
-  EdAction({this.date, @required this.type, @required this.description, this.funding, this.url});
+  const EdAction({this.date, @required this.type, @required this.description, this.funding, this.url});
 }

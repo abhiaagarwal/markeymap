@@ -83,7 +83,7 @@ class MarkeyMapBuilder extends StatelessWidget {
                 description: row[3], // must be non-null
                 funding: row[4].isNotEmpty ? double.tryParse(row[4]) : null,
                 url: row[5].isNotEmpty ? row[5] : null,
-              )
+              ),
             ],
           );
           if (!townZipcodes.containsKey(townName)) {
