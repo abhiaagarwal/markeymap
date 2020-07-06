@@ -57,13 +57,28 @@ class MarkeyMapBuilder extends StatelessWidget {
     for (final County county in countiesList.keys) {
       final LinkedHashMap<String, List<EdAction>> towns =
           LinkedHashMap<String, List<EdAction>>();
+
       final Map<String, int> townZipcodes = <String, int>{};
+      final List<EdAction> countyActions = <EdAction>[];
+
       for (final List<String> row in await spreadsheet
           .worksheetByTitle(county.name.toUpperCase())
           .values
           .allRows(fromRow: 2, length: 7)) {
         try {
           final String townName = row[0];
+          if (townName.isEmpty) {
+            countyActions.add(
+              EdAction(
+                date: row[1].isNotEmpty ? row[1] : null,
+                type: row[2].action, // this HAS to be non-null
+                description: row[3], // must be non-null
+                funding: row[4].isNotEmpty ? double.tryParse(row[4]) : null,
+                url: row[5].isNotEmpty ? row[5] : null,
+              ),
+            );
+            continue;
+          }
           towns.update(
             townName,
             (List<EdAction> actions) => actions
@@ -97,7 +112,7 @@ class MarkeyMapBuilder extends StatelessWidget {
         (String name, List<EdAction> actions) => countiesList[county].add(
           Town(
             name: name,
-            actions: actions,
+            actions: actions + countyActions,
             zipcode: townZipcodes[name],
           ),
         ),
