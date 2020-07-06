@@ -45,10 +45,8 @@ class MarkeyMapBuilder extends StatelessWidget {
 
   Future<Map<County, List<Town>>> _data(BuildContext context) async {
     final sheets.GSheets api = sheets.GSheets(
-        await DefaultAssetBundle.of(context)
-            .loadString(credentialsFile));
-    final sheets.Spreadsheet spreadsheet =
-        await api.spreadsheet(sheetId);
+        await DefaultAssetBundle.of(context).loadString(credentialsFile));
+    final sheets.Spreadsheet spreadsheet = await api.spreadsheet(sheetId);
     final Map<County, List<Town>> countiesList =
         // ignore: prefer_for_elements_to_map_fromiterable
         Map<County, List<Town>>.fromIterable(
@@ -59,34 +57,50 @@ class MarkeyMapBuilder extends StatelessWidget {
     for (final County county in countiesList.keys) {
       final LinkedHashMap<String, List<EdAction>> towns =
           LinkedHashMap<String, List<EdAction>>();
+      final Map<String, int> townZipcodes = <String, int>{};
       for (final List<String> row in await spreadsheet
           .worksheetByTitle(county.name.toUpperCase())
           .values
-          .allRows(fromRow: 2, length: 6)) {
+          .allRows(fromRow: 2, length: 7)) {
         try {
-        final int length = row.length;
-        final String townName = row[0];
-        if (!towns.containsKey(townName)) {
-          towns[townName] = <EdAction>[];
-        }
-        towns[townName].add(
-          EdAction(
-            date: row[1].isEmpty ? null : row[1],
-            type: row[2].action,
-            description: row[3],
-            funding: length < 5
-                ? 0.0
-                : (row[4].isEmpty ? 0.0 : double.tryParse(row[4])),
-            url: length < 6 ? '' : row[5],
-          ),
-        );
-        } catch(e) {
-          print(e);
+          final String townName = row[0];
+          towns.update(
+            townName,
+            (List<EdAction> actions) => actions
+              ..add(
+                EdAction(
+                  date: row[1].isNotEmpty ? row[1] : null,
+                  type: row[2].action, // this HAS to be non-null
+                  description: row[3], // must be non-null
+                  funding: row[4].isNotEmpty ? double.tryParse(row[4]) : null,
+                  url: row[5].isNotEmpty ? row[5] : null,
+                ),
+              ),
+            ifAbsent: () => <EdAction>[
+              EdAction(
+                date: row[1].isNotEmpty ? row[1] : null,
+                type: row[2].action, // this HAS to be non-null
+                description: row[3], // must be non-null
+                funding: row[4].isNotEmpty ? double.tryParse(row[4]) : null,
+                url: row[5].isNotEmpty ? row[5] : null,
+              )
+            ],
+          );
+          if (!townZipcodes.containsKey(townName)) {
+            townZipcodes[townName] = int.tryParse(row[6]);
+          }
+        } catch (e) {
+          print('Error while parsing $row, exception $e');
         }
       }
       towns.forEach(
-        (String name, List<EdAction> actions) =>
-            countiesList[county].add(Town(name: name, actions: actions)),
+        (String name, List<EdAction> actions) => countiesList[county].add(
+          Town(
+            name: name,
+            actions: actions,
+            zipcode: townZipcodes[name],
+          ),
+        ),
       );
     }
     return countiesList;
