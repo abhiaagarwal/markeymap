@@ -24,8 +24,13 @@ class ActionCard extends StatelessWidget {
   final String name;
   final List<EdAction> actions;
   final double totalSecured;
+  final int zipcode;
   const ActionCard(
-      {@required this.name, @required this.actions, this.totalSecured, Key key})
+      {@required this.name,
+      @required this.actions,
+      this.totalSecured,
+      this.zipcode,
+      Key key})
       : super(key: key);
 
   BoxDecoration get _gradient => BoxDecoration(
@@ -80,10 +85,9 @@ class ActionCard extends StatelessWidget {
       'edmarkey.com',
       '/volunteer',
       <String, String>{
-        'pc': '18682',
+        'pc': zipcode.toString(),
         'results': true.toString(),
-        'radius': 25.toString(),
-        'date_start': '',
+        'radius': 50.toString(),
       },
     );
     return link.toString();

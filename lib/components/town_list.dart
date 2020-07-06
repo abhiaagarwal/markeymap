@@ -36,6 +36,7 @@ class TownList extends StatelessWidget {
                 name: towns[index].name,
                 actions: towns[index].actions,
                 totalSecured: towns[index].totalSecured,
+                zipcode: towns[index].zipcode,
               ),
             ),
           ),
