@@ -58,7 +58,7 @@ class MarkeyMapBuilder extends StatelessWidget {
       final LinkedHashMap<String, List<EdAction>> towns =
           LinkedHashMap<String, List<EdAction>>();
 
-      final Map<String, int> townZipcodes = <String, int>{};
+      final Map<String, String> townZipcodes = <String, String>{};
       final List<EdAction> countyActions = <EdAction>[];
 
       for (final List<String> row in await spreadsheet
@@ -102,7 +102,7 @@ class MarkeyMapBuilder extends StatelessWidget {
             ],
           );
           if (!townZipcodes.containsKey(townName)) {
-            townZipcodes[townName] = int.tryParse(row[6]);
+            townZipcodes[townName] = row[6];
           }
         } catch (e) {
           print('Error while parsing $row, exception $e');

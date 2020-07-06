@@ -24,7 +24,7 @@ class ActionCard extends StatelessWidget {
   final String name;
   final List<EdAction> actions;
   final double totalSecured;
-  final int zipcode;
+  final String zipcode;
   const ActionCard(
       {@required this.name,
       @required this.actions,
@@ -45,53 +45,29 @@ class ActionCard extends StatelessWidget {
       );
 
   Widget get _actionList => Expanded(
-        child: ListView.builder(
-          itemCount: actions.length + 2,
-          itemBuilder: (BuildContext context, int index) {
-            if (index == 1 - 1) {
-              return _ActionHeader(
-                name: name,
-              );
-            }
-            if (index == (actions.length + 2) - 1) {
-              if (totalSecured == null || totalSecured == 0.0) {
-                return null;
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: ListView.builder(
+            itemCount: actions.length + 2,
+            itemBuilder: (BuildContext context, int index) {
+              if (index == 1 - 1) {
+                return _ActionHeader(
+                  name: name,
+                );
               }
-              return _TotalSecured(totalSecured: totalSecured);
-            }
-            return _ActionTileCard(
-              action: actions[index - 1],
-            );
-          },
+              if (index == (actions.length + 2) - 1) {
+                if (totalSecured == null || totalSecured == 0.0) {
+                  return null;
+                }
+                return _TotalSecured(totalSecured: totalSecured);
+              }
+              return _ActionTileCard(
+                action: actions[index - 1],
+              );
+            },
+          ),
         ),
       );
-
-  Widget get _donationButton => InkWell(
-        child: Text(
-          'Help Ed continue to fight for $name'.toUpperCase(),
-          style: MarkeyMapTheme.cardListStyle,
-        ),
-        onTap: () async => _launchUrl(_donationLink),
-      );
-
-  String get _donationLink => Uri.https(
-        'secure.actblue.com',
-        '/donate/markeymap',
-        <String, String>{'refcode': name},
-      ).toString();
-
-  String get _volunteerLink {
-    final Uri link = Uri.https(
-      'edmarkey.com',
-      '/volunteer',
-      <String, String>{
-        'pc': zipcode.toString(),
-        'results': true.toString(),
-        'radius': 50.toString(),
-      },
-    );
-    return link.toString();
-  }
 
   @override
   Widget build(BuildContext context) => Title(
@@ -99,13 +75,10 @@ class ActionCard extends StatelessWidget {
         color: Theme.of(context).primaryColor,
         child: Container(
           decoration: _gradient,
-          padding: const EdgeInsets.symmetric(
-            horizontal: 16,
-          ).copyWith(bottom: 8),
           child: Column(
             children: <Widget>[
               _actionList,
-              _donationButton,
+              _CallToActionBar(name: name, zipcode: zipcode),
             ],
           ),
         ),
@@ -258,6 +231,103 @@ class _TotalSecured extends StatelessWidget {
               child: _text,
             ),
           ],
+        ),
+      );
+}
+
+class _CallToActionBar extends StatelessWidget {
+  final String name;
+  final String zipcode;
+  const _CallToActionBar({this.name, this.zipcode, Key key}) : super(key: key);
+
+  Widget get _ctaText => Text(
+        'Help Ed continue to fight for $name:'.toUpperCase(),
+        style: MarkeyMapTheme.buttonStyle.copyWith(fontWeight: FontWeight.w700),
+      );
+
+  String get _donateLink => Uri.https(
+        'secure.actblue.com',
+        '/donate/markeymap',
+        <String, String>{
+          'refcode': name,
+          'amount': (int.tryParse(zipcode) / 100).toString(),
+        },
+      ).toString();
+
+  String get _volunteerLink => "${Uri.https(
+        'edmarkey.com',
+        '/volunteer',
+        <String, String>{
+          'pc': zipcode,
+          'results': true.toString(),
+          'radius': 25.toString(),
+          'sort': 2.toString(),
+        },
+      ).toString()}#formatted-events";
+
+  BoxDecoration get _gradient => const BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.centerLeft,
+          end: Alignment.centerRight,
+          colors: <Color>[
+            Color(0xFF005B97),
+            Color(0xFFCCE0F4),
+          ],
+        ),
+      );
+
+  @override
+  Widget build(BuildContext context) => Container(
+        decoration: _gradient,
+        height: 64,
+        width: double.infinity,
+        padding: const EdgeInsets.all(8),
+        child: FittedBox(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.only(right: 4),
+                child: _ctaText,
+              ),
+              _CallToActionButton(
+                text: 'Donate',
+                onTap: () => _launchUrl(_donateLink),
+                color: MarkeyMapTheme.theme.accentColor,
+              ),
+              _CallToActionButton(
+                text: 'Volunteer',
+                onTap: () => _launchUrl(_volunteerLink),
+                color: MarkeyMapTheme.theme.accentColor,
+              ),
+            ],
+          ),
+        ),
+      );
+}
+
+class _CallToActionButton extends StatelessWidget {
+  final String text;
+  final void Function() onTap;
+  final Color color;
+  const _CallToActionButton(
+      {@required this.text, @required this.onTap, this.color, Key key})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) => Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 4),
+        child: FlatButton(
+          color: color,
+          child: Container(
+            padding: const EdgeInsets.all(4),
+            child: Text(
+              text.toUpperCase(),
+              style: MarkeyMapTheme.buttonStyle,
+            ),
+          ),
+          onPressed: onTap,
+          shape: const RoundedRectangleBorder(borderRadius: BorderRadius.zero),
         ),
       );
 }
