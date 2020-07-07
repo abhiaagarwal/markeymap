@@ -21,6 +21,12 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
       ..play();
   }
 
+  @override
+  void dispose() {
+    super.dispose();
+    _controller.dispose();
+  }
+
   BoxDecoration get _decoration => const BoxDecoration(
         image: DecorationImage(
           image: AssetImage('assets/texture.png'),
@@ -32,7 +38,9 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   Widget build(BuildContext context) => Container(
         decoration: _decoration,
         child: Center(
-          child: VideoPlayer(_controller),
+          child: FittedBox(
+            child: VideoPlayer(_controller),
+          ),
         ),
       );
 }
