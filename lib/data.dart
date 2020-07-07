@@ -47,13 +47,9 @@ class MarkeyMapBuilder extends StatelessWidget {
     final sheets.GSheets api = sheets.GSheets(
         await DefaultAssetBundle.of(context).loadString(credentialsFile));
     final sheets.Spreadsheet spreadsheet = await api.spreadsheet(sheetId);
-    final Map<County, List<Town>> countiesList =
-        // ignore: prefer_for_elements_to_map_fromiterable
-        Map<County, List<Town>>.fromIterable(
-      County.values,
-      key: (dynamic county) => county as County,
-      value: (dynamic county) => <Town>[],
-    );
+    final Map<County, List<Town>> countiesList = <County, List<Town>>{
+      for (County county in County.values) county: <Town>[]
+    };
     for (final County county in countiesList.keys) {
       final LinkedHashMap<String, List<EdAction>> towns =
           LinkedHashMap<String, List<EdAction>>();
@@ -68,38 +64,13 @@ class MarkeyMapBuilder extends StatelessWidget {
         try {
           final String townName = row[0];
           if (townName.isEmpty) {
-            countyActions.add(
-              EdAction(
-                date: row[1].isNotEmpty ? row[1] : null,
-                type: row[2].action, // this HAS to be non-null
-                description: row[3], // must be non-null
-                funding: row[4].isNotEmpty ? double.tryParse(row[4]) : null,
-                url: row[5].isNotEmpty ? row[5] : null,
-              ),
-            );
+            countyActions.add(EdAction.fromRow(row));
             continue;
           }
           towns.update(
             townName,
-            (List<EdAction> actions) => actions
-              ..add(
-                EdAction(
-                  date: row[1].isNotEmpty ? row[1] : null,
-                  type: row[2].action, // this HAS to be non-null
-                  description: row[3], // must be non-null
-                  funding: row[4].isNotEmpty ? double.tryParse(row[4]) : null,
-                  url: row[5].isNotEmpty ? row[5] : null,
-                ),
-              ),
-            ifAbsent: () => <EdAction>[
-              EdAction(
-                date: row[1].isNotEmpty ? row[1] : null,
-                type: row[2].action, // this HAS to be non-null
-                description: row[3], // must be non-null
-                funding: row[4].isNotEmpty ? double.tryParse(row[4]) : null,
-                url: row[5].isNotEmpty ? row[5] : null,
-              ),
-            ],
+            (List<EdAction> actions) => actions..add(EdAction.fromRow(row)),
+            ifAbsent: () => <EdAction>[EdAction.fromRow(row)],
           );
           if (!townZipcodes.containsKey(townName)) {
             townZipcodes[townName] = row[6];
