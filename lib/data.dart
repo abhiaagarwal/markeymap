@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:gsheets/gsheets.dart' as sheets;
 
 import 'package:markeymap/components/loading.dart';
-
 import 'package:markeymap/models/action.dart';
 import 'package:markeymap/models/county.dart';
 import 'package:markeymap/models/town.dart';
