@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 
 import 'package:gsheets/gsheets.dart' as sheets;
 
+import 'package:markeymap/components/loading.dart';
+
 import 'package:markeymap/models/action.dart';
 import 'package:markeymap/models/county.dart';
 import 'package:markeymap/models/town.dart';
@@ -48,7 +50,7 @@ class MarkeyMapBuilder extends StatelessWidget {
         await DefaultAssetBundle.of(context).loadString(credentialsFile));
     final sheets.Spreadsheet spreadsheet = await api.spreadsheet(sheetId);
     final Map<County, List<Town>> countiesList = <County, List<Town>>{
-      for (County county in County.values) county: <Town>[]
+      for (final County county in County.values) county: <Town>[]
     };
     for (final County county in countiesList.keys) {
       final LinkedHashMap<String, List<EdAction>> towns =
@@ -111,7 +113,7 @@ class MarkeyMapBuilder extends StatelessWidget {
               }
               break;
             default:
-              return const Center(child: CircularProgressIndicator());
+              return const Loading();
           }
         },
       );
