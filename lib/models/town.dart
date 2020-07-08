@@ -6,7 +6,10 @@ class Town {
   final String name;
   final List<EdAction> actions;
   final String zipcode;
-  const Town({@required this.name, @required this.actions, this.zipcode});
+  const Town({@required this.name, @required this.actions, this.zipcode})
+      : assert(name != null),
+        assert(actions != null);
 
-  double get totalSecured => actions.fold<double>(0, (double p, EdAction c) => p ?? 0 + c.funding ?? 0);
+  double get totalSecured => actions.fold<double>(
+      0, (double p, EdAction c) => p ?? 0 + c.funding ?? 0);
 }

@@ -33,7 +33,8 @@ class EdAction {
     @required this.description,
     this.funding,
     this.url,
-  });
+  })  : assert(type != null),
+        assert(description != null);
 
   EdAction.fromRow(List<String> row)
       : date = row[1].isNotEmpty ? row[1] : null,
