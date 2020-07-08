@@ -100,21 +100,30 @@ class MarkeyMapBuilder extends StatelessWidget {
         builder: (
           BuildContext context,
           AsyncSnapshot<Map<County, List<Town>>> snapshot,
-        ) {
-          switch (snapshot.connectionState) {
-            case ConnectionState.done:
-              if (snapshot.data != null) {
-                return MarkeyMapData(
-                  data: snapshot.data,
-                  child: child,
+        ) =>
+            AnimatedSwitcher(
+          duration: const Duration(milliseconds: 300),
+          child: () {
+            switch (snapshot.connectionState) {
+              case ConnectionState.done:
+                if (snapshot.data != null) {
+                  return MarkeyMapData(
+                    key: const ValueKey<int>(2),
+                    data: snapshot.data,
+                    child: child,
+                  );
+                } else {
+                  return Container(
+                    key: const ValueKey<int>(3),
+                  );
+                }
+                break;
+              default:
+                return const Loading(
+                  key: ValueKey<int>(1),
                 );
-              } else {
-                return Container();
-              }
-              break;
-            default:
-              return const Loading();
-          }
-        },
+            }
+          }(),
+        ),
       );
 }

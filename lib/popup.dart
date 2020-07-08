@@ -50,12 +50,14 @@ class PopupLayout extends ModalRoute<void> {
   bool get opaque => false;
 
   @override
-  bool get barrierDismissible => false;
+  bool get barrierDismissible => true;
 
   @override
   Color get barrierColor => backgroundColor ?? Colors.black.withOpacity(0.5);
+
   @override
   String get barrierLabel => null;
+
   @override
   bool get maintainState => false;
 
@@ -65,15 +67,7 @@ class PopupLayout extends ModalRoute<void> {
     Animation<double> animation,
     Animation<double> secondaryAnimation,
   ) =>
-      Material(
-        type: MaterialType.transparency,
-        child: SafeArea(
-          bottom: true,
-          child: _buildOverlayContent(context),
-        ),
-      );
-
-  Widget _buildOverlayContent(BuildContext context) => Container(
+      Container(
         margin: EdgeInsets.only(
           bottom: bottom,
           left: left,
@@ -92,9 +86,6 @@ class PopupLayout extends ModalRoute<void> {
   ) =>
       FadeTransition(
         opacity: animation,
-        child: ScaleTransition(
-          scale: animation,
-          child: child,
-        ),
+        child: child,
       );
 }

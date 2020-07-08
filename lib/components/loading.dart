@@ -41,15 +41,19 @@ class _LoadingState extends State<Loading> {
 
   @override
   Widget build(BuildContext context) => Material(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const CircularProgressIndicator(),
-            Text(
-              'Did you know: ${Loading.funFacts[_index]}',
-              style: MarkeyMapTheme.searchBarStyle.copyWith(color: Colors.black),
-            ),
-          ],
-        ),
-      );
+    child: Container(
+      width: double.infinity,
+      child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              const CircularProgressIndicator(),
+              Text(
+                'Did you know: ${Loading.funFacts[_index]}',
+                style:
+                    MarkeyMapTheme.searchBarStyle.copyWith(color: Colors.black),
+              ),
+            ],
+          ),
+    ),
+  );
 }

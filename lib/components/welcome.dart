@@ -17,8 +17,11 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
     super.initState();
     _controller = VideoPlayerController.asset('assets/intro_video.mp4')
       ..initialize()
-      ..setLooping(true)
-      ..play();
+      ..setLooping(true);
+    Future<void>.delayed(
+      const Duration(milliseconds: 300),
+      () => _controller.play(),
+    );
   }
 
   @override
@@ -38,9 +41,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   Widget build(BuildContext context) => Container(
         decoration: _decoration,
         child: Center(
-          child: FittedBox(
-            child: VideoPlayer(_controller),
-          ),
+          child: VideoPlayer(_controller),
         ),
       );
 }
