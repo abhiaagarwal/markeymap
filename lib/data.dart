@@ -45,10 +45,8 @@ class MarkeyMapBuilder extends StatelessWidget {
 
   Future<Map<County, List<Town>>> _data(BuildContext context) async {
     final sheets.GSheets api = sheets.GSheets(
-        await DefaultAssetBundle.of(context)
-            .loadString(credentialsFile));
-    final sheets.Spreadsheet spreadsheet =
-        await api.spreadsheet(sheetId);
+        await DefaultAssetBundle.of(context).loadString(credentialsFile));
+    final sheets.Spreadsheet spreadsheet = await api.spreadsheet(sheetId);
     final Map<County, List<Town>> countiesList =
         // ignore: prefer_for_elements_to_map_fromiterable
         Map<County, List<Town>>.fromIterable(
@@ -64,23 +62,23 @@ class MarkeyMapBuilder extends StatelessWidget {
           .values
           .allRows(fromRow: 2, length: 6)) {
         try {
-        final int length = row.length;
-        final String townName = row[0];
-        if (!towns.containsKey(townName)) {
-          towns[townName] = <EdAction>[];
-        }
-        towns[townName].add(
-          EdAction(
-            date: row[1].isEmpty ? null : row[1],
-            type: row[2].action,
-            description: row[3],
-            funding: length < 5
-                ? 0.0
-                : (row[4].isEmpty ? 0.0 : double.tryParse(row[4])),
-            url: length < 6 ? '' : row[5],
-          ),
-        );
-        } catch(e) {
+          final int length = row.length;
+          final String townName = row[0];
+          if (!towns.containsKey(townName)) {
+            towns[townName] = <EdAction>[];
+          }
+          towns[townName].add(
+            EdAction(
+              date: row[1].isEmpty ? null : row[1],
+              type: row[2].action,
+              description: row[3],
+              funding: length < 5
+                  ? 0.0
+                  : (row[4].isEmpty ? 0.0 : double.tryParse(row[4])),
+              url: length < 6 ? '' : row[5],
+            ),
+          );
+        } catch (e) {
           print(e);
         }
       }
@@ -89,30 +87,30 @@ class MarkeyMapBuilder extends StatelessWidget {
             countiesList[county].add(Town(name: name, actions: actions)),
       );
     }
+
     return countiesList;
   }
 
   @override
   Widget build(BuildContext context) => FutureBuilder<Map<County, List<Town>>>(
-        future: _data(context),
-        builder: (
-          BuildContext context,
-          AsyncSnapshot<Map<County, List<Town>>> snapshot,
-        ) {
-          switch (snapshot.connectionState) {
-            case ConnectionState.done:
-              if (snapshot.data != null) {
-                return MarkeyMapData(
-                  data: snapshot.data,
-                  child: child,
-                );
-              } else {
-                return Container();
-              }
-              break;
-            default:
-              return const Center(child: CircularProgressIndicator());
-          }
-        },
-      );
+      future: _data(context),
+      builder: (
+        BuildContext context,
+        AsyncSnapshot<Map<County, List<Town>>> snapshot,
+      ) {
+        switch (snapshot.connectionState) {
+          case ConnectionState.done:
+            if (snapshot.data != null) {
+              return MarkeyMapData(
+                data: snapshot.data,
+                child: child,
+              );
+            } else {
+              return Container();
+            }
+            break;
+          default:
+            return const Center(child: CircularProgressIndicator());
+        }
+      });
 }
