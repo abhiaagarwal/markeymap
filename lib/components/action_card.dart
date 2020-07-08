@@ -44,31 +44,6 @@ class ActionCard extends StatelessWidget {
         ),
       );
 
-  Widget get _actionList => Expanded(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: ListView.builder(
-            itemCount: actions.length + 2,
-            itemBuilder: (BuildContext context, int index) {
-              if (index == 1 - 1) {
-                return _ActionHeader(
-                  name: name,
-                );
-              }
-              if (index == (actions.length + 2) - 1) {
-                if (totalSecured == null || totalSecured == 0.0) {
-                  return null;
-                }
-                return _TotalSecured(totalSecured: totalSecured);
-              }
-              return _ActionTileCard(
-                action: actions[index - 1],
-              );
-            },
-          ),
-        ),
-      );
-
   @override
   Widget build(BuildContext context) => Title(
         title: name,
@@ -77,9 +52,51 @@ class ActionCard extends StatelessWidget {
           decoration: _gradient,
           child: Column(
             children: <Widget>[
-              _actionList,
+              _ActionList(name: name, actions: actions, totalSecured: totalSecured),
               _CallToActionBar(name: name, zipcode: zipcode),
             ],
+          ),
+        ),
+      );
+}
+
+class _ActionList extends StatelessWidget {
+  final String name;
+  final List<EdAction> actions;
+  final double totalSecured;
+  _ActionList({this.name, this.actions, this.totalSecured, Key key}) : super(key: key);
+
+  final ScrollController _scrollController = ScrollController();
+
+  @override
+  Widget build(BuildContext context) => Expanded(
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          constraints: const BoxConstraints(maxWidth: 800),
+          alignment: Alignment.center,
+          child: Scrollbar(
+            controller: _scrollController,
+            isAlwaysShown: true,
+            child: ListView.builder(
+              controller: _scrollController,
+              itemCount: actions.length + 2,
+              itemBuilder: (BuildContext context, int index) {
+                if (index == 1 - 1) {
+                  return _ActionHeader(
+                    name: name,
+                  );
+                }
+                if (index == (actions.length + 2) - 1) {
+                  if (totalSecured == null || totalSecured == 0.0) {
+                    return null;
+                  }
+                  return _TotalSecured(totalSecured: totalSecured);
+                }
+                return _ActionTileCard(
+                  action: actions[index - 1],
+                );
+              },
+            ),
           ),
         ),
       );
