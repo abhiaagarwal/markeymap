@@ -1,7 +1,9 @@
 name: markeymap
-description: Interactive crossplatform app to show how Ed Markey has represented and fought for Massachusetts
+description:
+  Interactive crossplatform app to show how Ed Markey has represented and fought
+  for Massachusetts
 
-publish_to: 'none'
+publish_to: "none"
 
 # The following defines the version and build number for your application.
 # A version number is three numbers separated by dots, like 1.2.43
@@ -53,7 +55,7 @@ dependency_overrides:
 flutter:
   uses-material-design: true
 
-  assets: 
+  assets:
     - assets/header.png
     - assets/compass.svg
     - assets/intro_video.mp4
@@ -64,43 +66,43 @@ flutter:
   fonts:
     - family: Gotham Narrow
       fonts:
-      - asset: assets/fonts/GothamNarrow-Black.otf
-        weight: 800
-      - asset: assets/fonts/GothamNarrow-BlackItalic.otf
-        weight: 800
-        style: italic
-      - asset: assets/fonts/GothamNarrow-Bold.otf
-        weight: 700
-      - asset: assets/fonts/GothamNarrow-BoldItalic.otf
-        weight: 700
-        style: italic
-      - asset: assets/fonts/GothamNarrow-Book.otf
-        weight: 400
-      - asset: assets/fonts/GothamNarrow-BookItalic.otf
-        weight: 400
-        style: italic
-      - asset: assets/fonts/GothamNarrow-Light.otf
-        weight: 300
-      - asset: assets/fonts/GothamNarrow-LightItalic.otf
-        weight: 300
-        style: italic
-      - asset: assets/fonts/GothamNarrow-Medium.otf
-        weight: 500
-      - asset: assets/fonts/GothamNarrow-MediumItalic.otf
-        weight: 500
-        style: italic
-      - asset: assets/fonts/GothamNarrow-Thin.otf
-        weight: 100
-      - asset: assets/fonts/GothamNarrow-ThinItalic.otf
-        weight: 100
-        style: italic
-      - asset: assets/fonts/GothamNarrow-Ultra.otf
-        weight: 900
-      - asset: assets/fonts/GothamNarrow-UltraItalic.otf
-        weight: 900
-        style: italic
-      - asset: assets/fonts/GothamNarrow-XLight.otf
-        weight: 200
-      - asset: assets/fonts/GothamNarrow-XLightItalic.otf
-        weight: 200
-        style: italic
+        - asset: assets/fonts/GothamNarrow-Black.otf
+          weight: 800
+        - asset: assets/fonts/GothamNarrow-BlackItalic.otf
+          weight: 800
+          style: italic
+        - asset: assets/fonts/GothamNarrow-Bold.otf
+          weight: 700
+        - asset: assets/fonts/GothamNarrow-BoldItalic.otf
+          weight: 700
+          style: italic
+        - asset: assets/fonts/GothamNarrow-Book.otf
+          weight: 400
+        - asset: assets/fonts/GothamNarrow-BookItalic.otf
+          weight: 400
+          style: italic
+        - asset: assets/fonts/GothamNarrow-Light.otf
+          weight: 300
+        - asset: assets/fonts/GothamNarrow-LightItalic.otf
+          weight: 300
+          style: italic
+        - asset: assets/fonts/GothamNarrow-Medium.otf
+          weight: 500
+        - asset: assets/fonts/GothamNarrow-MediumItalic.otf
+          weight: 500
+          style: italic
+        - asset: assets/fonts/GothamNarrow-Thin.otf
+          weight: 100
+        - asset: assets/fonts/GothamNarrow-ThinItalic.otf
+          weight: 100
+          style: italic
+        - asset: assets/fonts/GothamNarrow-Ultra.otf
+          weight: 900
+        - asset: assets/fonts/GothamNarrow-UltraItalic.otf
+          weight: 900
+          style: italic
+        - asset: assets/fonts/GothamNarrow-XLight.otf
+          weight: 200
+        - asset: assets/fonts/GothamNarrow-XLightItalic.otf
+          weight: 200
+          style: italic

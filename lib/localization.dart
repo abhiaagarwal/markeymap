@@ -5,10 +5,9 @@ import 'package:intl/date_symbol_data_local.dart';
 
 class MarkeyMapLocalizations {
   static Future<MarkeyMapLocalizations> load(Locale locale) async {
-    final String localeName =
-        locale.countryCode == null || locale.countryCode.isEmpty
-            ? locale.languageCode
-            : locale.toString();
+    final String localeName = (locale.countryCode?.isEmpty ?? false)
+        ? locale.languageCode
+        : locale.toString();
     final String canonicalLocaleName = Intl.canonicalizedLocale(localeName);
     //await initializeMessages(canonicalLocaleName);
     await initializeDateFormatting(canonicalLocaleName);
@@ -41,11 +40,13 @@ class MarkeyMapLocalizations {
         },
       );
 
-  String get totalSecured => Intl.message(
-        'Total Secured:',
-        name: 'totalSecured',
-        desc: 'Amount of money secured for a community',
-      );
+  String totalSecured(double amount) => Intl.message('Total Secured: $amount',
+      name: 'totalSecured',
+      args: <Object>[amount],
+      desc: 'Amount of money secured for a community',
+      examples: const <String, double>{
+        'amount': 120000.00,
+      });
 
   String get info => Intl.message(
         'Info',
@@ -65,15 +66,21 @@ class MarkeyMapLocalizations {
         desc: 'Donate button',
       );
 
+  String get volunteer => Intl.message(
+        'Volunteer',
+        name: 'volunteer',
+        desc: 'Volunteer button',
+      );
+
   String get getInvolved => Intl.message(
         'Get Involved',
         name: 'getInvolved',
         desc: 'Get involved button',
       );
 
-  String townDonate(String town) => Intl.message(
+  String townCTA(String town) => Intl.message(
         'Help Ed fight for $town',
-        name: 'townDonate',
+        name: 'townCTA',
         args: <Object>[town],
         desc: 'Call-to-Action to Donate',
         examples: const <String, String>{
@@ -87,7 +94,7 @@ class MarkeyMapLocalizationsDelegate
   const MarkeyMapLocalizationsDelegate();
 
   static const List<Locale> supportedLocales = <Locale>[
-    Locale('en'),
+    Locale('en', 'US'),
     Locale('es'),
   ];
 
