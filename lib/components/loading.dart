@@ -28,7 +28,7 @@ class _LoadingState extends State<Loading> {
     _timer = Timer.periodic(
       const Duration(seconds: 1),
       (Timer timer) => setState(
-        () => _index = Random(timer.tick).nextInt(Loading.funFacts.length - 1),
+        () => _index = Random(timer.tick).nextInt(Loading.funFacts.length),
       ),
     );
   }
