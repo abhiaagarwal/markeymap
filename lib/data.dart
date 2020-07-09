@@ -1,6 +1,8 @@
 import 'dart:collection';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:gsheets/gsheets.dart' as sheets;
 
@@ -44,6 +46,18 @@ class MarkeyMapBuilder extends StatelessWidget {
       Key key})
       : super(key: key);
 
+  Future<void> _preloadSVGs(BuildContext context, List<String> towns) async {
+    for (final String town in towns) {
+      precachePicture(
+        SvgPicture.asset(
+          'assets/town_svgs/${town.trim().replaceAll(' ', '-')}.svg',
+          bundle: DefaultAssetBundle.of(context),
+        ).pictureProvider,
+        context,
+      );
+    }
+  }
+
   Future<Map<County, List<Town>>> _data(BuildContext context) async {
     final sheets.GSheets api = sheets.GSheets(
         await DefaultAssetBundle.of(context).loadString(credentialsFile));
@@ -80,6 +94,10 @@ class MarkeyMapBuilder extends StatelessWidget {
           print('Error while parsing $row, exception $e');
         }
       }
+      compute<void, void>(
+        (dynamic _) => _preloadSVGs(context, towns.keys.toList()),
+        null,
+      );
       towns.forEach(
         (String name, List<EdAction> actions) => countiesList[county].add(
           Town(
@@ -103,6 +121,13 @@ class MarkeyMapBuilder extends StatelessWidget {
             AnimatedSwitcher(
           duration: const Duration(milliseconds: 300),
           child: () {
+            precacheImage(
+              AssetImage(
+                'assets/header.png',
+                bundle: DefaultAssetBundle.of(context),
+              ),
+              context,
+            );
             switch (snapshot.connectionState) {
               case ConnectionState.done:
                 if (snapshot.data != null) {

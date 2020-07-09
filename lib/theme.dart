@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class MarkeyMapTheme {
   static ThemeData theme = ThemeData(
     fontFamily: 'Gotham Narrow',
-    accentColor: const Color(0xFFFF3333),
+    accentColor: const Color(0xFFEF3E42),
     appBarTheme: const AppBarTheme(
       elevation: 0,
     ),
