@@ -4,11 +4,12 @@ class MarkeyMapTheme {
   static ThemeData theme = ThemeData(
     fontFamily: 'Gotham Narrow',
     accentColor: const Color(0xFFEF3E42),
+    primaryColor: const Color(0xFF005196),
     appBarTheme: const AppBarTheme(
       elevation: 0,
     ),
-    primaryColor: const Color(0xFF005196),
     scaffoldBackgroundColor: Colors.white,
+    highlightColor: Colors.white,
     visualDensity: VisualDensity.adaptivePlatformDensity,
   );
 

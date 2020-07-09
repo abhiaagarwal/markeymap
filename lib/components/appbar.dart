@@ -9,16 +9,19 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
   const MainAppBar({Key key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) => Column(
-        children: <Widget>[
-          Container(
-            height: 24,
-            width: double.infinity,
-            color: MarkeyMapTheme.theme.accentColor,
-          ),
-          const _Header(),
-          const _SearchBar(),
-        ],
+  Widget build(BuildContext context) => Material(
+        elevation: 2.0,
+        child: Column(
+          children: <Widget>[
+            Container(
+              height: 24,
+              width: double.infinity,
+              color: MarkeyMapTheme.theme.accentColor,
+            ),
+            const _Header(),
+            const _SearchBar(),
+          ],
+        ),
       );
 
   @override

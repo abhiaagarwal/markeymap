@@ -70,13 +70,13 @@ class _ActionList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Expanded(
-        child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          constraints: const BoxConstraints(maxWidth: 800),
-          alignment: Alignment.center,
-          child: Scrollbar(
-            controller: _scrollController,
-            isAlwaysShown: true,
+        child: Scrollbar(
+          controller: _scrollController,
+          isAlwaysShown: true,
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            constraints: const BoxConstraints(maxWidth: 800),
+            alignment: Alignment.center,
             child: ListView.builder(
               controller: _scrollController,
               itemCount: actions.length + 2,
