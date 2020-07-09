@@ -29,6 +29,7 @@ dependencies:
   built_path_annotations: ^0.1.0
   auto_route: ^0.6.1
   cupertino_icons: ^0.1.3
+  video_player: ^0.10.5
   url_launcher: ^5.4.11
   url_launcher_web: ^0.1.0
 
@@ -53,6 +54,8 @@ flutter:
   assets: 
     - assets/header.png
     - assets/compass.svg
+    - assets/intro_video.mp4
+    - assets/texture.png
     - assets/credentials.json
     - assets/town_svgs/
 

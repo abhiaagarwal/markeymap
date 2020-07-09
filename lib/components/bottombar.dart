@@ -10,15 +10,17 @@ import 'package:markeymap/data.dart';
 import 'package:markeymap/models/county.dart';
 import 'package:markeymap/components/welcome.dart';
 
-class BottomBar extends StatelessWidget implements PreferredSizeWidget {
+class BottomBar extends StatelessWidget {
   const BottomBar({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) => Container(
-        height: 48,
+        width: double.infinity,
         color: Colors.transparent,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+        child: Wrap(
+          runAlignment: WrapAlignment.center,
+          alignment: WrapAlignment.center,
+          spacing: 16,
           children: <Widget>[
             _BottomButton(
               text: 'Info',
@@ -53,9 +55,6 @@ class BottomBar extends StatelessWidget implements PreferredSizeWidget {
           ],
         ),
       );
-
-  @override
-  Size get preferredSize => const Size.fromHeight(48);
 }
 
 class _BottomButton extends StatelessWidget {
@@ -67,21 +66,18 @@ class _BottomButton extends StatelessWidget {
       : super(key: key);
 
   @override
-  Widget build(BuildContext context) => Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8),
-        child: RaisedButton(
-          color: color,
-          child: Container(
-            padding: const EdgeInsets.all(4),
-            child: Text(
-              text.toUpperCase(),
-              style: MarkeyMapTheme.buttonStyle,
-            ),
-          ),
-          onPressed: onTap,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8),
-          ),
-        ),
-      );
+  Widget build(BuildContext context) => RaisedButton(
+    color: color,
+    child: Container(
+      padding: const EdgeInsets.all(4),
+      child: Text(
+        text.toUpperCase(),
+        style: MarkeyMapTheme.buttonStyle,
+      ),
+    ),
+    onPressed: onTap,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(8),
+    ),
+  );
 }

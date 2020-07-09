@@ -1,9 +1,10 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
 import 'package:auto_route/auto_route.dart';
 
-//import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:markeymap/components/action_card.dart';
 import 'package:markeymap/data.dart';
@@ -34,33 +35,48 @@ class TownList extends StatelessWidget {
   const TownList({@required this.county, @required this.towns, Key key})
       : super(key: key);
 
+  Future<void> _preloadSVGs(BuildContext context) async {
+    for (final Town town in towns) {
+      precachePicture(
+        SvgPicture.asset(
+          'assets/town_svgs/${town.name.trim().replaceAll(' ', '-')}.svg',
+          bundle: DefaultAssetBundle.of(context),
+        ).pictureProvider,
+        context,
+      );
+    }
+  }
+
   @override
-  Widget build(BuildContext context) => Title(
-        title: '${county.name} County',
-        color: Theme.of(context).primaryColor,
-        child: ListView.builder(
-          itemExtent: 50.0,
-          itemCount: towns.length,
-          itemBuilder: (BuildContext context, final int index) => ListTile(
-            title: Text(
-              towns[index].name,
-              style: const TextStyle(
-                color: Colors.white,
-              ),
+  Widget build(BuildContext context) {
+    compute(_preloadSVGs, context);
+    return Title(
+      title: '${county.name} County',
+      color: Theme.of(context).primaryColor,
+      child: ListView.builder(
+        itemExtent: 50.0,
+        itemCount: towns.length,
+        itemBuilder: (BuildContext context, final int index) => ListTile(
+          title: Text(
+            towns[index].name,
+            style: const TextStyle(
+              color: Colors.white,
             ),
-            onTap: () => showPopup(
-              context,
-              title: '',
-              scaffoldColor: Theme.of(context).primaryColor,
-              body: ActionCard(
-                name: towns[index].name,
-                actions: towns[index].actions,
-                totalSecured: towns[index].totalSecured,
-              ),
+          ),
+          onTap: () => showPopup(
+            context,
+            scaffoldColor: Theme.of(context).primaryColor,
+            body: ActionCard(
+              name: towns[index].name,
+              actions: towns[index].actions,
+              totalSecured: towns[index].totalSecured,
+              zipcode: towns[index].zipcode,
             ),
           ),
         ),
-      );
+      ),
+    );
+  }
 
   /*
   @override

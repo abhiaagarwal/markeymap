@@ -1,42 +1,47 @@
 import 'package:flutter/material.dart';
 
-import 'package:markeymap/theme.dart';
-import 'package:markeymap/popup.dart';
+import 'package:video_player/video_player.dart';
 
-class WelcomeButton extends StatelessWidget {
-  const WelcomeButton({Key key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) => IconButton(
-        icon: const Icon(Icons.info),
-        onPressed: () => showPopup(
-          context,
-          body: const WelcomeScreen(),
-          scaffoldColor: Theme.of(context).accentColor,
-        ),
-      );
-}
-
-class WelcomeScreen extends StatelessWidget {
+class WelcomeScreen extends StatefulWidget {
   const WelcomeScreen({Key key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) => Container(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 32),
-          child: Column(
-            children: <Widget>[
-              _WelcomeHeader(),
-            ],
-          ),
-        ),
-      );
+  _WelcomeScreenState createState() => _WelcomeScreenState();
 }
 
-class _WelcomeHeader extends StatelessWidget {
+class _WelcomeScreenState extends State<WelcomeScreen> {
+  VideoPlayerController _controller;
+
   @override
-  Widget build(BuildContext context) => Text(
-        'Welcome to the Markey Map!'.toUpperCase(),
-        style: MarkeyMapTheme.welcomeHeaderStyle,
+  void initState() {
+    super.initState();
+    _controller = VideoPlayerController.asset('assets/intro_video.mp4')
+      ..initialize()
+      ..setLooping(true);
+    Future<void>.delayed(
+      const Duration(milliseconds: 300),
+      () => _controller.play(),
+    );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _controller.dispose();
+  }
+
+  BoxDecoration get _decoration => const BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage('assets/texture.png'),
+          repeat: ImageRepeat.repeat,
+        ),
+      );
+
+  @override
+  Widget build(BuildContext context) => Container(
+        decoration: _decoration,
+        child: Center(
+          child: VideoPlayer(_controller),
+        ),
       );
 }

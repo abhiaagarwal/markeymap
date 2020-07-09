@@ -22,6 +22,8 @@ Future<void> handleSearch(BuildContext context) async {
     body: ActionCard(
       name: town.name,
       actions: town.actions,
+      totalSecured: town.totalSecured,
+      zipcode: town.zipcode,
     ),
   );
 }
