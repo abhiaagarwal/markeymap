@@ -128,6 +128,13 @@ class MarkeyMapBuilder extends StatelessWidget {
               ),
               context,
             );
+            precachePicture(
+              SvgPicture.asset(
+                'assets/compass.svg',
+                bundle: DefaultAssetBundle.of(context),
+              ).pictureProvider,
+              context,
+            );
             switch (snapshot.connectionState) {
               case ConnectionState.done:
                 if (snapshot.data != null) {

@@ -62,11 +62,13 @@ class _HeaderText extends StatelessWidget {
         style: MarkeyMapTheme.appBarStyle,
       );
 
-  Widget _compass(BuildContext context) => SvgPicture.asset(
-        'assets/compass.svg',
-        bundle: DefaultAssetBundle.of(context),
-        height: 42,
-        width: 42,
+  Widget _compass(BuildContext context) => Container(
+        child: SvgPicture.asset(
+          'assets/compass.svg',
+          bundle: DefaultAssetBundle.of(context),
+          height: 42,
+          width: 42,
+        ),
       );
 
   Widget get _map => Text(
