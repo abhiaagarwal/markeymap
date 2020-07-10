@@ -52,7 +52,8 @@ class ActionCard extends StatelessWidget {
           decoration: _gradient,
           child: Column(
             children: <Widget>[
-              _ActionList(name: name, actions: actions, totalSecured: totalSecured),
+              _ActionList(
+                  name: name, actions: actions, totalSecured: totalSecured),
               _CallToActionBar(name: name, zipcode: zipcode),
             ],
           ),
@@ -64,7 +65,8 @@ class _ActionList extends StatelessWidget {
   final String name;
   final List<EdAction> actions;
   final double totalSecured;
-  _ActionList({this.name, this.actions, this.totalSecured, Key key}) : super(key: key);
+  _ActionList({this.name, this.actions, this.totalSecured, Key key})
+      : super(key: key);
 
   final ScrollController _scrollController = ScrollController();
 
@@ -108,25 +110,31 @@ class _ActionHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Stack(
-        alignment: AlignmentDirectional.center,
-        children: <Widget>[
-          SvgPicture.asset(
-            'assets/town_svgs/${name.trim().replaceAll(' ', '-')}.svg',
-            bundle: DefaultAssetBundle.of(context),
-            height: MarkeyMapTheme.cardHeaderStyle.fontSize * 4.5,
-            width: MarkeyMapTheme.cardHeaderStyle.fontSize * 4.5,
-          ),
-          FittedBox(
-            child: Text(
-              name.toUpperCase(),
-              textAlign: TextAlign.center,
-              style: MarkeyMapTheme.cardHeaderStyle,
+          alignment: AlignmentDirectional.center,
+          children: <Widget>[
+            SizedBox(
+              height: MarkeyMapTheme.svgHeight,
+              child: FractionallySizedBox(
+                heightFactor: 0.8,
+                child: SvgPicture.asset(
+                  'assets/town_svgs/${name.trim().replaceAll(' ', '-')}.svg',
+                  bundle: DefaultAssetBundle.of(context),
+                  height: 1366,
+                  width: 738,
+                ),
+              ),
             ),
-          ),
-        ],
+            FittedBox(
+              child: Text(
+                name.toUpperCase(),
+                textAlign: TextAlign.center,
+                style: MarkeyMapTheme.cardHeaderStyle,
+              ),
+            ),
+          ],
       );
 }
-
+x[]
 class _ActionTileCard extends StatelessWidget {
   final EdAction action;
   const _ActionTileCard({@required this.action, Key key}) : super(key: key);

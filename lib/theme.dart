@@ -66,6 +66,8 @@ class MarkeyMapTheme {
     ],
   );
 
+  static const double svgHeight = 64 * 4.5;
+
   static const TextStyle cardListStyle = TextStyle(
     fontSize: 20,
     color: Colors.white,
