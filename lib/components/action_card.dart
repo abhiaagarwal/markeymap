@@ -134,7 +134,7 @@ class _ActionHeader extends StatelessWidget {
           ],
       );
 }
-x[]
+
 class _ActionTileCard extends StatelessWidget {
   final EdAction action;
   const _ActionTileCard({@required this.action, Key key}) : super(key: key);
