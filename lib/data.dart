@@ -122,19 +122,25 @@ class MarkeyMapBuilder extends StatelessWidget {
             AnimatedSwitcher(
           duration: const Duration(milliseconds: 300),
           child: () {
-            precacheImage(
-              AssetImage(
-                'assets/header.png',
-                bundle: DefaultAssetBundle.of(context),
+            compute(
+              (dynamic _) => precacheImage(
+                AssetImage(
+                  'assets/header.png',
+                  bundle: DefaultAssetBundle.of(context),
+                ),
+                context,
               ),
-              context,
+              null,
             );
-            precacheImage(
-              AssetImage(
-                'assets/logo.png',
-                bundle: DefaultAssetBundle.of(context),
+            compute(
+              (dynamic _) => precacheImage(
+                AssetImage(
+                  'assets/logo.png',
+                  bundle: DefaultAssetBundle.of(context),
+                ),
+                context,
               ),
-              context,
+              null,
             );
             switch (snapshot.connectionState) {
               case ConnectionState.done:
