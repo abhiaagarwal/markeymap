@@ -46,11 +46,11 @@ class MarkeyMapBuilder extends StatelessWidget {
       Key key})
       : super(key: key);
 
-  Future<void> _preloadSVGs(BuildContext context, List<String> towns) async {
-    for (final String town in towns) {
+  Future<void> _preloadSVGs(BuildContext context, List<String> townNames) async {
+    for (final String name in townNames) {
       precachePicture(
         SvgPicture.asset(
-          'assets/town_svgs/${town.trim().replaceAll(' ', '-')}.svg',
+          'assets/town_svgs/${name.trim().replaceAll(' ', '-')}.svg',
           bundle: DefaultAssetBundle.of(context),
         ).pictureProvider,
         context,
@@ -94,9 +94,9 @@ class MarkeyMapBuilder extends StatelessWidget {
           print('Error while parsing $row, exception $e');
         }
       }
-      compute<void, void>(
-        (dynamic _) => _preloadSVGs(context, towns.keys.toList()),
-        null,
+      compute<List<String>, void>(
+        (List<String> townNames) => _preloadSVGs(context, townNames),
+        towns.keys.toList(),
       );
       towns.forEach(
         (String name, List<EdAction> actions) => countiesList[county].add(
@@ -137,7 +137,7 @@ class MarkeyMapBuilder extends StatelessWidget {
             );
             switch (snapshot.connectionState) {
               case ConnectionState.done:
-                if (snapshot.data != null) {
+                if (snapshot.hasData) {
                   return MarkeyMapData(
                     key: const ValueKey<int>(2),
                     data: snapshot.data,
