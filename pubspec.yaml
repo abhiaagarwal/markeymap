@@ -51,7 +51,7 @@ flutter:
 
   assets: 
     - assets/header.png
-    - assets/compass.svg
+    - assets/logo.png
     - assets/intro_video.mp4
     - assets/texture.png
     - assets/credentials.json

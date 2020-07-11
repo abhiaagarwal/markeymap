@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter_svg/svg.dart';
 
 import 'package:markeymap/theme.dart';
 import 'package:markeymap/components/search.dart';
@@ -48,49 +47,25 @@ class _Header extends StatelessWidget {
           fit: StackFit.expand,
           children: <Widget>[
             _image(context),
-            const _HeaderText(),
+            const _Logo(),
           ],
         ),
       );
 }
 
-class _HeaderText extends StatelessWidget {
-  const _HeaderText({Key key}) : super(key: key);
-
-  Widget get _markey => Text(
-        'Markey'.toUpperCase(),
-        style: MarkeyMapTheme.appBarStyle,
-      );
-
-  Widget _compass(BuildContext context) => Container(
-        child: SvgPicture.asset(
-          'assets/compass.svg',
-          bundle: DefaultAssetBundle.of(context),
-          height: 42,
-          width: 42,
-        ),
-      );
-
-  Widget get _map => Text(
-        'Map'.toUpperCase(),
-        style: MarkeyMapTheme.appBarStyle,
-      );
+class _Logo extends StatelessWidget {
+  const _Logo({Key key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) => FittedBox(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8.0),
-          child: Center(
-            child: Column(
-              children: <Widget>[
-                _markey,
-                Row(
-                  children: <Widget>[
-                    _compass(context),
-                    _map,
-                  ],
-                )
-              ],
+  Widget build(BuildContext context) => Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Center(
+          child: SizedBox.expand(
+            child: Image.asset(
+              'assets/logo.png',
+              bundle: DefaultAssetBundle.of(context),
+              height: 1346,
+              width: 657,
             ),
           ),
         ),

@@ -46,7 +46,8 @@ class MarkeyMapBuilder extends StatelessWidget {
       Key key})
       : super(key: key);
 
-  Future<void> _preloadSVGs(BuildContext context, List<String> townNames) async {
+  Future<void> _preloadSVGs(
+      BuildContext context, List<String> townNames) async {
     for (final String name in townNames) {
       precachePicture(
         SvgPicture.asset(
@@ -128,11 +129,11 @@ class MarkeyMapBuilder extends StatelessWidget {
               ),
               context,
             );
-            precachePicture(
-              SvgPicture.asset(
-                'assets/compass.svg',
+            precacheImage(
+              AssetImage(
+                'assets/logo.png',
                 bundle: DefaultAssetBundle.of(context),
-              ).pictureProvider,
+              ),
               context,
             );
             switch (snapshot.connectionState) {
