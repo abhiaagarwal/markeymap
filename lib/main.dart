@@ -5,6 +5,7 @@ import 'package:markeymap/components/map.dart';
 import 'package:markeymap/components/bottombar.dart';
 
 import 'package:markeymap/data.dart';
+import 'package:markeymap/resources.dart' as resources;
 import 'package:markeymap/theme.dart';
 
 void main() => runApp(const MarkeyMapApp());
@@ -17,7 +18,7 @@ class MarkeyMapApp extends StatelessWidget {
         title: 'Markey Map',
         theme: MarkeyMapTheme.theme,
         home: const MarkeyMapBuilder(
-          credentialsFile: 'assets/credentials.json',
+          credentialsFile: resources.Data.credentials,
           sheetId: '18ERHHKICDJ3JGk2NcRjmU38KjXxdmNgDab9iqu_PwSQ',
           child: Scaffold(
             appBar: MainAppBar(),

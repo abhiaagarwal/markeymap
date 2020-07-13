@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:markeymap/resources.dart' as resources;
+
 import 'package:video_player/video_player.dart';
 
 class WelcomeScreen extends StatefulWidget {
@@ -15,7 +17,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   @override
   void initState() {
     super.initState();
-    _controller = VideoPlayerController.asset('assets/intro_video.mp4')
+    _controller = VideoPlayerController.asset(resources.Video.introVideo)
       ..initialize()
       ..setLooping(true);
     Future<void>.delayed(
@@ -32,7 +34,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
 
   BoxDecoration get _decoration => const BoxDecoration(
         image: DecorationImage(
-          image: AssetImage('assets/texture.png'),
+          image: AssetImage(resources.Image.texture),
           repeat: ImageRepeat.repeat,
         ),
       );

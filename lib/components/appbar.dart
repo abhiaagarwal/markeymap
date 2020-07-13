@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
 import 'package:markeymap/theme.dart';
+import 'package:markeymap/resources.dart' as resources;
 import 'package:markeymap/components/search.dart';
 
 class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -31,7 +32,7 @@ class _Header extends StatelessWidget {
   const _Header({Key key}) : super(key: key);
 
   Widget _image(BuildContext context) => Image.asset(
-        'assets/header.png',
+        resources.Image.header,
         bundle: DefaultAssetBundle.of(context),
         color: Theme.of(context).primaryColor,
         colorBlendMode: BlendMode.softLight,
@@ -62,7 +63,7 @@ class _Logo extends StatelessWidget {
         child: Center(
           child: SizedBox.expand(
             child: Image.asset(
-              'assets/logo.png',
+              resources.Image.logo,
               bundle: DefaultAssetBundle.of(context),
               height: 1346,
               width: 657,

@@ -8,6 +8,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:money2/money2.dart';
 
 import 'package:markeymap/theme.dart';
+import 'package:markeymap/resources.dart' as resources;
 import 'package:markeymap/models/action.dart';
 
 Future<void> _launchUrl(final String url) async {
@@ -117,7 +118,7 @@ class _ActionHeader extends StatelessWidget {
               child: FractionallySizedBox(
                 heightFactor: 0.8,
                 child: SvgPicture.asset(
-                  'assets/town_svgs/${name.trim().replaceAll(' ', '-')}.svg',
+                  '${resources.SVG.townSvg}${name.trim().replaceAll(' ', '-')}.svg',
                   bundle: DefaultAssetBundle.of(context),
                   height: 1366,
                   width: 738,
@@ -288,7 +289,7 @@ class _CallToActionBar extends StatelessWidget {
           'radius': 25.toString(),
           'sort': 2.toString(),
         },
-      ).toString()}#formatted-events";
+      )}#formatted-events";
 
   BoxDecoration get _gradient => const BoxDecoration(
         gradient: LinearGradient(
