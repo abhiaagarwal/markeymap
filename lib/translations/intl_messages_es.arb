@@ -1,0 +1,74 @@
+{
+  "@@last_modified": "2020-07-09T00:37:01.181208",
+  "@@locale": "es",
+  "title": "Mapa de Markey",
+  "@title": {
+    "description": "App Title",
+    "type": "text",
+    "placeholders": {}
+  },
+  "searchBar": "Busca en tu pueblo, ciudad o condado para saber qué ha hecho Ed por tu comunidad",
+  "@searchBar": {
+    "description": "Place to search for communities",
+    "type": "text",
+    "placeholders": {}
+  },
+  "countyName": "Contado de {county}",
+  "@countyName": {
+    "description": "Proper way to display County",
+    "type": "text",
+    "placeholders": {
+      "county": {}
+    }
+  },
+  "totalSecured": "Total Asegurado: {amount}",
+  "@totalSecured": {
+    "description": "Amount of money secured for a community",
+    "type": "text",
+    "placeholders": {
+      "amount": {
+        "example": 120000.0
+      }
+    }
+  },
+  "info": "Información",
+  "@info": {
+    "description": "Information Button",
+    "type": "text",
+    "placeholders": {}
+  },
+  "otherAccomplishments": "Otros Logros",
+  "@otherAccomplishments": {
+    "description": "Other Accomplishmnets outside of Counties button",
+    "type": "text",
+    "placeholders": {}
+  },
+  "donate": "Dona",
+  "@donate": {
+    "description": "Donate button",
+    "type": "text",
+    "placeholders": {}
+  },
+  "volunteer": "Ofrecerse",
+  "@volunteer": {
+    "description": "Volunteer button",
+    "type": "text",
+    "placeholders": {}
+  },
+  "getInvolved": "Involucra",
+  "@getInvolved": {
+    "description": "Get involved button",
+    "type": "text",
+    "placeholders": {}
+  },
+  "townCTA": "Ayuda a Ed a luchar por {town}",
+  "@townCTA": {
+    "description": "Call-to-Action to Donate",
+    "type": "text",
+    "placeholders": {
+      "town": {
+        "example": "Andover"
+      }
+    }
+  }
+}
