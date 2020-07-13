@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:markeymap/localization.dart';
 
 import 'package:url_launcher/url_launcher.dart' as url_launcher;
 
@@ -23,16 +24,16 @@ class BottomBar extends StatelessWidget {
           spacing: 16,
           children: <Widget>[
             _BottomButton(
-              text: 'Info',
+              text: MarkeyMapLocalizations.of(context).info,
               color: Theme.of(context).primaryColor,
               onTap: () => showPopup(context, body: const WelcomeScreen()),
             ),
             _BottomButton(
-              text: 'Other Accomplishments',
+              text: MarkeyMapLocalizations.of(context).otherAccomplishments,
               color: Theme.of(context).primaryColor,
               onTap: () => showPopup(
                 context,
-                title: 'Other Accomplishments',
+                title: MarkeyMapLocalizations.of(context).otherAccomplishments,
                 scaffoldColor: Theme.of(context).primaryColor,
                 body: TownList(
                   county: County.Other,
@@ -41,13 +42,13 @@ class BottomBar extends StatelessWidget {
               ),
             ),
             _BottomButton(
-              text: 'Donate',
+              text: MarkeyMapLocalizations.of(context).donate,
               color: Theme.of(context).accentColor,
               onTap: () => url_launcher
                   .launch('https://secure.actblue.com/donate/markeymap'),
             ),
             _BottomButton(
-              text: 'Get involved',
+              text: MarkeyMapLocalizations.of(context).getInvolved,
               color: Theme.of(context).accentColor,
               onTap: () =>
                   url_launcher.launch('https://www.edmarkey.com/volunteer/'),

@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:markeymap/localization.dart';
 
 import 'package:url_launcher/url_launcher.dart' as url_launcher;
 import 'package:flutter_svg/flutter_svg.dart';
@@ -111,28 +112,28 @@ class _ActionHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Stack(
-          alignment: AlignmentDirectional.center,
-          children: <Widget>[
-            SizedBox(
-              height: MarkeyMapTheme.svgHeight,
-              child: FractionallySizedBox(
-                heightFactor: 0.8,
-                child: SvgPicture.asset(
-                  '${resources.SVG.townSvg}${name.trim().replaceAll(' ', '-')}.svg',
-                  bundle: DefaultAssetBundle.of(context),
-                  height: 1366,
-                  width: 738,
-                ),
+        alignment: AlignmentDirectional.center,
+        children: <Widget>[
+          SizedBox(
+            height: MarkeyMapTheme.svgHeight,
+            child: FractionallySizedBox(
+              heightFactor: 0.8,
+              child: SvgPicture.asset(
+                '${resources.SVG.townSvg}${name.trim().replaceAll(' ', '-')}.svg',
+                bundle: DefaultAssetBundle.of(context),
+                height: 1366,
+                width: 738,
               ),
             ),
-            FittedBox(
-              child: Text(
-                name.toUpperCase(),
-                textAlign: TextAlign.center,
-                style: MarkeyMapTheme.cardHeaderStyle,
-              ),
+          ),
+          FittedBox(
+            child: Text(
+              name.toUpperCase(),
+              textAlign: TextAlign.center,
+              style: MarkeyMapTheme.cardHeaderStyle,
             ),
-          ],
+          ),
+        ],
       );
 }
 
@@ -266,8 +267,8 @@ class _CallToActionBar extends StatelessWidget {
   final String zipcode;
   const _CallToActionBar({this.name, this.zipcode, Key key}) : super(key: key);
 
-  Widget get _ctaText => Text(
-        'Help Ed continue to fight for $name:'.toUpperCase(),
+  Widget _ctaText(BuildContext context) => Text(
+        MarkeyMapLocalizations.of(context).townCTA(name).toUpperCase(),
         style: MarkeyMapTheme.buttonStyle.copyWith(fontWeight: FontWeight.w700),
       );
 
@@ -314,15 +315,15 @@ class _CallToActionBar extends StatelessWidget {
             children: <Widget>[
               Padding(
                 padding: const EdgeInsets.only(right: 4),
-                child: _ctaText,
+                child: _ctaText(context),
               ),
               _CallToActionButton(
-                text: 'Donate',
+                text: MarkeyMapLocalizations.of(context).donate,
                 onTap: () => _launchUrl(_donateLink),
                 color: MarkeyMapTheme.theme.accentColor,
               ),
               _CallToActionButton(
-                text: 'Volunteer',
+                text: MarkeyMapLocalizations.of(context).volunteer,
                 onTap: () => _launchUrl(_volunteerLink),
                 color: MarkeyMapTheme.theme.accentColor,
               ),

@@ -6,6 +6,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:gsheets/gsheets.dart' as sheets;
 
+import 'package:markeymap/resources.dart' as resources;
 import 'package:markeymap/components/loading.dart';
 import 'package:markeymap/models/action.dart';
 import 'package:markeymap/models/county.dart';
@@ -51,7 +52,7 @@ class MarkeyMapBuilder extends StatelessWidget {
     for (final String name in townNames) {
       precachePicture(
         SvgPicture.asset(
-          'assets/town_svgs/${name.trim().replaceAll(' ', '-')}.svg',
+          '{resources.SVG.townSvg}${name.trim().replaceAll(' ', '-')}.svg',
           bundle: DefaultAssetBundle.of(context),
         ).pictureProvider,
         context,
@@ -125,7 +126,7 @@ class MarkeyMapBuilder extends StatelessWidget {
             compute(
               (dynamic _) => precacheImage(
                 AssetImage(
-                  'assets/header.png',
+                  resources.Image.header,
                   bundle: DefaultAssetBundle.of(context),
                 ),
                 context,
@@ -135,7 +136,7 @@ class MarkeyMapBuilder extends StatelessWidget {
             compute(
               (dynamic _) => precacheImage(
                 AssetImage(
-                  'assets/logo.png',
+                  resources.Image.logo,
                   bundle: DefaultAssetBundle.of(context),
                 ),
                 context,

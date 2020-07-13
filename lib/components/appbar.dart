@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:markeymap/localization.dart';
 
 import 'package:markeymap/theme.dart';
 import 'package:markeymap/resources.dart' as resources;
@@ -85,8 +86,8 @@ class _SearchBar extends StatelessWidget {
         ),
       );
 
-  Widget get _searchText => const Text(
-        'Search your town, city, or county to find out what Ed has done for your community',
+  Widget _searchText(BuildContext context) => Text(
+        MarkeyMapLocalizations.of(context).searchBar,
         style: MarkeyMapTheme.searchBarStyle,
       );
 
@@ -107,7 +108,7 @@ class _SearchBar extends StatelessWidget {
               child: Row(
                 children: <Widget>[
                   _searchIcon,
-                  _searchText,
+                  _searchText(context),
                 ],
               ),
             ),

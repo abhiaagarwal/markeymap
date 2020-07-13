@@ -5,6 +5,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
 
 import 'package:markeymap/data.dart';
+import 'package:markeymap/localization.dart';
 import 'package:markeymap/models/county.dart';
 import 'package:markeymap/components/town_list.dart';
 import 'package:markeymap/components/svg_map.dart';
@@ -55,7 +56,7 @@ class _CountyObject extends StatelessWidget {
         highlightColor: const Color(0xFF00345C),
         onTap: () => showPopup(
           context,
-          title: '${county.name} County',
+          title: MarkeyMapLocalizations.of(context).countyName(county.name),
           scaffoldColor: Theme.of(context).primaryColor,
           body: TownList(
             county: county,
