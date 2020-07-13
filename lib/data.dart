@@ -52,7 +52,7 @@ class MarkeyMapBuilder extends StatelessWidget {
     for (final String name in townNames) {
       precachePicture(
         SvgPicture.asset(
-          '{resources.SVG.townSvg}${name.trim().replaceAll(' ', '-')}.svg',
+          '${resources.SVG.townSvg}${name.trim().replaceAll(' ', '-')}.svg',
           bundle: DefaultAssetBundle.of(context),
         ).pictureProvider,
         context,
