@@ -3,13 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
+import 'package:markeymap/translations/messages_all.dart';
+
 class MarkeyMapLocalizations {
   static Future<MarkeyMapLocalizations> load(Locale locale) async {
     final String localeName = (locale.countryCode?.isEmpty ?? false)
         ? locale.languageCode
         : locale.toString();
     final String canonicalLocaleName = Intl.canonicalizedLocale(localeName);
-    //await initializeMessages(canonicalLocaleName);
+    await initializeMessages(canonicalLocaleName);
     await initializeDateFormatting(canonicalLocaleName);
     Intl.defaultLocale = canonicalLocaleName;
     return MarkeyMapLocalizations();
