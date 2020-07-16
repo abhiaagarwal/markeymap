@@ -5,15 +5,37 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'package:markeymap/theme.dart';
+import 'package:markeymap/localization.dart';
 
-class Loading extends StatefulWidget {
+class Loading extends StatelessWidget {
   const Loading({Key key}) : super(key: key);
 
   @override
-  _LoadingState createState() => _LoadingState();
+  Widget build(BuildContext context) => Material(
+        type: MaterialType.transparency,
+        child: Container(
+          width: double.infinity,
+          constraints: const BoxConstraints(maxWidth: 800),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: const <Widget>[
+              CircularProgressIndicator(),
+              SizedBox(height: 30),
+              _DidYouKnow(),
+            ],
+          ),
+        ),
+      );
 }
 
-class _LoadingState extends State<Loading> {
+class _DidYouKnow extends StatefulWidget {
+  const _DidYouKnow({Key key}) : super(key: key);
+
+  @override
+  _DidYouKnowState createState() => _DidYouKnowState();
+}
+
+class _DidYouKnowState extends State<_DidYouKnow> {
   Timer _timer;
   int _index;
   Random _random;
@@ -51,34 +73,23 @@ class _LoadingState extends State<Loading> {
   }
 
   @override
-  Widget build(BuildContext context) => Material(
-        type: MaterialType.transparency,
-        child: Container(
-          width: double.infinity,
-          constraints: const BoxConstraints(maxWidth: 800),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              const CircularProgressIndicator(),
-              const SizedBox(height: 30),
-              RichText(
-                textAlign: TextAlign.center,
-                text: TextSpan(
-                  text: 'Did you know? ',
-                  style: MarkeyMapTheme.funFactStyle,
-                  children: <TextSpan>[
-                    TextSpan(
-                      text: funFacts[_index],
-                      style: MarkeyMapTheme.funFactStyle.copyWith(
-                        fontStyle: FontStyle.italic,
-                        fontWeight: FontWeight.w300,
-                      ),
-                    ),
-                  ],
-                ),
+  Widget build(BuildContext context) => RichText(
+        textAlign: TextAlign.center,
+        text: TextSpan(
+          text: MarkeyMapLocalizations.of(context).didYouKnow,
+          style: MarkeyMapTheme.funFactStyle,
+          children: <TextSpan>[
+            const TextSpan(
+              text: ' ',
+            ),
+            TextSpan(
+              text: funFacts[_index],
+              style: MarkeyMapTheme.funFactStyle.copyWith(
+                fontStyle: FontStyle.italic,
+                fontWeight: FontWeight.w300,
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       );
 }

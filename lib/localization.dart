@@ -89,6 +89,12 @@ class MarkeyMapLocalizations {
           'town': 'Andover',
         },
       );
+
+  String get didYouKnow => Intl.message(
+        'Did you know?',
+        name: 'didYouKnow',
+        desc: 'Did you know text for loading page',
+      );
 }
 
 class MarkeyMapLocalizationsDelegate
