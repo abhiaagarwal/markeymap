@@ -15,7 +15,7 @@ extension StringExtension on ActionType {
 
 extension ActionTypeExtension on String {
   ActionType get action => ActionType.values.firstWhere(
-        (ActionType element) => element.name == this,
+        (ActionType element) => element.name.toLowerCase() == toLowerCase(),
         orElse: () => null,
       );
 }
