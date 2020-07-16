@@ -42,9 +42,11 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
 
   @override
   Widget build(BuildContext context) => Container(
-        decoration: _decoration,
+      decoration: _decoration,
+      child: GestureDetector(
+        onTap: () => _controller.play(),
         child: Center(
           child: VideoPlayer(_controller),
         ),
-      );
+      ));
 }

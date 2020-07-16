@@ -40,6 +40,7 @@ class _DidYouKnowState extends State<_DidYouKnow> {
   int _index;
   Random _random;
 
+  // ignore_for_file: lines_longer_than_80_chars
   static const List<String> funFacts = <String>[
     'In 2006, Ed Markey successfully created an amendment that extended Daylight Savings Time',
     'Ed has been a leading voice against weapons of mass destruction since the 1970s, once speaking to a crowd of over 1 million people at the 1982 Nuclear Freeze Rally in New York City',

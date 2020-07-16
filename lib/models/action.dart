@@ -1,12 +1,12 @@
 import 'package:meta/meta.dart';
 
 enum ActionType {
-  Grant,
-  Letter,
-  Endorsement,
-  Legislation,
-  Action,
-  Other,
+  grant,
+  letter,
+  endorsement,
+  legislation,
+  action,
+  other,
 }
 
 extension StringExtension on ActionType {
@@ -38,7 +38,7 @@ class EdAction {
 
   EdAction.fromRow(List<String> row)
       : date = row[1].isNotEmpty ? row[1] : null,
-        type = row[2].action ?? ActionType.Other,
+        type = row[2].action ?? ActionType.other,
         description = row[3],
         funding = row[4].isNotEmpty ? double.tryParse(row[4]) : null,
         url = row[5].isNotEmpty ? row[5] : null;

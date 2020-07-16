@@ -24,11 +24,11 @@ class MarkeyMapApp extends StatelessWidget {
             MarkeyMapLocalizations.of(context).title,
         theme: MarkeyMapTheme.theme,
         localizationsDelegates: const <LocalizationsDelegate<dynamic>>[
-          MarkeyMapLocalizationsDelegate(),
+          MarkeyMapLocalizations.delegate,
           GlobalMaterialLocalizations.delegate,
           GlobalWidgetsLocalizations.delegate,
         ],
-        supportedLocales: MarkeyMapLocalizationsDelegate.supportedLocales,
+        supportedLocales: MarkeyMapLocalizations.supportedLocales,
         home: const MarkeyMapBuilder(
           credentialsFile: resources.Data.credentials,
           sheetId: '18ERHHKICDJ3JGk2NcRjmU38KjXxdmNgDab9iqu_PwSQ',

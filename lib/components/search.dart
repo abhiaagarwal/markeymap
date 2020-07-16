@@ -58,7 +58,7 @@ class TownSearchDelegate extends SearchDelegate<Town> {
       title: 'Search',
       color: Theme.of(context).primaryColor,
       child: ListView.builder(
-        itemExtent: 60.0,
+        itemExtent: 60,
         itemCount: results.length,
         itemBuilder: (BuildContext context, final int index) {
           final MapEntry<Town, County> entry = results.entries.elementAt(index);

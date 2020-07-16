@@ -110,6 +110,13 @@ class _ActionHeader extends StatelessWidget {
   final String name;
   const _ActionHeader({@required this.name, Key key}) : super(key: key);
 
+  Widget image(BuildContext context) => SvgPicture.asset(
+        '${resources.SVG.townSvg}${name.trim().replaceAll(' ', '-')}.svg',
+        bundle: DefaultAssetBundle.of(context),
+        height: 1366,
+        width: 738,
+      );
+
   @override
   Widget build(BuildContext context) => Stack(
         alignment: AlignmentDirectional.center,
@@ -118,12 +125,7 @@ class _ActionHeader extends StatelessWidget {
             height: MarkeyMapTheme.svgHeight,
             child: FractionallySizedBox(
               heightFactor: 0.8,
-              child: SvgPicture.asset(
-                '${resources.SVG.townSvg}${name.trim().replaceAll(' ', '-')}.svg',
-                bundle: DefaultAssetBundle.of(context),
-                height: 1366,
-                width: 738,
-              ),
+              child: image(context),
             ),
           ),
           FittedBox(
@@ -200,7 +202,7 @@ class _ActionTileCard extends StatelessWidget {
           children: <Widget>[
             _datePart,
             () {
-              if (action.type == ActionType.Endorsement) {
+              if (action.type == ActionType.endorsement) {
                 return _endorsedPart;
               } else {
                 return _descriptionPart;

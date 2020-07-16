@@ -38,8 +38,9 @@ class BottomBar extends StatelessWidget {
                     MarkeyMapLocalizations.of(context).statewideAccomplishments,
                 scaffoldColor: Theme.of(context).primaryColor,
                 body: () {
-                  final Town statewide =
-                      MarkeyMapData.of(context).data[County.Other][1];
+                  final Town statewide = MarkeyMapData.of(context)
+                      .data[County.other]
+                      .firstWhere((Town town) => town.name == 'Statewide');
                   return ActionCard(
                     name: statewide.name,
                     actions: statewide.actions,

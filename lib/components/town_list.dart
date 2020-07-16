@@ -18,7 +18,7 @@ class TownList extends StatelessWidget {
         title: MarkeyMapLocalizations.of(context).countyName(county.name),
         color: Theme.of(context).primaryColor,
         child: ListView.builder(
-          itemExtent: 50.0,
+          itemExtent: 50,
           itemCount: towns.length,
           itemBuilder: (BuildContext context, final int index) => ListTile(
             title: Text(

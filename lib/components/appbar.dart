@@ -11,7 +11,7 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) => Material(
-        elevation: 2.0,
+        elevation: 2,
         child: Column(
           children: <Widget>[
             Container(
@@ -43,7 +43,7 @@ class _Header extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Container(
-        height: 196.0,
+        height: 196,
         child: Stack(
           alignment: Alignment.center,
           fit: StackFit.expand,
@@ -60,7 +60,7 @@ class _Logo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(8),
         child: Center(
           child: SizedBox.expand(
             child: Image.asset(
@@ -98,8 +98,8 @@ class _SearchBar extends StatelessWidget {
         color: const Color(0xFF00345C),
         child: Padding(
           padding: const EdgeInsets.symmetric(
-            vertical: 8.0,
-            horizontal: 16.0,
+            vertical: 8,
+            horizontal: 16,
           ),
           child: InkWell(
             onTap: () => handleSearch(context),

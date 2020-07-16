@@ -11,5 +11,5 @@ class Town {
         assert(actions != null);
 
   double get totalSecured => actions.fold<double>(
-      0.0, (double p, EdAction e) => p + (e.funding ?? 0));
+      0, (double p, EdAction e) => p + (e.funding ?? 0));
 }

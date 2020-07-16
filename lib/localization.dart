@@ -20,6 +20,12 @@ class MarkeyMapLocalizations {
   static MarkeyMapLocalizations of(BuildContext context) =>
       Localizations.of<MarkeyMapLocalizations>(context, MarkeyMapLocalizations);
 
+  static const _MarkeyMapLocalizationsDelegate delegate =
+      _MarkeyMapLocalizationsDelegate();
+
+  static List<Locale> get supportedLocales =>
+      _MarkeyMapLocalizationsDelegate.supportedLocales;
+
   String get title => Intl.message(
         'Markey Map',
         name: 'title',
@@ -27,6 +33,7 @@ class MarkeyMapLocalizations {
       );
 
   String get searchBar => Intl.message(
+        // ignore: lines_longer_than_80_chars
         'Search your town, city, or county to see how Ed Markey has delivered for your community',
         name: 'searchBar',
         desc: 'Place to search for communities',
@@ -99,9 +106,9 @@ class MarkeyMapLocalizations {
       );
 }
 
-class MarkeyMapLocalizationsDelegate
+class _MarkeyMapLocalizationsDelegate
     extends LocalizationsDelegate<MarkeyMapLocalizations> {
-  const MarkeyMapLocalizationsDelegate();
+  const _MarkeyMapLocalizationsDelegate();
 
   static const List<Locale> supportedLocales = <Locale>[
     Locale('en', 'US'),

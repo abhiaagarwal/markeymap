@@ -25,7 +25,7 @@ class MarkeyMapTheme {
       Shadow(
         color: Color(0xFF005196),
         offset: Offset(0, 4),
-        blurRadius: 2.0,
+        blurRadius: 2,
       ),
     ],
   );
@@ -46,7 +46,7 @@ class MarkeyMapTheme {
     letterSpacing: 2,
     shadows: <Shadow>[
       Shadow(
-        blurRadius: 2.0,
+        blurRadius: 2,
         color: Color(0xFF00044C),
         offset: Offset(4, 4),
       ),
@@ -61,7 +61,7 @@ class MarkeyMapTheme {
     letterSpacing: 2,
     shadows: <Shadow>[
       Shadow(
-        blurRadius: 2.0,
+        blurRadius: 2,
         color: Color(0xFF00044C),
         offset: Offset(0, 4),
       ),

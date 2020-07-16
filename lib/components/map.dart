@@ -28,7 +28,7 @@ class InteractiveMap extends StatelessWidget {
                     .data
                     .keys
                     .toList()
-                      ..remove(County.Other);
+                      ..remove(County.other);
                       // Let's ignore how hacky this is
                 return counties;
               }()
