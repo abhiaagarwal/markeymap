@@ -8,8 +8,7 @@ void showPopup(
   String title,
   Color scaffoldColor,
 }) =>
-    Navigator.push(
-      context,
+    Navigator.of(context).push(
       PopupLayout(
         child: Scaffold(
           backgroundColor: scaffoldColor,
@@ -28,7 +27,7 @@ void showPopup(
       ),
     );
 
-class PopupLayout extends ModalRoute<void> {
+class PopupLayout extends PopupRoute<void> {
   final double top;
   final double bottom;
   final double left;
@@ -58,7 +57,7 @@ class PopupLayout extends ModalRoute<void> {
   Color get barrierColor => backgroundColor ?? Colors.black.withOpacity(0.5);
 
   @override
-  String get barrierLabel => null;
+  String get barrierLabel => 'Click to Dismiss';
 
   @override
   bool get maintainState => false;
