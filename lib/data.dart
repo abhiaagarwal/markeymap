@@ -51,7 +51,7 @@ class MarkeyMapBuilder extends StatelessWidget {
   Future<void> _preloadSVGs(
       BuildContext context, List<String> townNames) async {
     for (final String name in townNames) {
-      await precachePicture(
+      precachePicture(
         SvgPicture.asset(
           '${resources.SVG.townSvg}${name.trim().replaceAll(' ', '-')}.svg',
           bundle: DefaultAssetBundle.of(context),
@@ -97,7 +97,7 @@ class MarkeyMapBuilder extends StatelessWidget {
           print('Error while parsing $row, exception $e');
         }
       }
-      await compute<List<String>, void>(
+      compute<List<String>, void>(
         (List<String> townNames) => _preloadSVGs(context, townNames),
         towns.keys.toList(),
       );
