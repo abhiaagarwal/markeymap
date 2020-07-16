@@ -27,7 +27,7 @@ class MarkeyMapLocalizations {
       );
 
   String get searchBar => Intl.message(
-        'Search your town, city, or county to find out what Ed has done for your community',
+        'Search your town, city, or county to see how Ed Markey has delivered for your community',
         name: 'searchBar',
         desc: 'Place to search for communities',
       );
@@ -42,24 +42,26 @@ class MarkeyMapLocalizations {
         },
       );
 
-  String totalSecured(double amount) => Intl.message('Total Secured: $amount',
-      name: 'totalSecured',
-      args: <Object>[amount],
-      desc: 'Amount of money secured for a community',
-      examples: const <String, double>{
-        'amount': 120000.00,
-      });
-
-  String get info => Intl.message(
-        'Info',
-        name: 'info',
-        desc: 'Information Button',
+  String totalSecured(double amount) => Intl.message(
+        'Total Secured: $amount',
+        name: 'totalSecured',
+        args: <Object>[amount],
+        desc: 'Amount of money secured for a community',
+        examples: const <String, double>{
+          'amount': 120000.00,
+        },
       );
 
-  String get otherAccomplishments => Intl.message(
-        'Other Accomplishments',
-        name: 'otherAccomplishments',
-        desc: 'Other Accomplishmnets outside of Counties button',
+  String get navigate => Intl.message(
+        'How to Navigate',
+        name: 'navigate',
+        desc: 'How to Navigate Button',
+      );
+
+  String get statewideAccomplishments => Intl.message(
+        'Statewide Accomplishments',
+        name: 'statewideAccomplishments',
+        desc: 'Statewide Accomplishmnets outside of Counties button',
       );
 
   String get donate => Intl.message(

@@ -19,23 +19,24 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'es';
 
-  static m0(county) => "Contado de ${county}";
+  static m0(county) => "Condado de ${county}";
 
-  static m1(amount) => "Total Asegurado: ${amount}";
+  static m1(amount) => "Total de fondos asegurados: ${amount}";
 
   static m2(town) => "Ayuda a Ed a luchar por ${town}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
     "countyName" : m0,
-    "donate" : MessageLookupByLibrary.simpleMessage("Dona"),
-    "getInvolved" : MessageLookupByLibrary.simpleMessage("Involucra"),
-    "info" : MessageLookupByLibrary.simpleMessage("Información"),
-    "otherAccomplishments" : MessageLookupByLibrary.simpleMessage("Otros Logros"),
-    "searchBar" : MessageLookupByLibrary.simpleMessage("Busca en tu pueblo, ciudad o condado para saber qué ha hecho Ed por tu comunidad"),
-    "title" : MessageLookupByLibrary.simpleMessage("Mapa de Markey"),
+    "didYouKnow" : MessageLookupByLibrary.simpleMessage("¿Sabías que?"),
+    "donate" : MessageLookupByLibrary.simpleMessage("Donaciones"),
+    "getInvolved" : MessageLookupByLibrary.simpleMessage("Involúcrate"),
+    "navigate" : MessageLookupByLibrary.simpleMessage("Cómo navegar"),
+    "searchBar" : MessageLookupByLibrary.simpleMessage("Aprenda qué ha hecho senador Ed Markey para tu comunidad con nuestro Markey Map"),
+    "statewideAccomplishments" : MessageLookupByLibrary.simpleMessage("Statewide Accomplishments"),
+    "title" : MessageLookupByLibrary.simpleMessage("Markey Map"),
     "totalSecured" : m1,
     "townCTA" : m2,
-    "volunteer" : MessageLookupByLibrary.simpleMessage("Ofrecerse")
+    "volunteer" : MessageLookupByLibrary.simpleMessage("Involúcrate")
   };
 }

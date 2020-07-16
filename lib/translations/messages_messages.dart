@@ -28,11 +28,12 @@ class MessageLookup extends MessageLookupByLibrary {
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
     "countyName" : m0,
+    "didYouKnow" : MessageLookupByLibrary.simpleMessage("Did you know?"),
     "donate" : MessageLookupByLibrary.simpleMessage("Donate"),
     "getInvolved" : MessageLookupByLibrary.simpleMessage("Get Involved"),
-    "info" : MessageLookupByLibrary.simpleMessage("Info"),
-    "otherAccomplishments" : MessageLookupByLibrary.simpleMessage("Other Accomplishments"),
-    "searchBar" : MessageLookupByLibrary.simpleMessage("Search your town, city, or county to find out what Ed has done for your community"),
+    "navigate" : MessageLookupByLibrary.simpleMessage("How to Navigate"),
+    "searchBar" : MessageLookupByLibrary.simpleMessage("Search your town, city, or county to see how Ed Markey has delivered for your community"),
+    "statewideAccomplishments" : MessageLookupByLibrary.simpleMessage("Statewide Accomplishments"),
     "title" : MessageLookupByLibrary.simpleMessage("Markey Map"),
     "totalSecured" : m1,
     "townCTA" : m2,

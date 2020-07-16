@@ -1,19 +1,19 @@
 {
-  "@@last_modified": "2020-07-09T00:37:01.181208",
+  "@@last_modified": "2020-07-16T10:37:47.896140",
   "@@locale": "es",
-  "title": "Mapa de Markey",
+  "title": "Markey Map",
   "@title": {
     "description": "App Title",
     "type": "text",
     "placeholders": {}
   },
-  "searchBar": "Busca en tu pueblo, ciudad o condado para saber qué ha hecho Ed por tu comunidad",
+  "searchBar": "Aprenda qué ha hecho senador Ed Markey para tu comunidad con nuestro Markey Map",
   "@searchBar": {
     "description": "Place to search for communities",
     "type": "text",
     "placeholders": {}
   },
-  "countyName": "Contado de {county}",
+  "countyName": "Condado de {county}",
   "@countyName": {
     "description": "Proper way to display County",
     "type": "text",
@@ -21,7 +21,7 @@
       "county": {}
     }
   },
-  "totalSecured": "Total Asegurado: {amount}",
+  "totalSecured": "Total de fondos asegurados: {amount}",
   "@totalSecured": {
     "description": "Amount of money secured for a community",
     "type": "text",
@@ -31,31 +31,31 @@
       }
     }
   },
-  "info": "Información",
-  "@info": {
-    "description": "Information Button",
+  "navigate": "Cómo navegar",
+  "@navigate": {
+    "description": "How to Navigate Button",
     "type": "text",
     "placeholders": {}
   },
-  "otherAccomplishments": "Otros Logros",
-  "@otherAccomplishments": {
-    "description": "Other Accomplishmnets outside of Counties button",
+  "statewideAccomplishments": "Statewide Accomplishments",
+  "@statewideAccomplishments": {
+    "description": "Statewide Accomplishmnets outside of Counties button",
     "type": "text",
     "placeholders": {}
   },
-  "donate": "Dona",
+  "donate": "Donaciones",
   "@donate": {
     "description": "Donate button",
     "type": "text",
     "placeholders": {}
   },
-  "volunteer": "Ofrecerse",
+  "volunteer": "Involúcrate",
   "@volunteer": {
     "description": "Volunteer button",
     "type": "text",
     "placeholders": {}
   },
-  "getInvolved": "Involucra",
+  "getInvolved": "Involúcrate",
   "@getInvolved": {
     "description": "Get involved button",
     "type": "text",
@@ -70,5 +70,11 @@
         "example": "Andover"
       }
     }
+  },
+  "didYouKnow": "¿Sabías que?",
+  "@didYouKnow": {
+    "description": "Did you know text for loading page",
+    "type": "text",
+    "placeholders": {}
   }
 }

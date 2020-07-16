@@ -1,12 +1,12 @@
 {
-  "@@last_modified": "2020-07-09T00:37:01.181208",
+  "@@last_modified": "2020-07-16T10:37:47.896140",
   "title": "Markey Map",
   "@title": {
     "description": "App Title",
     "type": "text",
     "placeholders": {}
   },
-  "searchBar": "Search your town, city, or county to find out what Ed has done for your community",
+  "searchBar": "Search your town, city, or county to see how Ed Markey has delivered for your community",
   "@searchBar": {
     "description": "Place to search for communities",
     "type": "text",
@@ -30,15 +30,15 @@
       }
     }
   },
-  "info": "Info",
-  "@info": {
-    "description": "Information Button",
+  "navigate": "How to Navigate",
+  "@navigate": {
+    "description": "How to Navigate Button",
     "type": "text",
     "placeholders": {}
   },
-  "otherAccomplishments": "Other Accomplishments",
-  "@otherAccomplishments": {
-    "description": "Other Accomplishmnets outside of Counties button",
+  "statewideAccomplishments": "Statewide Accomplishments",
+  "@statewideAccomplishments": {
+    "description": "Statewide Accomplishmnets outside of Counties button",
     "type": "text",
     "placeholders": {}
   },
@@ -69,5 +69,11 @@
         "example": "Andover"
       }
     }
+  },
+  "didYouKnow": "Did you know?",
+  "@didYouKnow": {
+    "description": "Did you know text for loading page",
+    "type": "text",
+    "placeholders": {}
   }
 }
