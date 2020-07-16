@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'package:markeymap/theme.dart';
 import 'package:markeymap/resources.dart' as resources;
 
 import 'package:video_player/video_player.dart';
@@ -21,7 +22,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
       ..initialize()
       ..setLooping(true);
     Future<void>.delayed(
-      const Duration(milliseconds: 300),
+      MarkeyMapTheme.animationDuration,
       () => _controller.play(),
     );
   }

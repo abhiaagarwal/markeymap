@@ -13,6 +13,8 @@ class MarkeyMapTheme {
     visualDensity: VisualDensity.adaptivePlatformDensity,
   );
 
+  static const Duration animationDuration = Duration(milliseconds: 250);
+
   static const TextStyle appBarStyle = TextStyle(
     fontFamily: 'Gotham Narrow',
     fontWeight: FontWeight.w900,
@@ -25,15 +27,15 @@ class MarkeyMapTheme {
         offset: Offset(0, 4),
         blurRadius: 2.0,
       ),
-    ]
+    ],
   );
 
   static const TextStyle searchBarStyle = TextStyle(
-          fontStyle: FontStyle.italic,
-          color: Colors.white,
-          fontSize: 12,
-          fontWeight: FontWeight.w200,
-        );
+    fontStyle: FontStyle.italic,
+    color: Colors.white,
+    fontSize: 12,
+    fontWeight: FontWeight.w200,
+  );
 
   static const TextStyle welcomeHeaderStyle = TextStyle(
     color: Colors.white,
@@ -81,7 +83,7 @@ class MarkeyMapTheme {
       Shadow(
         offset: Offset(1, 1),
       ),
-    ]
+    ],
   );
 
   static const TextStyle funFactStyle = TextStyle(

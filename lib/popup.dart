@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:markeymap/theme.dart';
+
 void showPopup(
   BuildContext context, {
   @required Widget body,
@@ -44,7 +46,7 @@ class PopupLayout extends ModalRoute<void> {
   });
 
   @override
-  Duration get transitionDuration => const Duration(milliseconds: 300);
+  Duration get transitionDuration => MarkeyMapTheme.animationDuration;
 
   @override
   bool get opaque => false;

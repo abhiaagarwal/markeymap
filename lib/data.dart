@@ -7,6 +7,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gsheets/gsheets.dart' as sheets;
 
 import 'package:markeymap/resources.dart' as resources;
+import 'package:markeymap/theme.dart';
 import 'package:markeymap/components/loading.dart';
 import 'package:markeymap/models/action.dart';
 import 'package:markeymap/models/county.dart';
@@ -121,7 +122,7 @@ class MarkeyMapBuilder extends StatelessWidget {
           AsyncSnapshot<Map<County, List<Town>>> snapshot,
         ) =>
             AnimatedSwitcher(
-          duration: const Duration(milliseconds: 300),
+          duration: MarkeyMapTheme.animationDuration,
           child: () {
             compute(
               (dynamic _) => precacheImage(
