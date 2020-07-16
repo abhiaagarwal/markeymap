@@ -14,8 +14,8 @@ class Loading extends StatelessWidget {
   Widget build(BuildContext context) => Material(
         type: MaterialType.transparency,
         child: Container(
-          width: double.infinity,
           constraints: const BoxConstraints(maxWidth: 800),
+          padding: const EdgeInsets.all(16),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: const <Widget>[
