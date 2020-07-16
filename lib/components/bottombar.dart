@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:markeymap/components/action_card.dart';
 import 'package:markeymap/localization.dart';
 
 import 'package:url_launcher/url_launcher.dart' as url_launcher;
@@ -6,9 +7,9 @@ import 'package:url_launcher/url_launcher.dart' as url_launcher;
 import 'package:markeymap/theme.dart';
 
 import 'package:markeymap/popup.dart';
-import 'package:markeymap/components/town_list.dart';
 import 'package:markeymap/data.dart';
 import 'package:markeymap/models/county.dart';
+import 'package:markeymap/models/town.dart';
 import 'package:markeymap/components/welcome.dart';
 
 class BottomBar extends StatelessWidget {
@@ -24,21 +25,26 @@ class BottomBar extends StatelessWidget {
           spacing: 16,
           children: <Widget>[
             _BottomButton(
-              text: MarkeyMapLocalizations.of(context).info,
+              text: MarkeyMapLocalizations.of(context).navigate,
               color: Theme.of(context).primaryColor,
               onTap: () => showPopup(context, body: const WelcomeScreen()),
             ),
             _BottomButton(
-              text: MarkeyMapLocalizations.of(context).otherAccomplishments,
+              text: MarkeyMapLocalizations.of(context).statewideAccomplishments,
               color: Theme.of(context).primaryColor,
               onTap: () => showPopup(
                 context,
-                title: MarkeyMapLocalizations.of(context).otherAccomplishments,
+                title:
+                    MarkeyMapLocalizations.of(context).statewideAccomplishments,
                 scaffoldColor: Theme.of(context).primaryColor,
-                body: TownList(
-                  county: County.Other,
-                  towns: MarkeyMapData.of(context).data[County.Other],
-                ),
+                body: () {
+                  final Town statewide =
+                      MarkeyMapData.of(context).data[County.Other][1];
+                  return ActionCard(
+                    name: statewide.name,
+                    actions: statewide.actions,
+                  );
+                }(),
               ),
             ),
             _BottomButton(
@@ -68,17 +74,17 @@ class _BottomButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => RaisedButton(
-    color: color,
-    child: Container(
-      padding: const EdgeInsets.all(4),
-      child: Text(
-        text.toUpperCase(),
-        style: MarkeyMapTheme.buttonStyle,
-      ),
-    ),
-    onPressed: onTap,
-    shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(8),
-    ),
-  );
+        color: color,
+        child: Container(
+          padding: const EdgeInsets.all(4),
+          child: Text(
+            text.toUpperCase(),
+            style: MarkeyMapTheme.buttonStyle,
+          ),
+        ),
+        onPressed: onTap,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8),
+        ),
+      );
 }
