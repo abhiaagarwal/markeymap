@@ -7,6 +7,7 @@ void showPopup(
   @required Widget body,
   String title,
   Color scaffoldColor,
+  Color backgroundColor,
 }) =>
     Navigator.of(context).push(
       PopupLayout(
@@ -24,6 +25,7 @@ void showPopup(
           resizeToAvoidBottomInset: false,
           body: body,
         ),
+        backgroundColor: backgroundColor,
       ),
     );
 
