@@ -245,7 +245,7 @@ class _TotalSecured extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Padding(
-        padding: const EdgeInsets.only(top: 16),
+        padding: const EdgeInsets.symmetric(vertical: 16),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
@@ -305,27 +305,32 @@ class _CallToActionBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Container(
+        constraints: const BoxConstraints(maxHeight: 64),
         decoration: _gradient,
-        height: 64,
         width: double.infinity,
         padding: const EdgeInsets.all(8),
         child: FittedBox(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+          child: Wrap(
+            alignment: WrapAlignment.center,
+            crossAxisAlignment: WrapCrossAlignment.center,
             children: <Widget>[
               Padding(
                 padding: const EdgeInsets.only(right: 4),
                 child: _ctaText(context),
               ),
-              _CallToActionButton(
-                text: MarkeyMapLocalizations.of(context).donate,
-                onTap: () => _launchUrl(_donateLink),
-                color: MarkeyMapTheme.theme.accentColor,
-              ),
-              _CallToActionButton(
-                text: MarkeyMapLocalizations.of(context).volunteer,
-                onTap: () => _launchUrl(_volunteerLink),
-                color: MarkeyMapTheme.theme.accentColor,
+              Row(
+                children: <Widget>[
+                  _CallToActionButton(
+                    text: MarkeyMapLocalizations.of(context).donate,
+                    onTap: () => _launchUrl(_donateLink),
+                    color: MarkeyMapTheme.theme.accentColor,
+                  ),
+                  _CallToActionButton(
+                    text: MarkeyMapLocalizations.of(context).volunteer,
+                    onTap: () => _launchUrl(_volunteerLink),
+                    color: MarkeyMapTheme.theme.accentColor,
+                  ),
+                ],
               ),
             ],
           ),
