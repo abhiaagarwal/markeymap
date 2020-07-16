@@ -265,7 +265,8 @@ class _TotalSecured extends StatelessWidget {
 class _CallToActionBar extends StatelessWidget {
   final String name;
   final String zipcode;
-  const _CallToActionBar({this.name, this.zipcode, Key key}) : super(key: key);
+  const _CallToActionBar({@required this.name, this.zipcode, Key key})
+      : super(key: key);
 
   Widget _ctaText(BuildContext context) => Text(
         MarkeyMapLocalizations.of(context).townCTA(name).toUpperCase(),
@@ -277,7 +278,7 @@ class _CallToActionBar extends StatelessWidget {
         '/donate/markeymap',
         <String, String>{
           'refcode': name,
-          'amount': (int.tryParse(zipcode) / 100).toString(),
+          'amount': (int.tryParse(zipcode ?? '100') / 100).toString(),
         },
       ).toString();
 
