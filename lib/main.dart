@@ -19,6 +19,7 @@ class MarkeyMapApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => MaterialApp(
+    debugShowCheckedModeBanner: false,
         onGenerateTitle: (BuildContext context) =>
             MarkeyMapLocalizations.of(context).title,
         theme: MarkeyMapTheme.theme,
