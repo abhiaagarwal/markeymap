@@ -15,7 +15,7 @@ class Video {
 class SVG {
   const SVG();
 
-  static const String townSvg = 'assets/town_svgs/';
+  static const String townSvg = 'assets/svgs/';
 }
 
 class Data {
