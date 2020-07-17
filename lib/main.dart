@@ -38,18 +38,25 @@ class MarkeyMapApp extends StatelessWidget {
         home: const MarkeyMapBuilder(
           credentialsFile: resources.Data.credentials,
           sheetId: '18ERHHKICDJ3JGk2NcRjmU38KjXxdmNgDab9iqu_PwSQ',
-          child: Scaffold(
-            appBar: MainAppBar(),
-            body: Center(
-              child: Padding(
-                padding: EdgeInsets.all(8),
-                child: FittedBox(
-                  child: InteractiveMap(),
-                ),
-              ),
+          child: MarkeyScaffold(),
+        ),
+      );
+}
+
+class MarkeyScaffold extends StatelessWidget {
+  const MarkeyScaffold({Key key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) => const Scaffold(
+        appBar: MainAppBar(),
+        body: Center(
+          child: Padding(
+            padding: EdgeInsets.all(8),
+            child: FittedBox(
+              child: InteractiveMap(),
             ),
-            bottomSheet: BottomBar(),
           ),
         ),
+        bottomNavigationBar: BottomBar(),
       );
 }
