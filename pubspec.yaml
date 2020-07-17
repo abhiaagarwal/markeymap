@@ -33,7 +33,7 @@ dependencies:
   cloud_firestore: "0.14.0-dev.1"
   built_path_annotations: ^0.1.0
   cupertino_icons: ^0.1.3
-  video_player: ^0.10.5
+#  video_player: ^0.10.5
   url_launcher: ^5.4.11
   url_launcher_web: ^0.1.0
 
@@ -59,10 +59,10 @@ flutter:
   assets:
     - assets/header.png
     - assets/logo.png
-    - assets/intro_video.mp4
+#    - assets/intro_video.mp4
     - assets/texture.png
     - assets/credentials.json
-    - assets/data.xlsx
+#    - assets/data.xlsx
     - assets/town_svgs/
 
   fonts:
