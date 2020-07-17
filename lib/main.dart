@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-
 import 'package:flutter_localizations/flutter_localizations.dart';
+
+import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_analytics/observer.dart';
 
 import 'package:markeymap/components/appbar.dart';
 import 'package:markeymap/components/map.dart';
@@ -19,6 +21,11 @@ class MarkeyMapApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) => MaterialApp(
         debugShowCheckedModeBanner: false,
+        navigatorObservers: <NavigatorObserver>[
+          FirebaseAnalyticsObserver(
+            analytics: FirebaseAnalytics(),
+          ),
+        ],
         onGenerateTitle: (BuildContext context) =>
             MarkeyMapLocalizations.of(context).title,
         theme: MarkeyMapTheme.theme,
