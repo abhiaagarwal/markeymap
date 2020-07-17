@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
-import 'package:markeymap/components/action_card.dart';
 import 'package:markeymap/localization.dart';
 import 'package:markeymap/popup.dart';
+import 'package:markeymap/components/action_card.dart';
 import 'package:markeymap/models/county.dart';
 import 'package:markeymap/models/town.dart';
+import 'package:markeymap/utils/string.dart';
 
 class TownList extends StatelessWidget {
   final County county;
@@ -15,7 +16,8 @@ class TownList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Title(
-        title: MarkeyMapLocalizations.of(context).countyName(county.name),
+        title: MarkeyMapLocalizations.of(context)
+            .countyName(county.name.toCapitalize()),
         color: Theme.of(context).primaryColor,
         child: ListView.builder(
           itemExtent: 50,

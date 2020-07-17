@@ -21,6 +21,8 @@ extension NameExtension on County {
 }
 
 extension CountyExtension on String {
-  County get county => County.values
-      .firstWhere((County element) => element.name == this, orElse: () => null);
+  County get county => County.values.firstWhere(
+        (County element) => element.name.toLowerCase() == toLowerCase(),
+        orElse: () => null,
+      );
 }

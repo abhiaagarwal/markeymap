@@ -34,8 +34,6 @@ class BottomBar extends StatelessWidget {
               color: Theme.of(context).primaryColor,
               onTap: () => showPopup(
                 context,
-                title:
-                    MarkeyMapLocalizations.of(context).statewideAccomplishments,
                 scaffoldColor: Theme.of(context).primaryColor,
                 body: () {
                   final Town statewide = MarkeyMapData.of(context)
