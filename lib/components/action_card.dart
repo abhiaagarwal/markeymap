@@ -11,6 +11,7 @@ import 'package:money2/money2.dart';
 import 'package:markeymap/theme.dart';
 import 'package:markeymap/resources.dart' as resources;
 import 'package:markeymap/models/action.dart';
+import 'package:markeymap/utils/string.dart';
 
 Future<void> _launchUrl(final String url) async {
   if (url == null) {
@@ -48,7 +49,7 @@ class ActionCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Title(
-        title: name,
+        title: name.toCapitalize(),
         color: Theme.of(context).primaryColor,
         child: Container(
           decoration: _gradient,

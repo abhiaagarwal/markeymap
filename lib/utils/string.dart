@@ -1,4 +1,5 @@
-
 extension CapitalizeExtension on String {
-  String toCapitalize() => this[0].toUpperCase() + substring(1);
+  String toCapitalize() => split(' ')
+      .map((String part) => part[0].toUpperCase() + part.substring(1))
+      .join(' ');
 }
