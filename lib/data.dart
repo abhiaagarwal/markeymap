@@ -142,9 +142,12 @@ class MarkeyMapBuilder extends StatelessWidget {
     }
     */
 
-    
     final FirebaseFirestore store = FirebaseFirestore.instance;
-    await store.enablePersistence();
+    try {
+      await store.enablePersistence();
+    } catch (e) {
+      print(e);
+    }
     return <County, List<Town>>{
       for (final County county in County.values)
         county: (await store.collection(county.name.toLowerCase()).get())
@@ -157,8 +160,13 @@ class MarkeyMapBuilder extends StatelessWidget {
                   ),
               ),
             )
-            .toList()
-    };
+            .toList(),
+    }..forEach(
+        (County county, List<Town> towns) => compute<List<String>, void>(
+          (List<String> townNames) => _preloadSVGs(context, townNames),
+          towns.map<String>((Town town) => town.name).toList(),
+        ),
+      );
   }
 
   @override
