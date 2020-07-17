@@ -6,7 +6,6 @@ import 'package:markeymap/components/appbar.dart';
 import 'package:markeymap/components/map.dart';
 import 'package:markeymap/components/bottombar.dart';
 
-
 import 'package:markeymap/data.dart';
 import 'package:markeymap/resources.dart' as resources;
 import 'package:markeymap/theme.dart';
@@ -19,7 +18,7 @@ class MarkeyMapApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => MaterialApp(
-    debugShowCheckedModeBanner: false,
+        debugShowCheckedModeBanner: false,
         onGenerateTitle: (BuildContext context) =>
             MarkeyMapLocalizations.of(context).title,
         theme: MarkeyMapTheme.theme,

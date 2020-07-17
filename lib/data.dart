@@ -157,6 +157,12 @@ class MarkeyMapBuilder extends StatelessWidget {
                 } else {
                   return Container(
                     key: const ValueKey<int>(3),
+                    child: const Center(
+                      child: Text(
+                        'Thank you so much for visiting. The Markey Map is experiencing high volume. Please Refresh.',
+                        style: MarkeyMapTheme.funFactStyle,
+                      ),
+                    ),
                   );
                 }
                 break;
