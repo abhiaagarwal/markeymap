@@ -7,6 +7,7 @@ import 'package:markeymap/popup.dart';
 import 'package:markeymap/components/action_card.dart';
 import 'package:markeymap/models/town.dart';
 import 'package:markeymap/models/county.dart';
+import 'package:markeymap/utils/string.dart';
 
 Future<void> handleSearch(BuildContext context) async {
   final Town town = await showSearch<Town>(
@@ -63,8 +64,8 @@ class TownSearchDelegate extends SearchDelegate<Town> {
         itemBuilder: (BuildContext context, final int index) {
           final MapEntry<Town, County> entry = results.entries.elementAt(index);
           return ListTile(
-            title: Text(entry.key.name),
-            subtitle: Text(entry.value.name),
+            title: Text(entry.key.name.toCapitalize()),
+            subtitle: Text(entry.value.name.toCapitalize()),
             onTap: () => close(context, entry.key),
           );
         },
