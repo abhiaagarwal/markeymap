@@ -24,7 +24,7 @@ class TownList extends StatelessWidget {
           itemCount: towns.length,
           itemBuilder: (BuildContext context, final int index) => ListTile(
             title: Text(
-              towns[index].name,
+              towns[index].name.toCapitalize(),
               style: const TextStyle(
                 color: Colors.white,
               ),

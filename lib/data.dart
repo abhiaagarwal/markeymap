@@ -65,6 +65,7 @@ class MarkeyMapBuilder extends StatelessWidget {
   }
 
   Future<Map<County, List<Town>>> _data(BuildContext context) async {
+    /*
     final sheets.GSheets api = sheets.GSheets(
         await DefaultAssetBundle.of(context).loadString(credentialsFile));
     final sheets.Spreadsheet spreadsheet = await api.spreadsheet(sheetId);
@@ -116,6 +117,7 @@ class MarkeyMapBuilder extends StatelessWidget {
       );
     }
     return countiesList;
+    */
 
     /*
     print('Converting Google Sheets Data to Firebase');
@@ -140,7 +142,7 @@ class MarkeyMapBuilder extends StatelessWidget {
     }
     */
 
-    /*
+    
     final FirebaseFirestore store = FirebaseFirestore.instance;
     await store.enablePersistence();
     return <County, List<Town>>{
@@ -157,7 +159,6 @@ class MarkeyMapBuilder extends StatelessWidget {
             )
             .toList()
     };
-    */
   }
 
   @override

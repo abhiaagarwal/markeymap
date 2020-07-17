@@ -38,7 +38,8 @@ class BottomBar extends StatelessWidget {
                 body: () {
                   final Town statewide = MarkeyMapData.of(context)
                       .data[County.other]
-                      .firstWhere((Town town) => town.name == 'Statewide');
+                      .firstWhere((Town town) =>
+                          town.name.toLowerCase() == 'Statewide'.toLowerCase());
                   return ActionCard(
                     name: statewide.name,
                     actions: statewide.actions,
