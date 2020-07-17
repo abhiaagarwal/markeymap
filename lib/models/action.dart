@@ -42,4 +42,11 @@ class EdAction {
         description = row[3],
         funding = row[4].isNotEmpty ? double.tryParse(row[4]) : null,
         url = row[5].isNotEmpty ? row[5] : null;
+
+  EdAction.fromMap(Map<String, dynamic> data)
+      : date = data['date'] as String,
+        type = (data['type'] as String).action ?? ActionType.other,
+        description = data['description'] as String,
+        funding = data['funding'] as double,
+        url = data['url'] as String;
 }

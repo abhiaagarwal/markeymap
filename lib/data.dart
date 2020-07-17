@@ -6,6 +6,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:gsheets/gsheets.dart' as sheets;
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 import 'package:markeymap/resources.dart' as resources;
 import 'package:markeymap/theme.dart';
 import 'package:markeymap/components/loading.dart';
@@ -114,6 +116,48 @@ class MarkeyMapBuilder extends StatelessWidget {
       );
     }
     return countiesList;
+
+    /*
+    print('Converting Google Sheets Data to Firebase');
+    FirebaseFirestore store = FirebaseFirestore.instance;
+    for (County county in countiesList.keys) {
+      CollectionReference reference =
+          store.collection(county.name.toLowerCase());
+      for (Town town in countiesList[county]) {
+        reference.doc(town.name.toLowerCase()).set(<String, dynamic>{
+          'zipcode': town.zipcode,
+          'actions': town.actions.map<Map<String, dynamic>>(
+            (EdAction action) => <String, dynamic>{
+              'date': action.date,
+              'description': action.description,
+              'type': action.type.name.toLowerCase(),
+              'link': action.url,
+              'funding': action.funding,
+            },
+          ),
+        });
+      }
+    }
+    */
+
+    /*
+    final FirebaseFirestore store = FirebaseFirestore.instance;
+    await store.enablePersistence();
+    return <County, List<Town>>{
+      for (final County county in County.values)
+        county: (await store.collection(county.name.toLowerCase()).get())
+            .docs
+            .map<Town>(
+              (QueryDocumentSnapshot document) => Town.fromMap(
+                document.data()
+                  ..addAll(
+                    <String, String>{'name': document.id},
+                  ),
+              ),
+            )
+            .toList()
+    };
+    */
   }
 
   @override
@@ -146,6 +190,9 @@ class MarkeyMapBuilder extends StatelessWidget {
               ),
               null,
             );
+            if (snapshot.hasError) {
+              print(snapshot.error);
+            }
             switch (snapshot.connectionState) {
               case ConnectionState.done:
                 if (snapshot.hasData) {
