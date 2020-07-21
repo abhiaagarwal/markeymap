@@ -112,7 +112,7 @@ class _ActionHeader extends StatelessWidget {
   const _ActionHeader({@required this.name, Key key}) : super(key: key);
 
   Widget image(BuildContext context) => SvgPicture.asset(
-        '${resources.SVG.townSvg}${name.trim().replaceAll(' ', '-')}.svg',
+        '${resources.SVG.townSvg}${name.toLowerCase().trim().replaceAll(' ', '-')}.svg',
         bundle: DefaultAssetBundle.of(context),
         height: 1366,
         width: 738,
