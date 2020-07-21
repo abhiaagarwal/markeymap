@@ -146,16 +146,18 @@ class _ActionTileCard extends StatelessWidget {
 
   Widget get _datePart => Expanded(
         flex: 1,
-        child: Padding(
-          padding: const EdgeInsets.only(right: 16),
-          child: Text(
-            action.date ?? '',
-            textAlign: TextAlign.right,
-            style: MarkeyMapTheme.cardListStyle.copyWith(
-              fontWeight: FontWeight.w700,
-              fontFeatures: <FontFeature>[
-                const FontFeature.tabularFigures(),
-              ],
+        child: FittedBox(
+          child: Padding(
+            padding: const EdgeInsets.only(right: 16),
+            child: Text(
+              action.date ?? '',
+              textAlign: TextAlign.right,
+              style: MarkeyMapTheme.cardListStyle.copyWith(
+                fontWeight: FontWeight.w700,
+                fontFeatures: <FontFeature>[
+                  const FontFeature.tabularFigures(),
+                ],
+              ),
             ),
           ),
         ),
@@ -201,7 +203,7 @@ class _ActionTileCard extends StatelessWidget {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            _datePart,
+            if(action.date != null) _datePart,
             () {
               if (action.type == ActionType.endorsement) {
                 return _endorsedPart;

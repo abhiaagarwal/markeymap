@@ -4,7 +4,7 @@ extension CapitalizeExtension on String {
       return split(' ')
           .map((String part) => part[0].toUpperCase() + part.substring(1))
           .join(' ');
-    } on Exception {
+    } on RangeError {
       return this[0].toUpperCase() + substring(1);
     }
   }
