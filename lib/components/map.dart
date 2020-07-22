@@ -16,7 +16,7 @@ class InteractiveMap extends StatelessWidget {
   const InteractiveMap({Key key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) => Container(
+  Widget build(BuildContext context) => SizedBox(
         width: CountySize.size.width,
         height: CountySize.size.height,
         child: Transform.rotate(

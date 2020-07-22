@@ -56,15 +56,6 @@ class _ReturnBar extends StatelessWidget {
 class _Header extends StatelessWidget {
   const _Header({Key key}) : super(key: key);
 
-  Widget _image(BuildContext context) => Image.asset(
-        resources.Image.header,
-        bundle: DefaultAssetBundle.of(context),
-        color: Theme.of(context).primaryColor,
-        colorBlendMode: BlendMode.softLight,
-        fit: BoxFit.cover,
-        repeat: ImageRepeat.repeatX,
-      );
-
   @override
   Widget build(BuildContext context) => SizedBox(
         height: 196,
@@ -72,11 +63,25 @@ class _Header extends StatelessWidget {
         child: Stack(
           alignment: Alignment.center,
           fit: StackFit.expand,
-          children: <Widget>[
-            _image(context),
-            const _Logo(),
+          children: const <Widget>[
+            _Image(),
+            _Logo(),
           ],
         ),
+      );
+}
+
+class _Image extends StatelessWidget {
+  const _Image({Key key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) => Image.asset(
+        resources.Image.header,
+        bundle: DefaultAssetBundle.of(context),
+        color: Theme.of(context).primaryColor,
+        colorBlendMode: BlendMode.softLight,
+        fit: BoxFit.cover,
+        repeat: ImageRepeat.repeatX,
       );
 }
 
@@ -121,21 +126,19 @@ class _SearchBar extends StatelessWidget {
         height: 48,
         width: double.infinity,
         color: const Color(0xFF00345C),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(
-            vertical: 8,
-            horizontal: 16,
-          ),
-          child: InkWell(
-            onTap: () => handleSearch(context),
-            mouseCursor: SystemMouseCursors.text,
-            child: FittedBox(
-              child: Row(
-                children: <Widget>[
-                  _searchIcon,
-                  _searchText(context),
-                ],
-              ),
+        padding: const EdgeInsets.symmetric(
+          vertical: 8,
+          horizontal: 16,
+        ),
+        child: InkWell(
+          onTap: () => handleSearch(context),
+          mouseCursor: SystemMouseCursors.text,
+          child: FittedBox(
+            child: Row(
+              children: <Widget>[
+                _searchIcon,
+                _searchText(context),
+              ],
             ),
           ),
         ),

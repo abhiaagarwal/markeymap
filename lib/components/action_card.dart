@@ -51,7 +51,7 @@ class ActionCard extends StatelessWidget {
   Widget build(BuildContext context) => Title(
         title: name.toCapitalize(),
         color: Theme.of(context).primaryColor,
-        child: Container(
+        child: DecoratedBox(
           decoration: _gradient,
           child: Column(
             children: <Widget>[

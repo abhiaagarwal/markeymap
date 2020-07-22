@@ -75,7 +75,7 @@ class _BottomButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) => RaisedButton(
         color: color,
-        child: Container(
+        child: Padding(
           padding: const EdgeInsets.all(4),
           child: Text(
             text.toUpperCase(),
