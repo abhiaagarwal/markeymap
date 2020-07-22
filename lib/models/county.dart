@@ -1,19 +1,19 @@
 enum County {
-  Barnstable,
-  Berkshire,
-  Bristol,
-  Dukes,
-  Essex,
-  Franklin,
-  Hampden,
-  Hampshire,
-  Nantucket,
-  Middlesex,
-  Norfolk,
-  Plymouth,
-  Suffolk,
-  Worcester,
-  Other,
+  barnstable,
+  berkshire,
+  bristol,
+  dukes,
+  essex,
+  franklin,
+  hampden,
+  hampshire,
+  nantucket,
+  middlesex,
+  norfolk,
+  plymouth,
+  suffolk,
+  worcester,
+  other,
 }
 
 extension NameExtension on County {
@@ -21,6 +21,8 @@ extension NameExtension on County {
 }
 
 extension CountyExtension on String {
-  County get county => County.values
-      .firstWhere((County element) => element.name.toLowerCase() == toLowerCase(), orElse: () => null);
+  County get county => County.values.firstWhere(
+        (County element) => element.name.toLowerCase() == toLowerCase(),
+        orElse: () => null,
+      );
 }

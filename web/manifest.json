@@ -5,7 +5,7 @@
     "display": "standalone",
     "background_color": "#FFFFFF",
     "theme_color": "#005196",
-    "description": "[todo]",
+    "description": "Learn about what Senator Ed Markey has delivered for your local community with the Markey Map",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

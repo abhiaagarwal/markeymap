@@ -1,0 +1,80 @@
+{
+  "@@last_modified": "2020-07-16T10:37:47.896140",
+  "@@locale": "es",
+  "title": "Markey Map",
+  "@title": {
+    "description": "App Title",
+    "type": "text",
+    "placeholders": {}
+  },
+  "searchBar": "Aprenda qué ha hecho senador Ed Markey para tu comunidad con nuestro Markey Map",
+  "@searchBar": {
+    "description": "Place to search for communities",
+    "type": "text",
+    "placeholders": {}
+  },
+  "countyName": "Condado de {county}",
+  "@countyName": {
+    "description": "Proper way to display County",
+    "type": "text",
+    "placeholders": {
+      "county": {}
+    }
+  },
+  "totalSecured": "Total de fondos asegurados: {amount}",
+  "@totalSecured": {
+    "description": "Amount of money secured for a community",
+    "type": "text",
+    "placeholders": {
+      "amount": {
+        "example": 120000.0
+      }
+    }
+  },
+  "navigate": "Cómo navegar",
+  "@navigate": {
+    "description": "How to Navigate Button",
+    "type": "text",
+    "placeholders": {}
+  },
+  "statewideAccomplishments": "Statewide Accomplishments",
+  "@statewideAccomplishments": {
+    "description": "Statewide Accomplishmnets outside of Counties button",
+    "type": "text",
+    "placeholders": {}
+  },
+  "donate": "Donaciones",
+  "@donate": {
+    "description": "Donate button",
+    "type": "text",
+    "placeholders": {}
+  },
+  "volunteer": "Involúcrate",
+  "@volunteer": {
+    "description": "Volunteer button",
+    "type": "text",
+    "placeholders": {}
+  },
+  "getInvolved": "Involúcrate",
+  "@getInvolved": {
+    "description": "Get involved button",
+    "type": "text",
+    "placeholders": {}
+  },
+  "townCTA": "Ayuda a Ed a luchar por {town}",
+  "@townCTA": {
+    "description": "Call-to-Action to Donate",
+    "type": "text",
+    "placeholders": {
+      "town": {
+        "example": "Andover"
+      }
+    }
+  },
+  "didYouKnow": "¿Sabías que?",
+  "@didYouKnow": {
+    "description": "Did you know text for loading page",
+    "type": "text",
+    "placeholders": {}
+  }
+}

@@ -2,13 +2,16 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:markeymap/localization.dart';
 
 import 'package:url_launcher/url_launcher.dart' as url_launcher;
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:money2/money2.dart';
 
 import 'package:markeymap/theme.dart';
+import 'package:markeymap/resources.dart' as resources;
 import 'package:markeymap/models/action.dart';
+import 'package:markeymap/utils/string.dart';
 
 Future<void> _launchUrl(final String url) async {
   if (url == null) {
@@ -46,13 +49,14 @@ class ActionCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Title(
-        title: name,
+        title: name.toCapitalize(),
         color: Theme.of(context).primaryColor,
-        child: Container(
+        child: DecoratedBox(
           decoration: _gradient,
           child: Column(
             children: <Widget>[
-              _ActionList(name: name, actions: actions, totalSecured: totalSecured),
+              _ActionList(
+                  name: name, actions: actions, totalSecured: totalSecured),
               _CallToActionBar(name: name, zipcode: zipcode),
             ],
           ),
@@ -64,19 +68,20 @@ class _ActionList extends StatelessWidget {
   final String name;
   final List<EdAction> actions;
   final double totalSecured;
-  _ActionList({this.name, this.actions, this.totalSecured, Key key}) : super(key: key);
+  _ActionList({this.name, this.actions, this.totalSecured, Key key})
+      : super(key: key);
 
   final ScrollController _scrollController = ScrollController();
 
   @override
   Widget build(BuildContext context) => Expanded(
-        child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          constraints: const BoxConstraints(maxWidth: 800),
-          alignment: Alignment.center,
-          child: Scrollbar(
-            controller: _scrollController,
-            isAlwaysShown: true,
+        child: Scrollbar(
+          controller: _scrollController,
+          isAlwaysShown: true,
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            constraints: const BoxConstraints(maxWidth: 800),
+            alignment: Alignment.center,
             child: ListView.builder(
               controller: _scrollController,
               itemCount: actions.length + 2,
@@ -106,15 +111,23 @@ class _ActionHeader extends StatelessWidget {
   final String name;
   const _ActionHeader({@required this.name, Key key}) : super(key: key);
 
+  Widget image(BuildContext context) => SvgPicture.asset(
+        '${resources.SVG.townSvg}${name.toLowerCase().trim().replaceAll(' ', '-')}.svg',
+        bundle: DefaultAssetBundle.of(context),
+        height: 1366,
+        width: 738,
+      );
+
   @override
   Widget build(BuildContext context) => Stack(
         alignment: AlignmentDirectional.center,
         children: <Widget>[
-          SvgPicture.asset(
-            'assets/town_svgs/${name.trim().replaceAll(' ', '-')}.svg',
-            bundle: DefaultAssetBundle.of(context),
-            height: MarkeyMapTheme.cardHeaderStyle.fontSize * 4.5,
-            width: MarkeyMapTheme.cardHeaderStyle.fontSize * 4.5,
+          SizedBox(
+            height: MarkeyMapTheme.svgHeight,
+            child: FractionallySizedBox(
+              heightFactor: 0.8,
+              child: image(context),
+            ),
           ),
           FittedBox(
             child: Text(
@@ -133,16 +146,18 @@ class _ActionTileCard extends StatelessWidget {
 
   Widget get _datePart => Expanded(
         flex: 1,
-        child: Padding(
-          padding: const EdgeInsets.only(right: 16),
-          child: Text(
-            action.date ?? '',
-            textAlign: TextAlign.right,
-            style: MarkeyMapTheme.cardListStyle.copyWith(
-              fontWeight: FontWeight.w700,
-              fontFeatures: <FontFeature>[
-                const FontFeature.tabularFigures(),
-              ],
+        child: FittedBox(
+          child: Padding(
+            padding: const EdgeInsets.only(right: 16),
+            child: Text(
+              action.date ?? '',
+              textAlign: TextAlign.right,
+              style: MarkeyMapTheme.cardListStyle.copyWith(
+                fontWeight: FontWeight.w700,
+                fontFeatures: <FontFeature>[
+                  const FontFeature.tabularFigures(),
+                ],
+              ),
             ),
           ),
         ),
@@ -188,9 +203,9 @@ class _ActionTileCard extends StatelessWidget {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            _datePart,
+            if(action.date != null) _datePart,
             () {
-              if (action.type == ActionType.Endorsement) {
+              if (action.type == ActionType.endorsement) {
                 return _endorsedPart;
               } else {
                 return _descriptionPart;
@@ -235,7 +250,7 @@ class _TotalSecured extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Padding(
-        padding: const EdgeInsets.only(top: 16),
+        padding: const EdgeInsets.symmetric(vertical: 16),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
@@ -255,10 +270,11 @@ class _TotalSecured extends StatelessWidget {
 class _CallToActionBar extends StatelessWidget {
   final String name;
   final String zipcode;
-  const _CallToActionBar({this.name, this.zipcode, Key key}) : super(key: key);
+  const _CallToActionBar({@required this.name, this.zipcode, Key key})
+      : super(key: key);
 
-  Widget get _ctaText => Text(
-        'Help Ed continue to fight for $name:'.toUpperCase(),
+  Widget _ctaText(BuildContext context) => Text(
+        MarkeyMapLocalizations.of(context).townCTA(name).toUpperCase(),
         style: MarkeyMapTheme.buttonStyle.copyWith(fontWeight: FontWeight.w700),
       );
 
@@ -267,7 +283,7 @@ class _CallToActionBar extends StatelessWidget {
         '/donate/markeymap',
         <String, String>{
           'refcode': name,
-          'amount': (int.tryParse(zipcode) / 100).toString(),
+          'amount': (int.tryParse(zipcode ?? '100') / 100).toString(),
         },
       ).toString();
 
@@ -280,7 +296,7 @@ class _CallToActionBar extends StatelessWidget {
           'radius': 25.toString(),
           'sort': 2.toString(),
         },
-      ).toString()}#formatted-events";
+      )}#formatted-events";
 
   BoxDecoration get _gradient => const BoxDecoration(
         gradient: LinearGradient(
@@ -295,27 +311,32 @@ class _CallToActionBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Container(
+        constraints: const BoxConstraints(maxHeight: 64),
         decoration: _gradient,
-        height: 64,
         width: double.infinity,
         padding: const EdgeInsets.all(8),
         child: FittedBox(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+          child: Wrap(
+            alignment: WrapAlignment.center,
+            crossAxisAlignment: WrapCrossAlignment.center,
             children: <Widget>[
               Padding(
                 padding: const EdgeInsets.only(right: 4),
-                child: _ctaText,
+                child: _ctaText(context),
               ),
-              _CallToActionButton(
-                text: 'Donate',
-                onTap: () => _launchUrl(_donateLink),
-                color: MarkeyMapTheme.theme.accentColor,
-              ),
-              _CallToActionButton(
-                text: 'Volunteer',
-                onTap: () => _launchUrl(_volunteerLink),
-                color: MarkeyMapTheme.theme.accentColor,
+              Row(
+                children: <Widget>[
+                  _CallToActionButton(
+                    text: MarkeyMapLocalizations.of(context).donate,
+                    onTap: () => _launchUrl(_donateLink),
+                    color: MarkeyMapTheme.theme.accentColor,
+                  ),
+                  _CallToActionButton(
+                    text: MarkeyMapLocalizations.of(context).volunteer,
+                    onTap: () => _launchUrl(_volunteerLink),
+                    color: MarkeyMapTheme.theme.accentColor,
+                  ),
+                ],
               ),
             ],
           ),

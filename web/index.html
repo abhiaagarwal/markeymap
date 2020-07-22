@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta content="IE=Edge" http-equiv="X-UA-Compatible">
-  <meta name="description" content="A new Flutter project.">
+  <meta name="description" content="Learn about what Senator Ed Markey has delivered for your local community with the Markey Map">
 
   <!-- iOS meta tags & icons -->
   <meta name="apple-mobile-web-app-title" content="Markey Map">
@@ -15,13 +15,61 @@
   <!-- Favicon -->
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <link rel="alternate icon" href="/favicon.ico">
-  <link rel="shortcut icon" type="image/png" href="/favicon.png"/>
+  <link rel="shortcut icon" type="image/png" href="/favicon-32x32.png"/>
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
 
+  <!-- MS application -->
   <meta name="application-name" content="Markey Map">
   <meta name="msapplication-TileColor" content="#005196">
-  <meta name="theme-color" content="#ffffff">
+  <meta name="theme-color" content="#005196">
+
+  <!-- Twitter metadata -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@edmarkey">
+  <meta name="twitter:creator" content="@edmarkey">
+  <meta name="twitter:title" content="Markey Map of Massachusetts">
+  <meta name="twitter:description" content="Learn about what Senator Ed Markey has delivered for your local community with the Markey Map">
+  <meta name="twitter:image" content="https://i.imgur.com/NsYnrdV.png">
+
+  <!-- Facebook metadata -->
+  <meta property="og:url" content="https://map.edmarkey.com">
+  <meta property="og:site_name" content="https://edmarkey.com">
+  <meta property="og:title" content="Markey Map of Massachusetts">
+  <meta property="og:determiner" content="the">
+  <meta property="og:description" content="Learn about what Senator Ed Markey has delivered for your local community with the Markey Map">
+  <meta property="og:image" content="https://i.imgur.com/NsYnrdV.png">
+  <meta property="og:image:type" content="image/png">
+  <meta property="og:image:height" content="2880">
+  <meta property="og:image:width" content="1594">
+  <meta property="og:image:alt" content="Screenshot of the Markey Map">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:locale:alternate" content="es">
+
+  <!-- Preload Fonts -->
+  <link rel="preload" as="font" href="/assets/assets/fonts/GothamNarrow-Black.woff2" type="font/woff2" crossorigin="anonymous">
+  <link rel="preload" as="font" href="/assets/assets/fonts/GothamNarrow-BlackItalic.woff2" type="font/woff2" crossorigin="anonymous">
+  <link rel="preload" as="font" href="/assets/assets/fonts/GothamNarrow-Bold.woff2" type="font/woff2" crossorigin="anonymous">
+  <link rel="preload" as="font" href="/assets/assets/fonts/GothamNarrow-BoldItalic.woff2" type="font/woff2" crossorigin="anonymous">
+  <link rel="preload" as="font" href="/assets/assets/fonts/GothamNarrow-Book.woff2" type="font/woff2" crossorigin="anonymous">
+  <link rel="preload" as="font" href="/assets/assets/fonts/GothamNarrow-BookItalic.woff2" type="font/woff2" crossorigin="anonymous">
+  <link rel="preload" as="font" href="/assets/assets/fonts/GothamNarrow-Light.woff2" type="font/woff2" crossorigin="anonymous">
+  <link rel="preload" as="font" href="/assets/assets/fonts/GothamNarrow-LightItalic.woff2" type="font/woff2" crossorigin="anonymous">
+  <link rel="preload" as="font" href="/assets/assets/fonts/GothamNarrow-Medium.woff2" type="font/woff2" crossorigin="anonymous">
+  <link rel="preload" as="font" href="/assets/assets/fonts/GothamNarrow-MediumItalic.woff2" type="font/woff2" crossorigin="anonymous">
+  <link rel="preload" as="font" href="/assets/assets/fonts/GothamNarrow-Thin.woff2" type="font/woff2" crossorigin="anonymous">
+  <link rel="preload" as="font" href="/assets/assets/fonts/GothamNarrow-ThinItalic.woff2" type="font/woff2" crossorigin="anonymous">
+  <link rel="preload" as="font" href="/assets/assets/fonts/GothamNarrow-Ultra.woff2" type="font/woff2" crossorigin="anonymous">
+  <link rel="preload" as="font" href="/assets/assets/fonts/GothamNarrow-UltraItalic.woff2" type="font/woff2" crossorigin="anonymous">
+  <link rel="preload" as="font" href="/assets/assets/fonts/GothamNarrow-XLight.woff2" type="font/woff2" crossorigin="anonymous">
+  <link rel="preload" as="font" href="/assets/assets/fonts/GothamNarrow-XLightItalic.woff2" type="font/woff2" crossorigin="anonymous">
+
+  <!-- Prefetch DNS -->
+  <link rel="preconnect" href="https://sheets.googleapis.com" crossorigin>
+  <link rel="dns-prefetch" href="https://sheets.googleapis.com">
+  <link rel="preconnect" href="https://accounts.google.com" crossorigin>
+  <link rel="dns-prefetch" href="https://accounts.google.com">
 
   <title>Markey Map</title>
   <link rel="manifest" href="manifest.json">
@@ -37,11 +85,25 @@
       });
     }
   </script>
-  <script src="/__/firebase/7.15.5/firebase-app.js"></script>
-  <script src="/__/firebase/7.15.5/firebase-analytics.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-analytics.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-firestore.js"></script>
+  <script>
+    var firebaseConfig = {
+      apiKey: "AIzaSyDvgo5WkYNlBBpSB3go26TgzyjIV1zFVpk",
+      authDomain: "markey-map.firebaseapp.com",
+      databaseURL: "https://markey-map.firebaseio.com",
+      projectId: "markey-map",
+      storageBucket: "markey-map.appspot.com",
+      messagingSenderId: "235565633884",
+      appId: "1:235565633884:web:010e96d0b758f20008f199",
+      measurementId: "G-PQBK8S1EG2"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    firebase.analytics();
+  </script>
 
-  <script src="/__/firebase/init.js"></script>
-
-  <script src="main.dart.js" type="application/javascript"></script>
+  <script src="main.dart.js?version=1.6.4" type="application/javascript"></script>
 </body>
 </html>

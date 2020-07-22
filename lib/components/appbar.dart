@@ -1,91 +1,103 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:markeymap/localization.dart';
 
 import 'package:markeymap/theme.dart';
+import 'package:markeymap/resources.dart' as resources;
 import 'package:markeymap/components/search.dart';
+
+import 'package:url_launcher/url_launcher.dart' as url_launcher;
 
 class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
   const MainAppBar({Key key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) => Column(
-        children: <Widget>[
-          Container(
-            height: 24,
-            width: double.infinity,
-            color: MarkeyMapTheme.theme.accentColor,
-          ),
-          const _Header(),
-          const _SearchBar(),
-        ],
+  Widget build(BuildContext context) => Material(
+        elevation: 2,
+        child: Column(
+          children: const <Widget>[
+            _ReturnBar(),
+            _Header(),
+            _SearchBar(),
+          ],
+        ),
       );
 
   @override
-  Size get preferredSize => const Size.fromHeight(24.0 + 196.0 + 48.0);
+  Size get preferredSize => const Size.fromHeight(20.0 + 196.0 + 48.0);
+}
+
+class _ReturnBar extends StatelessWidget {
+  const _ReturnBar({Key key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) => Container(
+        height: 20,
+        width: double.infinity,
+        padding: const EdgeInsets.symmetric(
+          vertical: 4,
+          horizontal: 8,
+        ),
+        color: MarkeyMapTheme.theme.accentColor,
+        child: InkWell(
+          onTap: () async => await url_launcher.launch('https://edmarkey.com'),
+          mouseCursor: SystemMouseCursors.click,
+          child: Center(
+            child: Text(
+              '← ${MarkeyMapLocalizations.of(context).returnText.toUpperCase()}',
+              textAlign: TextAlign.center,
+              style: MarkeyMapTheme.returnStyle,
+            ),
+          ),
+        ),
+      );
 }
 
 class _Header extends StatelessWidget {
   const _Header({Key key}) : super(key: key);
 
-  Widget _image(BuildContext context) => Image.asset(
-        'assets/header.png',
+  @override
+  Widget build(BuildContext context) => SizedBox(
+        height: 196,
+        width: double.infinity,
+        child: Stack(
+          alignment: Alignment.center,
+          fit: StackFit.expand,
+          children: const <Widget>[
+            _Image(),
+            _Logo(),
+          ],
+        ),
+      );
+}
+
+class _Image extends StatelessWidget {
+  const _Image({Key key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) => Image.asset(
+        resources.Image.header,
         bundle: DefaultAssetBundle.of(context),
         color: Theme.of(context).primaryColor,
         colorBlendMode: BlendMode.softLight,
         fit: BoxFit.cover,
         repeat: ImageRepeat.repeatX,
       );
-
-  @override
-  Widget build(BuildContext context) => Container(
-        height: 196.0,
-        child: Stack(
-          alignment: Alignment.center,
-          fit: StackFit.expand,
-          children: <Widget>[
-            _image(context),
-            const _HeaderText(),
-          ],
-        ),
-      );
 }
 
-class _HeaderText extends StatelessWidget {
-  const _HeaderText({Key key}) : super(key: key);
-
-  Widget get _markey => Text(
-        'Markey'.toUpperCase(),
-        style: MarkeyMapTheme.appBarStyle,
-      );
-
-  Widget _compass(BuildContext context) => SvgPicture.asset(
-        'assets/compass.svg',
-        bundle: DefaultAssetBundle.of(context),
-        height: 42,
-        width: 42,
-      );
-
-  Widget get _map => Text(
-        'Map'.toUpperCase(),
-        style: MarkeyMapTheme.appBarStyle,
-      );
+class _Logo extends StatelessWidget {
+  const _Logo({Key key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) => FittedBox(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8.0),
-          child: Center(
-            child: Column(
-              children: <Widget>[
-                _markey,
-                Row(
-                  children: <Widget>[
-                    _compass(context),
-                    _map,
-                  ],
-                )
-              ],
+  Widget build(BuildContext context) => Padding(
+        padding: const EdgeInsets.all(8),
+        child: Center(
+          child: SizedBox.expand(
+            child: Image.asset(
+              resources.Image.logo,
+              bundle: DefaultAssetBundle.of(context),
+              height: 1346,
+              width: 657,
             ),
           ),
         ),
@@ -104,8 +116,8 @@ class _SearchBar extends StatelessWidget {
         ),
       );
 
-  Widget get _searchText => const Text(
-        'Search your town, city, or county to find out what Ed has done for your community',
+  Widget _searchText(BuildContext context) => Text(
+        MarkeyMapLocalizations.of(context).searchBar,
         style: MarkeyMapTheme.searchBarStyle,
       );
 
@@ -114,21 +126,19 @@ class _SearchBar extends StatelessWidget {
         height: 48,
         width: double.infinity,
         color: const Color(0xFF00345C),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(
-            vertical: 8.0,
-            horizontal: 16.0,
-          ),
-          child: InkWell(
-            onTap: () => handleSearch(context),
-            mouseCursor: SystemMouseCursors.text,
-            child: FittedBox(
-              child: Row(
-                children: <Widget>[
-                  _searchIcon,
-                  _searchText,
-                ],
-              ),
+        padding: const EdgeInsets.symmetric(
+          vertical: 8,
+          horizontal: 16,
+        ),
+        child: InkWell(
+          onTap: () => handleSearch(context),
+          mouseCursor: SystemMouseCursors.text,
+          child: FittedBox(
+            child: Row(
+              children: <Widget>[
+                _searchIcon,
+                _searchText(context),
+              ],
             ),
           ),
         ),

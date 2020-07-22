@@ -1,9 +1,15 @@
 import 'dart:collection';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:gsheets/gsheets.dart' as sheets;
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+
+import 'package:markeymap/resources.dart' as resources;
+import 'package:markeymap/theme.dart';
 import 'package:markeymap/components/loading.dart';
 import 'package:markeymap/models/action.dart';
 import 'package:markeymap/models/county.dart';
@@ -44,6 +50,20 @@ class MarkeyMapBuilder extends StatelessWidget {
       Key key})
       : super(key: key);
 
+  Future<void> _preloadSVGs(
+      BuildContext context, List<String> townNames) async {
+    for (final String name in townNames) {
+      // ignore: unawaited_futures
+      precachePicture(
+        SvgPicture.asset(
+          '${resources.SVG.townSvg}${name.trim().replaceAll(' ', '-')}.svg',
+          bundle: DefaultAssetBundle.of(context),
+        ).pictureProvider,
+        context,
+      );
+    }
+  }
+
   Future<Map<County, List<Town>>> _data(BuildContext context) async {
     final sheets.GSheets api = sheets.GSheets(
         await DefaultAssetBundle.of(context).loadString(credentialsFile));
@@ -80,6 +100,11 @@ class MarkeyMapBuilder extends StatelessWidget {
           print('Error while parsing $row, exception $e');
         }
       }
+      // ignore: unawaited_futures
+      compute<List<String>, void>(
+        (List<String> townNames) => _preloadSVGs(context, townNames),
+        towns.keys.toList(),
+      );
       towns.forEach(
         (String name, List<EdAction> actions) => countiesList[county].add(
           Town(
@@ -92,6 +117,55 @@ class MarkeyMapBuilder extends StatelessWidget {
     }
 
     return countiesList;
+
+    /*
+    print('Converting Google Sheets Data to Firebase');
+    FirebaseFirestore store = FirebaseFirestore.instance;
+    for (County county in countiesList.keys) {
+      CollectionReference reference =
+          store.collection(county.name.toLowerCase());
+      for (Town town in countiesList[county]) {
+        reference.doc(town.name.toLowerCase()).set(<String, dynamic>{
+          'zipcode': town.zipcode,
+          'actions': town.actions.map<Map<String, dynamic>>(
+            (EdAction action) => <String, dynamic>{
+              'date': action.date,
+              'description': action.description,
+              'type': action.type.name.toLowerCase(),
+              'link': action.url,
+              'funding': action.funding,
+            },
+          ),
+        });
+      }
+    }
+    */
+    /*
+    final FirebaseFirestore store = FirebaseFirestore.instance;
+    try {
+      await store.enablePersistence();
+    } catch (e) {
+      print(e);
+    }
+    Map<County, List<Town>> countiesList = <County, List<Town>>{
+      for (final County county in County.values)
+        county: (await store.collection(county.name.toLowerCase()).get())
+            .docs
+            .map<Town>(
+              (QueryDocumentSnapshot document) => Town.fromMap(
+                document.data()
+                  ..addAll(
+                    <String, String>{'name': document.id},
+                  ),
+              ),
+            )
+            .toList(),
+    }..forEach(
+        (County county, List<Town> towns) => compute<List<String>, void>(
+          (List<String> townNames) => _preloadSVGs(context, townNames),
+          towns.map<String>((Town town) => town.name).toList(),
+        ),
+      );*/
   }
 
   @override
@@ -102,11 +176,34 @@ class MarkeyMapBuilder extends StatelessWidget {
           AsyncSnapshot<Map<County, List<Town>>> snapshot,
         ) =>
             AnimatedSwitcher(
-          duration: const Duration(milliseconds: 300),
+          duration: MarkeyMapTheme.animationDuration,
           child: () {
+            compute(
+              (dynamic _) => precacheImage(
+                AssetImage(
+                  resources.Image.header,
+                  bundle: DefaultAssetBundle.of(context),
+                ),
+                context,
+              ),
+              null,
+            );
+            compute(
+              (dynamic _) => precacheImage(
+                AssetImage(
+                  resources.Image.logo,
+                  bundle: DefaultAssetBundle.of(context),
+                ),
+                context,
+              ),
+              null,
+            );
+            if (snapshot.hasError) {
+              print(snapshot.error);
+            }
             switch (snapshot.connectionState) {
               case ConnectionState.done:
-                if (snapshot.data != null) {
+                if (snapshot.hasData) {
                   return MarkeyMapData(
                     key: const ValueKey<int>(2),
                     data: snapshot.data,
@@ -115,6 +212,12 @@ class MarkeyMapBuilder extends StatelessWidget {
                 } else {
                   return Container(
                     key: const ValueKey<int>(3),
+                    child: const Center(
+                      child: Text(
+                        'Thank you so much for visiting. The Markey Map is experiencing high volume. Please Refresh.',
+                        style: MarkeyMapTheme.funFactStyle,
+                      ),
+                    ),
                   );
                 }
                 break;

@@ -5,35 +5,29 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
 
 import 'package:markeymap/data.dart';
+import 'package:markeymap/popup.dart';
+import 'package:markeymap/localization.dart';
 import 'package:markeymap/models/county.dart';
 import 'package:markeymap/components/town_list.dart';
 import 'package:markeymap/components/svg_map.dart';
-import 'package:markeymap/popup.dart';
+import 'package:markeymap/utils/string.dart';
 
 class InteractiveMap extends StatelessWidget {
   const InteractiveMap({Key key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) => Container(
-        width: CountySize.size.width,
-        height: CountySize.size.height,
+  Widget build(BuildContext context) => SizedBox.fromSize(
+        size: CountySize.size,
         child: Transform.rotate(
-          angle: (-math.pi / 180.0) * 10,
+          angle: (math.pi / 180.0) * -10,
           child: Transform.scale(
             scale: 0.9,
             child: Stack(
-              children: () {
-                final List<County> counties = MarkeyMapData.of(context)
-                    .data
-                    .keys
-                    .toList()
-                      ..remove(County.Other);
-                      // Let's ignore how hacky this is
-                return counties;
-              }()
+              children: MarkeyMapData.of(context)
+                  .data
+                  .keys
                   .map<_CountyObject>((County county) => _CountyObject(county))
                   .toList(),
-              overflow: Overflow.visible,
             ),
           ),
         ),
@@ -55,7 +49,8 @@ class _CountyObject extends StatelessWidget {
         highlightColor: const Color(0xFF00345C),
         onTap: () => showPopup(
           context,
-          title: '${county.name} County',
+          title: MarkeyMapLocalizations.of(context)
+              .countyName(county.name.toCapitalize()),
           scaffoldColor: Theme.of(context).primaryColor,
           body: TownList(
             county: county,

@@ -9,33 +9,33 @@ part 'svg_map.svg_path.g.dart';
 extension PathExtension on County {
   Path get path {
     switch (this) {
-      case County.Barnstable:
+      case County.barnstable:
         return _MapSVGData.Barnstable;
-      case County.Berkshire:
+      case County.berkshire:
         return _MapSVGData.Berkshire;
-      case County.Bristol:
+      case County.bristol:
         return _MapSVGData.Bristol;
-      case County.Dukes:
+      case County.dukes:
         return _MapSVGData.Dukes;
-      case County.Essex:
+      case County.essex:
         return _MapSVGData.Essex;
-      case County.Franklin:
+      case County.franklin:
         return _MapSVGData.Franklin;
-      case County.Hampden:
+      case County.hampden:
         return _MapSVGData.Hampden;
-      case County.Hampshire:
+      case County.hampshire:
         return _MapSVGData.Hampshire;
-      case County.Nantucket:
+      case County.nantucket:
         return _MapSVGData.Nantucket;
-      case County.Norfolk:
+      case County.norfolk:
         return _MapSVGData.Norfolk;
-      case County.Middlesex:
+      case County.middlesex:
         return _MapSVGData.Middlesex;
-      case County.Plymouth:
+      case County.plymouth:
         return _MapSVGData.Plymouth;
-      case County.Suffolk:
+      case County.suffolk:
         return _MapSVGData.Suffolk;
-      case County.Worcester:
+      case County.worcester:
         return _MapSVGData.Worcester;
       default:
         return Path();
@@ -51,7 +51,7 @@ class _MapSVGData {
   static const double width = 1270.0238;
   static const double height = 701.0781;
 
-  // ignore_for_file: non_constant_identifier_names
+  // ignore_for_file: non_constant_identifier_names, lines_longer_than_80_chars
   @SvgPath(
       'M929.5238,583.0781l-10-8s11-3,12-8,0-18,0-18v-13s-4-8,0-9,9,0,7-3-10,0-9-3,2,0,5-3,1-9,0-8-2,5-5,4-3-10,0-10,8,0,9-3,0-8,0-8l-7-2s.6482-2.3277,2.8241-1.6639c0,0,9.1759,4.6639,4.1759-13.3361,0,0,0-3,16-8,0,0,5-1,12-12,0,0,24,30,52,32,0,0,28-2,30,0s4,5,2,5h-10c-4,0-9-1-9,1s2,4,5,4,13-1,13-1h7s14-15,17-15,14-3,14-3,48-5,51-19,3-19,3-19-3,2-3-1v-15c0-1-4-4-4-6s-1-2,3-2,6,0,4-2-4,0-6-2-2-1-3-4a29.5394,29.5394,0,0,0-3-6s-7-1-8,1-1,9-1,9v5s1,8-1,6-3-6-3-6v-8l-1-6v-24c0-3,0-9-2-11s-9-19-18-20-12-4-14,1-7,7-5,10,1,4,4,3a14.0926,14.0926,0,0,0,5-3s2,6-1,7-3,4-7,2-6-3-7-6-3-14-5-13-3,4-4,3-1-4-1-6,3-6,5-7,14-2,16-2,20,3,26,7,32,19,47,71,15,69,15,69v18l-3-1-2-9v-15l-2-3-5,1s-1-1-2,3,1,7-1,8-6,0-7,1-4,3-3,4,1,3,4,1,5-3,8-3,5,2,5,3,1,9,1,9l1,5v6s-2,3-2,5-5,13-5,16-3,3-3,8a37.2969,37.2969,0,0,1-2,12,46.7108,46.7108,0,0,1-5,10c-2,3-2,5-5,4s-4-3-2-4,3-1,4-5,3-9,3-13-1-8,1-10,4-2,5-6,3-7,0-8-7-6-8-6-13,0-16,1-17,4-17,4l-17,4h-12l-8,4-9,5-6,6s-4,3-4,2,0-5,1-7,5-4,5-6-7-2-7-2l-4,5s-6,5-9,5-4-4-4-4l-9-1-8,5s2,2-1,3-6,4-7,4-4-3-4-3l-5-1-5,6s3,0,2,2-14,19-14,19-5,3-8,3-6-3-5-4,4-3,3-6,0-5-3-4-6,5-6,5-4,3-2,3,4-2,4,0v6s-19-3-27,1S929.5238,583.0781,929.5238,583.0781Z')
   static Path get Barnstable => _$_MapSVGData_Barnstable;

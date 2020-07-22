@@ -1,0 +1,79 @@
+{
+  "@@last_modified": "2020-07-16T10:37:47.896140",
+  "title": "Markey Map",
+  "@title": {
+    "description": "App Title",
+    "type": "text",
+    "placeholders": {}
+  },
+  "searchBar": "Search your town, city, or county to see how Ed Markey has delivered for your community",
+  "@searchBar": {
+    "description": "Place to search for communities",
+    "type": "text",
+    "placeholders": {}
+  },
+  "countyName": "{county} County",
+  "@countyName": {
+    "description": "Proper way to display County",
+    "type": "text",
+    "placeholders": {
+      "county": {}
+    }
+  },
+  "totalSecured": "Total Secured: {amount}",
+  "@totalSecured": {
+    "description": "Amount of money secured for a community",
+    "type": "text",
+    "placeholders": {
+      "amount": {
+        "example": 120000.0
+      }
+    }
+  },
+  "navigate": "How to Navigate",
+  "@navigate": {
+    "description": "How to Navigate Button",
+    "type": "text",
+    "placeholders": {}
+  },
+  "statewideAccomplishments": "Statewide Accomplishments",
+  "@statewideAccomplishments": {
+    "description": "Statewide Accomplishmnets outside of Counties button",
+    "type": "text",
+    "placeholders": {}
+  },
+  "donate": "Donate",
+  "@donate": {
+    "description": "Donate button",
+    "type": "text",
+    "placeholders": {}
+  },
+  "volunteer": "Volunteer",
+  "@volunteer": {
+    "description": "Volunteer button",
+    "type": "text",
+    "placeholders": {}
+  },
+  "getInvolved": "Get Involved",
+  "@getInvolved": {
+    "description": "Get involved button",
+    "type": "text",
+    "placeholders": {}
+  },
+  "townCTA": "Help Ed fight for {town}",
+  "@townCTA": {
+    "description": "Call-to-Action to Donate",
+    "type": "text",
+    "placeholders": {
+      "town": {
+        "example": "Andover"
+      }
+    }
+  },
+  "didYouKnow": "Did you know?",
+  "@didYouKnow": {
+    "description": "Did you know text for loading page",
+    "type": "text",
+    "placeholders": {}
+  }
+}
