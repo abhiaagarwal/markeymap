@@ -6,6 +6,8 @@ import 'package:markeymap/theme.dart';
 import 'package:markeymap/resources.dart' as resources;
 import 'package:markeymap/components/search.dart';
 
+import 'package:url_launcher/url_launcher.dart' as url_launcher;
+
 class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
   const MainAppBar({Key key}) : super(key: key);
 
@@ -13,20 +15,42 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) => Material(
         elevation: 2,
         child: Column(
-          children: <Widget>[
-            Container(
-              height: 24,
-              width: double.infinity,
-              color: MarkeyMapTheme.theme.accentColor,
-            ),
-            const _Header(),
-            const _SearchBar(),
+          children: const <Widget>[
+            _ReturnBar(),
+            _Header(),
+            _SearchBar(),
           ],
         ),
       );
 
   @override
-  Size get preferredSize => const Size.fromHeight(24.0 + 196.0 + 48.0);
+  Size get preferredSize => const Size.fromHeight(20.0 + 196.0 + 48.0);
+}
+
+class _ReturnBar extends StatelessWidget {
+  const _ReturnBar({Key key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) => Container(
+        height: 20,
+        width: double.infinity,
+        padding: const EdgeInsets.symmetric(
+          vertical: 4,
+          horizontal: 8,
+        ),
+        color: MarkeyMapTheme.theme.accentColor,
+        child: InkWell(
+          onTap: () async => await url_launcher.launch('https://edmarkey.com'),
+          mouseCursor: SystemMouseCursors.click,
+          child: Center(
+            child: Text(
+              '← ${MarkeyMapLocalizations.of(context).returnText.toUpperCase()}',
+              textAlign: TextAlign.center,
+              style: MarkeyMapTheme.returnStyle,
+            ),
+          ),
+        ),
+      );
 }
 
 class _Header extends StatelessWidget {
@@ -42,8 +66,9 @@ class _Header extends StatelessWidget {
       );
 
   @override
-  Widget build(BuildContext context) => Container(
+  Widget build(BuildContext context) => SizedBox(
         height: 196,
+        width: double.infinity,
         child: Stack(
           alignment: Alignment.center,
           fit: StackFit.expand,

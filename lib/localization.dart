@@ -104,6 +104,12 @@ class MarkeyMapLocalizations {
         name: 'didYouKnow',
         desc: 'Did you know text for loading page',
       );
+
+  String get returnText => Intl.message(
+        'Return to EdMarkey.com',
+        name: 'returnText',
+        desc: 'Text that returns you to EdMarkey.com',
+      );
 }
 
 class _MarkeyMapLocalizationsDelegate

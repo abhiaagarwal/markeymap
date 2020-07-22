@@ -91,4 +91,11 @@ class MarkeyMapTheme {
     color: Colors.black,
     fontSize: 24,
   );
+
+  static const TextStyle returnStyle = TextStyle(
+    fontFamily: 'Gotham Narrow',
+    color: Colors.white,
+    fontSize: 12,
+    fontWeight: FontWeight.w700,
+  );
 }
