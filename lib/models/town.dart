@@ -18,6 +18,17 @@ class Town {
                 EdAction.fromMap(element as Map<String, dynamic>))
             .toList();
 
+  Map<String, dynamic> toMap() => <String, dynamic>{
+        'name': name,
+        'actions': actions
+            .map<Map<String, dynamic>>((EdAction action) => action.toMap())
+            .toList(),
+        'zipcode': zipcode,
+      };
+
   double get totalSecured =>
       actions.fold<double>(0, (double p, EdAction e) => p + (e.funding ?? 0));
+
+  @override
+  String toString() => toMap().toString();
 }

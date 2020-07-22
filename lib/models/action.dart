@@ -49,4 +49,15 @@ class EdAction {
         description = data['description'] as String,
         funding = data['funding'] as double,
         url = data['url'] as String;
+
+  Map<String, dynamic> toMap() => <String, dynamic>{
+        'date': date,
+        'type': type.name,
+        'description': description,
+        'funding': funding.toString(),
+        'url': url,
+      };
+
+  @override
+  String toString() => toMap().toString();
 }
