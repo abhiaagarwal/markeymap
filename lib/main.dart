@@ -12,6 +12,10 @@ import 'package:markeymap/theme.dart';
 import 'package:markeymap/router.gr.dart';
 import 'package:markeymap/localization.dart';
 
+import 'package:markeymap/components/appbar.dart';
+import 'package:markeymap/components/map.dart';
+import 'package:markeymap/components/bottombar.dart';
+
 void main() => runApp(const MarkeyMapApp());
 
 class MarkeyMapApp extends StatelessWidget {
