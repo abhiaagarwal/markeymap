@@ -13,6 +13,8 @@ analyzer:
     - "bin/cache/**"
     - "lib/translations/messages_*.dart"
     - "lib/src/http/**"
+    - "lib/router.gr.dart"
+    - "lib/components/svg_map.svg_path.g.dart"
 
 linter:
   rules:

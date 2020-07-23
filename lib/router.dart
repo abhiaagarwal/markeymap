@@ -7,10 +7,9 @@ import 'package:markeymap/pages/map_page.dart';
 import 'package:markeymap/pages/town_list_page.dart';
 
 @CustomAutoRouter(
-  routes: <AutoRoute>[
+  routes: <AutoRoute<dynamic>>[
     CustomRoute<void>(
       page: MapPage,
-      path: MapPage.route,
       initial: true,
     ),
     /*
