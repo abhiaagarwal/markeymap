@@ -1,34 +1,26 @@
-import 'package:markeymap/models/action.dart';
+import 'package:flutter/foundation.dart';
 
-import 'package:meta/meta.dart';
-
-class Town {
+class Town with DiagnosticableTreeMixin {
   final String name;
-  final List<EdAction> actions;
   final String zipcode;
-  const Town({@required this.name, @required this.actions, this.zipcode})
+  const Town({@required this.name, @required this.zipcode})
       : assert(name != null),
-        assert(actions != null);
+        assert(zipcode != null);
 
   Town.fromMap(Map<String, dynamic> data)
       : name = data['name'] as String,
-        zipcode = data['zipcode'] as String,
-        actions = (data['actions'] as List<dynamic>)
-            .map<EdAction>((dynamic element) =>
-                EdAction.fromMap(element as Map<String, dynamic>))
-            .toList();
+        zipcode = data['zipcode'] as String;
 
   Map<String, dynamic> toMap() => <String, dynamic>{
         'name': name,
-        'actions': actions
-            .map<Map<String, dynamic>>((EdAction action) => action.toMap())
-            .toList(),
         'zipcode': zipcode,
       };
 
-  double get totalSecured =>
-      actions.fold<double>(0, (double p, EdAction e) => p + (e.funding ?? 0));
-
   @override
-  String toString() => toMap().toString();
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(StringProperty('name', name))
+      ..add(StringProperty('zipcode', zipcode));
+  }
 }

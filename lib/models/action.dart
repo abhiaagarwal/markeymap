@@ -1,4 +1,4 @@
-import 'package:meta/meta.dart';
+import 'package:flutter/foundation.dart';
 
 enum ActionType {
   grant,
@@ -20,7 +20,7 @@ extension ActionTypeExtension on String {
       );
 }
 
-class EdAction {
+class EdAction with DiagnosticableTreeMixin {
   final String date;
   final ActionType type;
   final String description;
@@ -59,5 +59,18 @@ class EdAction {
       };
 
   @override
-  String toString() => toMap().toString();
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(StringProperty('date', date))
+      ..add(EnumProperty<ActionType>('type', type))
+      ..add(StringProperty('description', description))
+      ..add(DoubleProperty('funding', funding))
+      ..add(StringProperty('url', url));
+  }
+}
+
+extension TotalSecuredExtension on List<EdAction> {
+  double get totalSecured =>
+      fold<double>(0, (double p, EdAction e) => p + (e.funding ?? 0));
 }
