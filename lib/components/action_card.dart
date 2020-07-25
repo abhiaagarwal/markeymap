@@ -82,25 +82,27 @@ class _ActionList extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 16),
             constraints: const BoxConstraints(maxWidth: 800),
             alignment: Alignment.center,
-            child: ListView.builder(
-              controller: _scrollController,
-              itemCount: actions.length + 2,
-              itemBuilder: (BuildContext context, int index) {
-                if (index == 1 - 1) {
-                  return _ActionHeader(
-                    name: name,
-                  );
-                }
-                if (index == (actions.length + 2) - 1) {
-                  if (totalSecured == null || totalSecured == 0.0) {
-                    return null;
+            child: RepaintBoundary(
+              child: ListView.builder(
+                controller: _scrollController,
+                itemCount: actions.length + 2,
+                itemBuilder: (BuildContext context, int index) {
+                  if (index == 1 - 1) {
+                    return _ActionHeader(
+                      name: name,
+                    );
                   }
-                  return _TotalSecured(totalSecured: totalSecured);
-                }
-                return _ActionTileCard(
-                  action: actions[index - 1],
-                );
-              },
+                  if (index == (actions.length + 2) - 1) {
+                    if (totalSecured == null || totalSecured == 0.0) {
+                      return null;
+                    }
+                    return _TotalSecured(totalSecured: totalSecured);
+                  }
+                  return _ActionTileCard(
+                    action: actions[index - 1],
+                  );
+                },
+              ),
             ),
           ),
         ),
@@ -203,7 +205,7 @@ class _ActionTileCard extends StatelessWidget {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            if(action.date != null) _datePart,
+            if (action.date != null) _datePart,
             () {
               if (action.type == ActionType.endorsement) {
                 return _endorsedPart;

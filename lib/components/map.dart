@@ -22,12 +22,15 @@ class InteractiveMap extends StatelessWidget {
           angle: (math.pi / 180.0) * -10,
           child: Transform.scale(
             scale: 0.9,
-            child: Stack(
-              children: MarkeyMapData.of(context)
-                  .data
-                  .keys
-                  .map<_CountyObject>((County county) => _CountyObject(county))
-                  .toList(),
+            child: RepaintBoundary(
+              child: Stack(
+                children: MarkeyMapData.of(context)
+                    .data
+                    .keys
+                    .map<_CountyObject>(
+                        (County county) => _CountyObject(county))
+                    .toList(),
+              ),
             ),
           ),
         ),
