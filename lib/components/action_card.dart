@@ -2,14 +2,14 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:markeymap/localization.dart';
 
 import 'package:url_launcher/url_launcher.dart' as url_launcher;
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:money2/money2.dart';
+import 'package:intl/intl.dart';
 
 import 'package:markeymap/theme.dart';
 import 'package:markeymap/resources.dart' as resources;
+import 'package:markeymap/localization.dart';
 import 'package:markeymap/models/action.dart';
 import 'package:markeymap/utils/string.dart';
 
@@ -236,14 +236,10 @@ class _TotalSecured extends StatelessWidget {
   final double totalSecured;
   const _TotalSecured({@required this.totalSecured, Key key}) : super(key: key);
 
-  String get _formattedMoney => Money.from(
-        totalSecured,
-        Currency.create(
-          'USD',
-          2,
-          pattern: 'S0,000.00',
-        ),
-      ).toString();
+  String get _formattedMoney => NumberFormat.currency(
+        symbol: '\$',
+        decimalDigits: 2,
+      ).format(totalSecured);
 
   Widget get _text => RichText(
         text: TextSpan(
