@@ -68,45 +68,46 @@ class _ActionList extends StatelessWidget {
   final String name;
   final List<EdAction> actions;
   final double totalSecured;
-  _ActionList({this.name, this.actions, this.totalSecured, Key key})
+  const _ActionList({this.name, this.actions, this.totalSecured, Key key})
       : super(key: key);
 
-  final ScrollController _scrollController = ScrollController();
-
   @override
-  Widget build(BuildContext context) => Expanded(
-        child: Scrollbar(
-          controller: _scrollController,
-          isAlwaysShown: true,
-          child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            constraints: const BoxConstraints(maxWidth: 800),
-            alignment: Alignment.center,
-            child: RepaintBoundary(
-              child: ListView.builder(
-                controller: _scrollController,
-                itemCount: actions.length + 2,
-                itemBuilder: (BuildContext context, int index) {
-                  if (index == 1 - 1) {
-                    return _ActionHeader(
-                      name: name,
-                    );
-                  }
-                  if (index == (actions.length + 2) - 1) {
-                    if (totalSecured == null || totalSecured == 0.0) {
-                      return null;
-                    }
-                    return _TotalSecured(totalSecured: totalSecured);
-                  }
-                  return _ActionTileCard(
-                    action: actions[index - 1],
+  Widget build(BuildContext context) {
+    final ScrollController _scrollController = ScrollController();
+    return Expanded(
+      child: Scrollbar(
+        controller: _scrollController,
+        isAlwaysShown: true,
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          constraints: const BoxConstraints(maxWidth: 800),
+          alignment: Alignment.center,
+          child: RepaintBoundary(
+            child: ListView.builder(
+              controller: _scrollController,
+              itemCount: actions.length + 2,
+              itemBuilder: (BuildContext context, int index) {
+                if (index == 1 - 1) {
+                  return _ActionHeader(
+                    name: name,
                   );
-                },
-              ),
+                }
+                if (index == (actions.length + 2) - 1) {
+                  if (totalSecured == null || totalSecured == 0.0) {
+                    return null;
+                  }
+                  return _TotalSecured(totalSecured: totalSecured);
+                }
+                return _ActionTileCard(
+                  action: actions[index - 1],
+                );
+              },
             ),
           ),
         ),
-      );
+      ),
+    );
+  }
 }
 
 class _ActionHeader extends StatelessWidget {
