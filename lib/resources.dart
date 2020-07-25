@@ -1,25 +1,35 @@
-class Image {
-  const Image();
+class Resource {
+  const Resource();
 
-  static const String header = 'assets/header.png';
-  static const String logo = 'assets/logo.png';
-  static const String texture = 'assets/texture.png';
+  _Image get images => const _Image();
+  _Video get videos => const _Video();
+  _SVG get svg => const _SVG();
+  _Data get data => const _Data();
 }
 
-class Video {
-  const Video();
+class _Image {
+  const _Image();
 
-  static const String introVideo = 'assets/intro_video.mp4';
+  String get header => 'assets/header.png';
+  String get logo => 'assets/logo.png';
+  String get texture => 'assets/texture.png';
 }
 
-class SVG {
-  const SVG();
+class _Video {
+  const _Video();
 
-  static const String townSvg = 'assets/svgs/';
+  String get introVideo => 'assets/intro_video.mp4';
 }
 
-class Data {
-  const Data();
+class _SVG {
+  const _SVG();
 
-  static const String credentials = 'assets/credentials.json';
+  String townSvg(String name) => 'assets/svgs/${name.toLowerCase().trim().replaceAll(' ', '-')}.svg';
+}
+
+class _Data {
+  const _Data();
+
+  String get credentials => 'assets/credentials.json';
+  String get sheetId => '18ERHHKICDJ3JGk2NcRjmU38KjXxdmNgDab9iqu_PwSQ';
 }

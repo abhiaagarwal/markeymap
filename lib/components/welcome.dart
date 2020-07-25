@@ -2,7 +2,8 @@ import 'dart:html';
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
-import 'package:markeymap/resources.dart' as resources;
+import 'package:provider/provider.dart';
+import 'package:markeymap/resources.dart';
 
 // import 'package:video_player/video_player.dart';
 
@@ -57,9 +58,9 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({Key key}) : super(key: key);
 
-  BoxDecoration get _decoration => const BoxDecoration(
+  BoxDecoration _decoration(BuildContext context) => BoxDecoration(
         image: DecorationImage(
-          image: AssetImage(resources.Image.texture),
+          image: AssetImage(Provider.of<Resource>(context).images.texture),
           repeat: ImageRepeat.repeat,
         ),
       );
@@ -78,7 +79,7 @@ class WelcomeScreen extends StatelessWidget {
       (int viewId) => _iframeElement,
     );
     return Container(
-      decoration: _decoration,
+      decoration: _decoration(context),
       child: const HtmlElementView(
         viewType: 'iframeElement',
       ),

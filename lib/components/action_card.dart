@@ -6,9 +6,10 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 import 'package:markeymap/localization.dart';
 import 'package:markeymap/models/action.dart';
-import 'package:markeymap/resources.dart' as resources;
+import 'package:markeymap/resources.dart';
 import 'package:markeymap/theme.dart';
 import 'package:markeymap/utils/string.dart';
+import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart' as url_launcher;
 
 Future<void> _launchUrl(final String url) async {
@@ -113,7 +114,7 @@ class _ActionHeader extends StatelessWidget {
   const _ActionHeader({@required this.name, Key key}) : super(key: key);
 
   Widget image(BuildContext context) => SvgPicture.asset(
-        '${resources.SVG.townSvg}${name.toLowerCase().trim().replaceAll(' ', '-')}.svg',
+        Provider.of<Resource>(context).svg.townSvg(name),
         bundle: DefaultAssetBundle.of(context),
         height: 1366,
         width: 738,

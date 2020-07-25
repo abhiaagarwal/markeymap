@@ -22,7 +22,7 @@ Future<void> handleSearch(BuildContext context) async {
     body: ActionCard(
       name: town.name,
       actions: town.actions,
-      totalSecured: town.totalSecured,
+      totalSecured: 0,
       zipcode: town.zipcode,
     ),
   );

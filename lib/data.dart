@@ -7,8 +7,9 @@ import 'package:markeymap/components/loading.dart';
 import 'package:markeymap/models/action.dart';
 import 'package:markeymap/models/county.dart';
 import 'package:markeymap/models/town.dart';
-import 'package:markeymap/resources.dart' as resources;
 import 'package:markeymap/theme.dart';
+import 'package:markeymap/resources.dart';
+import 'package:provider/provider.dart';
 
 class MarkeyMapData extends InheritedWidget {
   final Map<County, List<Town>> data;
@@ -182,7 +183,7 @@ class MarkeyMapBuilder extends StatelessWidget {
             compute(
               (dynamic _) => precacheImage(
                 AssetImage(
-                  resources.Image.header,
+                  Provider.of<Resource>(context).images.header,
                   bundle: DefaultAssetBundle.of(context),
                 ),
                 context,
@@ -192,7 +193,7 @@ class MarkeyMapBuilder extends StatelessWidget {
             compute(
               (dynamic _) => precacheImage(
                 AssetImage(
-                  resources.Image.logo,
+                  Provider.of<Resource>(context).images.logo,
                   bundle: DefaultAssetBundle.of(context),
                 ),
                 context,

@@ -34,7 +34,7 @@ class TownList extends StatelessWidget {
               body: ActionCard(
                 name: towns[index].name,
                 actions: towns[index].actions,
-                totalSecured: towns[index].totalSecured,
+                totalSecured: 0,
                 zipcode: towns[index].zipcode,
               ),
             ),

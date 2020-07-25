@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:markeymap/components/search.dart';
 import 'package:markeymap/localization.dart';
-import 'package:markeymap/resources.dart' as resources;
+import 'package:markeymap/resources.dart';
 import 'package:markeymap/theme.dart';
+import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart' as url_launcher;
 
 class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -74,7 +75,7 @@ class _Image extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Image.asset(
-        resources.Image.header,
+        Provider.of<Resource>(context).images.header,
         bundle: DefaultAssetBundle.of(context),
         color: Theme.of(context).primaryColor,
         colorBlendMode: BlendMode.softLight,
@@ -92,7 +93,7 @@ class _Logo extends StatelessWidget {
         child: Center(
           child: SizedBox.expand(
             child: Image.asset(
-              resources.Image.logo,
+              Provider.of<Resource>(context).images.logo,
               bundle: DefaultAssetBundle.of(context),
               height: 1346,
               width: 657,
