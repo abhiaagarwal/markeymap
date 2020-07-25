@@ -118,6 +118,19 @@ class _ActionHeader extends StatelessWidget {
         bundle: DefaultAssetBundle.of(context),
         height: 1366,
         width: 738,
+        placeholderBuilder: (BuildContext context) => const DecoratedBox(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.centerLeft,
+              end: Alignment.centerRight,
+              colors: <Color>[
+                Color(0xFF005B97),
+                Color(0xFFCCE0F4),
+              ],
+            ),
+            shape: BoxShape.circle,
+          ),
+        ),
       );
 
   @override
