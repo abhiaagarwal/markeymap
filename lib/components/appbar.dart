@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:markeymap/localization.dart';
-
-import 'package:markeymap/theme.dart';
-import 'package:markeymap/resources.dart' as resources;
 import 'package:markeymap/components/search.dart';
-
+import 'package:markeymap/localization.dart';
+import 'package:markeymap/resources.dart' as resources;
+import 'package:markeymap/theme.dart';
 import 'package:url_launcher/url_launcher.dart' as url_launcher;
 
 class MainAppBar extends StatelessWidget implements PreferredSizeWidget {

@@ -2,18 +2,13 @@ import 'dart:collection';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-
 import 'package:gsheets/gsheets.dart' as sheets;
-
-import 'package:cloud_firestore/cloud_firestore.dart';
-
-import 'package:markeymap/resources.dart' as resources;
-import 'package:markeymap/theme.dart';
 import 'package:markeymap/components/loading.dart';
 import 'package:markeymap/models/action.dart';
 import 'package:markeymap/models/county.dart';
 import 'package:markeymap/models/town.dart';
+import 'package:markeymap/resources.dart' as resources;
+import 'package:markeymap/theme.dart';
 
 class MarkeyMapData extends InheritedWidget {
   final Map<County, List<Town>> data;
@@ -50,6 +45,7 @@ class MarkeyMapBuilder extends StatelessWidget {
       Key key})
       : super(key: key);
 
+  /*
   Future<void> _preloadSVGs(
       BuildContext context, List<String> townNames) async {
     for (final String name in townNames) {
@@ -63,6 +59,7 @@ class MarkeyMapBuilder extends StatelessWidget {
       );
     }
   }
+  */
 
   Future<Map<County, List<Town>>> _data(BuildContext context) async {
     final sheets.GSheets api = sheets.GSheets(
@@ -100,11 +97,15 @@ class MarkeyMapBuilder extends StatelessWidget {
           print('Error while parsing $row, exception $e');
         }
       }
+
+      /*
       // ignore: unawaited_futures
       compute<List<String>, void>(
         (List<String> townNames) => _preloadSVGs(context, townNames),
         towns.keys.toList(),
       );
+      */
+
       towns.forEach(
         (String name, List<EdAction> actions) => countiesList[county].add(
           Town(

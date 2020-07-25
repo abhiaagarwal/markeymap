@@ -2,16 +2,14 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:markeymap/localization.dart';
-
-import 'package:url_launcher/url_launcher.dart' as url_launcher;
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:money2/money2.dart';
-
-import 'package:markeymap/theme.dart';
-import 'package:markeymap/resources.dart' as resources;
+import 'package:intl/intl.dart';
+import 'package:markeymap/localization.dart';
 import 'package:markeymap/models/action.dart';
+import 'package:markeymap/resources.dart' as resources;
+import 'package:markeymap/theme.dart';
 import 'package:markeymap/utils/string.dart';
+import 'package:url_launcher/url_launcher.dart' as url_launcher;
 
 Future<void> _launchUrl(final String url) async {
   if (url == null) {
@@ -68,20 +66,21 @@ class _ActionList extends StatelessWidget {
   final String name;
   final List<EdAction> actions;
   final double totalSecured;
-  _ActionList({this.name, this.actions, this.totalSecured, Key key})
+  const _ActionList({this.name, this.actions, this.totalSecured, Key key})
       : super(key: key);
 
-  final ScrollController _scrollController = ScrollController();
-
   @override
-  Widget build(BuildContext context) => Expanded(
-        child: Scrollbar(
-          controller: _scrollController,
-          isAlwaysShown: true,
-          child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            constraints: const BoxConstraints(maxWidth: 800),
-            alignment: Alignment.center,
+  Widget build(BuildContext context) {
+    final ScrollController _scrollController = ScrollController();
+    return Expanded(
+      child: Scrollbar(
+        controller: _scrollController,
+        isAlwaysShown: true,
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          constraints: const BoxConstraints(maxWidth: 800),
+          alignment: Alignment.center,
+          child: RepaintBoundary(
             child: ListView.builder(
               controller: _scrollController,
               itemCount: actions.length + 2,
@@ -104,7 +103,9 @@ class _ActionList extends StatelessWidget {
             ),
           ),
         ),
-      );
+      ),
+    );
+  }
 }
 
 class _ActionHeader extends StatelessWidget {
@@ -116,6 +117,19 @@ class _ActionHeader extends StatelessWidget {
         bundle: DefaultAssetBundle.of(context),
         height: 1366,
         width: 738,
+        placeholderBuilder: (BuildContext context) => const DecoratedBox(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.centerLeft,
+              end: Alignment.centerRight,
+              colors: <Color>[
+                Color(0xFF005B97),
+                Color(0xFFCCE0F4),
+              ],
+            ),
+            shape: BoxShape.circle,
+          ),
+        ),
       );
 
   @override
@@ -203,7 +217,7 @@ class _ActionTileCard extends StatelessWidget {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            if(action.date != null) _datePart,
+            if (action.date != null) _datePart,
             () {
               if (action.type == ActionType.endorsement) {
                 return _endorsedPart;
@@ -220,14 +234,10 @@ class _TotalSecured extends StatelessWidget {
   final double totalSecured;
   const _TotalSecured({@required this.totalSecured, Key key}) : super(key: key);
 
-  String get _formattedMoney => Money.from(
-        totalSecured,
-        Currency.create(
-          'USD',
-          2,
-          pattern: 'S0,000.00',
-        ),
-      ).toString();
+  String get _formattedMoney => NumberFormat.currency(
+        symbol: '\$',
+        decimalDigits: 2,
+      ).format(totalSecured);
 
   Widget get _text => RichText(
         text: TextSpan(

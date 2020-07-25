@@ -1,16 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:markeymap/components/action_card.dart';
-import 'package:markeymap/localization.dart';
-
-import 'package:url_launcher/url_launcher.dart' as url_launcher;
-
-import 'package:markeymap/theme.dart';
-
-import 'package:markeymap/popup.dart';
+import 'package:markeymap/components/welcome.dart';
 import 'package:markeymap/data.dart';
+import 'package:markeymap/localization.dart';
 import 'package:markeymap/models/county.dart';
 import 'package:markeymap/models/town.dart';
-import 'package:markeymap/components/welcome.dart';
+import 'package:markeymap/popup.dart';
+import 'package:markeymap/theme.dart';
+import 'package:url_launcher/url_launcher.dart' as url_launcher;
 
 class BottomBar extends StatelessWidget {
   const BottomBar({Key key}) : super(key: key);

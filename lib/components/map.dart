@@ -1,15 +1,14 @@
 import 'dart:math' as math;
 
+import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter/material.dart';
-
+import 'package:markeymap/components/svg_map.dart';
+import 'package:markeymap/components/town_list.dart';
 import 'package:markeymap/data.dart';
-import 'package:markeymap/popup.dart';
 import 'package:markeymap/localization.dart';
 import 'package:markeymap/models/county.dart';
-import 'package:markeymap/components/town_list.dart';
-import 'package:markeymap/components/svg_map.dart';
+import 'package:markeymap/popup.dart';
 import 'package:markeymap/utils/string.dart';
 
 class InteractiveMap extends StatelessWidget {
@@ -22,12 +21,15 @@ class InteractiveMap extends StatelessWidget {
           angle: (math.pi / 180.0) * -10,
           child: Transform.scale(
             scale: 0.9,
-            child: Stack(
-              children: MarkeyMapData.of(context)
-                  .data
-                  .keys
-                  .map<_CountyObject>((County county) => _CountyObject(county))
-                  .toList(),
+            child: RepaintBoundary(
+              child: Stack(
+                children: MarkeyMapData.of(context)
+                    .data
+                    .keys
+                    .map<_CountyObject>(
+                        (County county) => _CountyObject(county))
+                    .toList(),
+              ),
             ),
           ),
         ),
