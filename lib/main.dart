@@ -1,17 +1,14 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
-
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_analytics/observer.dart';
-
+import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:markeymap/components/appbar.dart';
-import 'package:markeymap/components/map.dart';
 import 'package:markeymap/components/bottombar.dart';
-
+import 'package:markeymap/components/map.dart';
 import 'package:markeymap/data.dart';
+import 'package:markeymap/localization.dart';
 import 'package:markeymap/resources.dart' as resources;
 import 'package:markeymap/theme.dart';
-import 'package:markeymap/localization.dart';
 
 void main() => runApp(const MarkeyMapApp());
 

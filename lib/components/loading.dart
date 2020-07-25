@@ -3,9 +3,8 @@ import 'dart:math';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-
-import 'package:markeymap/theme.dart';
 import 'package:markeymap/localization.dart';
+import 'package:markeymap/theme.dart';
 
 class Loading extends StatelessWidget {
   const Loading({Key key}) : super(key: key);

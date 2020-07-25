@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-
-import 'package:markeymap/localization.dart';
-import 'package:markeymap/popup.dart';
 import 'package:markeymap/components/action_card.dart';
+import 'package:markeymap/localization.dart';
 import 'package:markeymap/models/county.dart';
 import 'package:markeymap/models/town.dart';
+import 'package:markeymap/popup.dart';
 import 'package:markeymap/utils/string.dart';
 
 class TownList extends StatelessWidget {

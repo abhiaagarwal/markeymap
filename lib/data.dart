@@ -2,18 +2,13 @@ import 'dart:collection';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-
 import 'package:gsheets/gsheets.dart' as sheets;
-
-import 'package:cloud_firestore/cloud_firestore.dart';
-
-import 'package:markeymap/resources.dart' as resources;
-import 'package:markeymap/theme.dart';
 import 'package:markeymap/components/loading.dart';
 import 'package:markeymap/models/action.dart';
 import 'package:markeymap/models/county.dart';
 import 'package:markeymap/models/town.dart';
+import 'package:markeymap/resources.dart' as resources;
+import 'package:markeymap/theme.dart';
 
 class MarkeyMapData extends InheritedWidget {
   final Map<County, List<Town>> data;

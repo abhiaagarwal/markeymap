@@ -1,5 +1,4 @@
 import 'package:markeymap/models/action.dart';
-
 import 'package:meta/meta.dart';
 
 class Town {

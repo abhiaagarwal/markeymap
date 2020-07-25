@@ -2,16 +2,14 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-
-import 'package:url_launcher/url_launcher.dart' as url_launcher;
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
-
-import 'package:markeymap/theme.dart';
-import 'package:markeymap/resources.dart' as resources;
 import 'package:markeymap/localization.dart';
 import 'package:markeymap/models/action.dart';
+import 'package:markeymap/resources.dart' as resources;
+import 'package:markeymap/theme.dart';
 import 'package:markeymap/utils/string.dart';
+import 'package:url_launcher/url_launcher.dart' as url_launcher;
 
 Future<void> _launchUrl(final String url) async {
   if (url == null) {

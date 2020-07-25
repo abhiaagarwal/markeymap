@@ -1,8 +1,7 @@
 import 'dart:html';
 import 'dart:ui' as ui;
-import 'package:flutter/material.dart';
 
-import 'package:markeymap/theme.dart';
+import 'package:flutter/material.dart';
 import 'package:markeymap/resources.dart' as resources;
 
 // import 'package:video_player/video_player.dart';
