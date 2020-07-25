@@ -115,30 +115,31 @@ class MarkeyMapBuilder extends StatelessWidget {
         ),
       );
     }
-    return countiesList;
 
     /*
     print('Converting Google Sheets Data to Firebase');
-    FirebaseFirestore store = FirebaseFirestore.instance;
-    for (County county in countiesList.keys) {
-      CollectionReference reference =
+    final FirebaseFirestore store = FirebaseFirestore.instance;
+    for (final County county in countiesList.keys) {
+      final CollectionReference countyReference =
           store.collection(county.name.toLowerCase());
-      for (Town town in countiesList[county]) {
-        reference.doc(town.name.toLowerCase()).set(<String, dynamic>{
-          'zipcode': town.zipcode,
-          'actions': town.actions.map<Map<String, dynamic>>(
-            (EdAction action) => <String, dynamic>{
-              'date': action.date,
-              'description': action.description,
-              'type': action.type.name.toLowerCase(),
-              'link': action.url,
-              'funding': action.funding,
-            },
-          ),
-        });
+      for (final Town town in countiesList[county]) {
+        final String townName = town.name;
+        final DocumentReference townReference =
+            countyReference.doc(townName.toLowerCase());
+        await townReference.set(
+          <String, dynamic>{
+            'name': townName,
+            'zipcode': town.zipcode,
+          },
+        );
+        for (final EdAction action in town.actions) {
+          await townReference.collection('actions').add(action.toMap());
+        }
       }
     }
     */
+
+    return countiesList;
     /*
     final FirebaseFirestore store = FirebaseFirestore.instance;
     try {
