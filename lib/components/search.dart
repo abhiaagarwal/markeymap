@@ -63,7 +63,7 @@ class TownSearchDelegate extends SearchDelegate<Town> {
         itemBuilder: (BuildContext context, final int index) {
           final MapEntry<Town, County> entry = results.entries.elementAt(index);
           return ListTile(
-            title: Text(entry.key.name.toCapitalize()),
+            title: Text(entry.key.name),
             subtitle: Text(entry.value.name.toCapitalize()),
             onTap: () => close(context, entry.key),
           );
