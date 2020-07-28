@@ -51,6 +51,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "donate" : MessageLookupByLibrary.simpleMessage("Donate"),
     "getInvolved" : MessageLookupByLibrary.simpleMessage("Get Involved"),
     "navigate" : MessageLookupByLibrary.simpleMessage("How to Navigate"),
+    "returnText" : MessageLookupByLibrary.simpleMessage("Return to EdMarkey.com"),
     "searchBar" : MessageLookupByLibrary.simpleMessage("Search your town, city, or county to see how Ed Markey has delivered for your community"),
     "statewideAccomplishments" : MessageLookupByLibrary.simpleMessage("Statewide Accomplishments"),
     "title" : MessageLookupByLibrary.simpleMessage("Markey Map"),

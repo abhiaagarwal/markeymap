@@ -76,5 +76,11 @@
     "description": "Did you know text for loading page",
     "type": "text",
     "placeholders": {}
+  },
+  "returnText": "Vuelve a edmarkey.com",
+  "@returnText": {
+    "description": "Text that returns you to EdMarkey.com",
+    "type": "text",
+    "placeholders": {}
   }
 }
