@@ -19,6 +19,25 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'es';
 
+  String lookupMessage(
+      String message_str,
+      String locale,
+      String name,
+      List<dynamic> args,
+      String meaning,
+      {MessageIfAbsent ifAbsent}) {
+    String failedLookup(String message_str, List<dynamic> args) {
+      // If there's no message_str, then we are an internal lookup, e.g. an
+      // embedded plural, and shouldn't fail.
+      if (message_str == null) return null;
+      throw new UnsupportedError(
+          "No translation found for message '$name',\n"
+          "  original text '$message_str'");
+    }
+    return super.lookupMessage(message_str, locale, name, args, meaning,
+        ifAbsent: ifAbsent ?? failedLookup);
+  }
+
   static m0(county) => "Condado de ${county}";
 
   static m1(amount) => "Total de fondos asegurados: ${amount}";
@@ -32,6 +51,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "donate" : MessageLookupByLibrary.simpleMessage("Donaciones"),
     "getInvolved" : MessageLookupByLibrary.simpleMessage("Involúcrate"),
     "navigate" : MessageLookupByLibrary.simpleMessage("Cómo navegar"),
+    "returnText" : MessageLookupByLibrary.simpleMessage("Vuelve a edmarkey.com"),
     "searchBar" : MessageLookupByLibrary.simpleMessage("Aprenda qué ha hecho senador Ed Markey para tu comunidad con nuestro Markey Map"),
     "statewideAccomplishments" : MessageLookupByLibrary.simpleMessage("Statewide Accomplishments"),
     "title" : MessageLookupByLibrary.simpleMessage("Markey Map"),

@@ -8,7 +8,6 @@ import 'package:markeymap/localization.dart';
 import 'package:markeymap/models/action.dart';
 import 'package:markeymap/resources.dart';
 import 'package:markeymap/theme.dart';
-import 'package:markeymap/utils/string.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart' as url_launcher;
 
@@ -48,7 +47,7 @@ class ActionCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Title(
-        title: name.toCapitalize(),
+        title: name,
         color: Theme.of(context).primaryColor,
         child: DecoratedBox(
           decoration: _gradient,
@@ -70,37 +69,47 @@ class _ActionList extends StatelessWidget {
   const _ActionList({this.name, this.actions, this.totalSecured, Key key})
       : super(key: key);
 
+  Widget _builder(BuildContext context, final int index) {
+    if (index == (actions.length + 1) - 1) {
+      if (totalSecured == null || totalSecured == 0.0) {
+        return null;
+      }
+      return _TotalSecured(totalSecured: totalSecured);
+    }
+    return _ActionTileCard(
+      action: actions[index],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    final ScrollController _scrollController = ScrollController();
+    final ScrollController scrollController = ScrollController();
     return Expanded(
       child: Scrollbar(
-        controller: _scrollController,
+        controller: scrollController,
         isAlwaysShown: true,
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 16),
           constraints: const BoxConstraints(maxWidth: 800),
           alignment: Alignment.center,
           child: RepaintBoundary(
-            child: ListView.builder(
-              controller: _scrollController,
-              itemCount: actions.length + 2,
-              itemBuilder: (BuildContext context, int index) {
-                if (index == 1 - 1) {
-                  return _ActionHeader(
-                    name: name,
-                  );
-                }
-                if (index == (actions.length + 2) - 1) {
-                  if (totalSecured == null || totalSecured == 0.0) {
-                    return null;
-                  }
-                  return _TotalSecured(totalSecured: totalSecured);
-                }
-                return _ActionTileCard(
-                  action: actions[index - 1],
-                );
-              },
+            child: CustomScrollView(
+              controller: scrollController,
+              slivers: <Widget>[
+                SliverAppBar(
+                  backgroundColor: Colors.transparent,
+                  expandedHeight: MarkeyMapTheme.cardHeaderHeight,
+                  automaticallyImplyLeading: false,
+                  flexibleSpace: _ActionHeader(name: name),
+                ),
+                SliverList(
+                  delegate: SliverChildBuilderDelegate(
+                    _builder,
+                    childCount: actions.length +
+                        ((totalSecured == null || totalSecured == 0.0) ? 0 : 1),
+                  ),
+                )
+              ],
             ),
           ),
         ),
@@ -138,7 +147,7 @@ class _ActionHeader extends StatelessWidget {
         alignment: AlignmentDirectional.center,
         children: <Widget>[
           SizedBox(
-            height: MarkeyMapTheme.svgHeight,
+            height: MarkeyMapTheme.cardHeaderHeight,
             child: FractionallySizedBox(
               heightFactor: 0.8,
               child: image(context),
@@ -265,10 +274,6 @@ class _TotalSecured extends StatelessWidget {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            const Expanded(
-              flex: 1,
-              child: SizedBox.shrink(),
-            ),
             Expanded(
               flex: 5,
               child: _text,
