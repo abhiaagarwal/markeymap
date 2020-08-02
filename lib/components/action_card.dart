@@ -68,6 +68,18 @@ class _ActionList extends StatelessWidget {
   const _ActionList({this.name, this.actions, this.totalSecured, Key key})
       : super(key: key);
 
+  Widget _builder(BuildContext context, final int index) {
+    if (index == (actions.length + 1) - 1) {
+      if (totalSecured == null || totalSecured == 0.0) {
+        return null;
+      }
+      return _TotalSecured(totalSecured: totalSecured);
+    }
+    return _ActionTileCard(
+      action: actions[index],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final ScrollController scrollController = ScrollController();
@@ -91,17 +103,7 @@ class _ActionList extends StatelessWidget {
                 ),
                 SliverList(
                   delegate: SliverChildBuilderDelegate(
-                    (BuildContext context, int index) {
-                      if (index == (actions.length + 1) - 1) {
-                        if (totalSecured == null || totalSecured == 0.0) {
-                          return null;
-                        }
-                        return _TotalSecured(totalSecured: totalSecured);
-                      }
-                      return _ActionTileCard(
-                        action: actions[index],
-                      );
-                    },
+                    _builder,
                     childCount: actions.length +
                         ((totalSecured == null || totalSecured == 0.0) ? 0 : 1),
                   ),
