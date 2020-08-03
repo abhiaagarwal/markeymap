@@ -1,13 +1,18 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+
+import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart' as url_launcher;
+
 import 'package:markeymap/components/action_card.dart';
 import 'package:markeymap/components/welcome.dart';
-import 'package:markeymap/data.dart';
-import 'package:markeymap/localization.dart';
 import 'package:markeymap/models/county.dart';
 import 'package:markeymap/models/town.dart';
+import 'package:markeymap/data/database.dart';
 import 'package:markeymap/popup.dart';
+import 'package:markeymap/localization.dart';
 import 'package:markeymap/theme.dart';
-import 'package:url_launcher/url_launcher.dart' as url_launcher;
 
 class BottomBar extends StatelessWidget {
   const BottomBar({Key key}) : super(key: key);
@@ -29,20 +34,23 @@ class BottomBar extends StatelessWidget {
             _BottomButton(
               text: MarkeyMapLocalizations.of(context).statewideAccomplishments,
               color: Theme.of(context).primaryColor,
-              onTap: () => showPopup(
-                context,
-                scaffoldColor: Theme.of(context).primaryColor,
-                body: () {
-                  final Town statewide = MarkeyMapData.of(context)
-                      .data[County.other]
-                      .firstWhere((Town town) =>
-                          town.name.toLowerCase() == 'Statewide'.toLowerCase());
-                  return ActionCard(
-                    name: statewide.name,
-                    actions: statewide.actions,
-                  );
-                }(),
-              ),
+              onTap: () async {
+                const County statewideCounty = County.other;
+                final Town statewide =
+                    (await Provider.of<Database>(context, listen: false)
+                            .getTowns(statewideCounty))
+                        .firstWhere(
+                  (Town town) => town.name.toLowerCase() == 'statewide',
+                );
+                showPopup(
+                  context,
+                  scaffoldColor: Theme.of(context).primaryColor,
+                  body: ActionCard(
+                    town: statewide,
+                    county: statewideCounty,
+                  ),
+                );
+              },
             ),
             _BottomButton(
               text: MarkeyMapLocalizations.of(context).donate,
@@ -63,7 +71,7 @@ class BottomBar extends StatelessWidget {
 
 class _BottomButton extends StatelessWidget {
   final String text;
-  final void Function() onTap;
+  final FutureOr<void> Function() onTap;
   final Color color;
   const _BottomButton(
       {@required this.text, @required this.onTap, this.color, Key key})

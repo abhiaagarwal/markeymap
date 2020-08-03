@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+
+import 'package:provider/provider.dart';
+import 'package:transparent_image/transparent_image.dart';
+import 'package:url_launcher/url_launcher.dart' as url_launcher;
+
 import 'package:markeymap/components/search.dart';
 import 'package:markeymap/localization.dart';
 import 'package:markeymap/resources.dart';
 import 'package:markeymap/theme.dart';
-import 'package:provider/provider.dart';
-import 'package:url_launcher/url_launcher.dart' as url_launcher;
 
 class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
   const MainAppBar({Key key}) : super(key: key);
@@ -42,10 +45,20 @@ class _ReturnBar extends StatelessWidget {
           onTap: () async => await url_launcher.launch('https://edmarkey.com'),
           mouseCursor: SystemMouseCursors.click,
           child: Center(
-            child: Text(
-              '← ${MarkeyMapLocalizations.of(context).returnText.toUpperCase()}',
+            child: RichText(
               textAlign: TextAlign.center,
-              style: MarkeyMapTheme.returnStyle,
+              text: TextSpan(
+                text: '←',
+                style: MarkeyMapTheme.returnStyle,
+                children: <TextSpan>[
+                  const TextSpan(text: ' '),
+                  TextSpan(
+                    text: MarkeyMapLocalizations.of(context)
+                        .returnText
+                        .toUpperCase(),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
@@ -77,6 +90,8 @@ class _Image extends StatelessWidget {
   Widget build(BuildContext context) => Image.asset(
         Provider.of<Resource>(context).images.header,
         bundle: DefaultAssetBundle.of(context),
+        height: 1366,
+        width: 213,
         color: Theme.of(context).primaryColor,
         colorBlendMode: BlendMode.softLight,
         fit: BoxFit.cover,
@@ -92,11 +107,14 @@ class _Logo extends StatelessWidget {
         padding: const EdgeInsets.all(8),
         child: Center(
           child: SizedBox.expand(
-            child: Image.asset(
-              Provider.of<Resource>(context).images.logo,
-              bundle: DefaultAssetBundle.of(context),
+            child: FadeInImage(
               height: 1346,
               width: 657,
+              image: AssetImage(
+                Provider.of<Resource>(context).images.logo,
+                bundle: DefaultAssetBundle.of(context),
+              ),
+              placeholder: MemoryImage(kTransparentImage),
             ),
           ),
         ),

@@ -6,6 +6,54 @@ import 'package:flutter/material.dart';
 import 'package:markeymap/localization.dart';
 import 'package:markeymap/theme.dart';
 
+class FutureLoader<T, W extends Widget> extends StatelessWidget {
+  final W Function(BuildContext, T) builder;
+  final Future<T> future;
+  final T initialData;
+  const FutureLoader(
+      {@required this.builder,
+      @required this.future,
+      this.initialData,
+      Key key})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) => FutureBuilder<T>(
+        future: future,
+        initialData: initialData,
+        builder: (
+          BuildContext context,
+          AsyncSnapshot<T> snapshot,
+        ) =>
+            AnimatedSwitcher(
+          duration: MarkeyMapTheme.animationDuration,
+          child: () {
+            if (snapshot.hasError) {
+              debugPrint(snapshot.error.toString());
+              return Container();
+              //toDo: add error handling
+            }
+            switch (snapshot.connectionState) {
+              case ConnectionState.done:
+                if (snapshot.hasData) {
+                  return Builder(
+                    key: const ValueKey<int>(0),
+                    builder: (BuildContext context) =>
+                        builder(context, snapshot.data),
+                  );
+                } else {
+                  debugPrint(snapshot.error.toString());
+                  return Container();
+                }
+                break;
+              default:
+                return const Loading(key: ValueKey<int>(1));
+            }
+          }(),
+        ),
+      );
+}
+
 class Loading extends StatelessWidget {
   const Loading({Key key}) : super(key: key);
 
@@ -13,15 +61,19 @@ class Loading extends StatelessWidget {
   Widget build(BuildContext context) => Material(
         type: MaterialType.transparency,
         child: Container(
-          constraints: const BoxConstraints(maxWidth: 800),
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: const <Widget>[
-              CircularProgressIndicator(),
-              SizedBox(height: 30),
-              _DidYouKnow(),
-            ],
+          padding: const EdgeInsets.all(8),
+          //color: Colors.white,
+          width: double.infinity,
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 800),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: const <Widget>[
+                CircularProgressIndicator(),
+                SizedBox(height: 30),
+                //_DidYouKnow(),
+              ],
+            ),
           ),
         ),
       );
@@ -56,6 +108,9 @@ class _DidYouKnowState extends State<_DidYouKnow> {
   @override
   void initState() {
     super.initState();
+    () async {
+      await Future<void>.delayed(const Duration(seconds: 200), () => null);
+    }();
     _random = Random();
     _index = _random.nextInt(funFacts.length);
     _timer = Timer.periodic(

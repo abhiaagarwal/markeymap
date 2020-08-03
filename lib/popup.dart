@@ -15,7 +15,7 @@ void showPopup(
             title: Text(title ?? ''),
             leading: Builder(
               builder: (BuildContext context) => IconButton(
-                icon: const Icon(Icons.arrow_back),
+                icon: const Icon(Icons.arrow_back_ios),
                 onPressed: () => Navigator.pop(context),
               ),
             ),

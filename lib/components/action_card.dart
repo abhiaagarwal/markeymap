@@ -2,14 +2,20 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
-import 'package:markeymap/localization.dart';
-import 'package:markeymap/models/action.dart';
-import 'package:markeymap/resources.dart';
-import 'package:markeymap/theme.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart' as url_launcher;
+
+import 'package:markeymap/components/loading.dart';
+import 'package:markeymap/models/action.dart';
+import 'package:markeymap/models/town.dart';
+import 'package:markeymap/models/county.dart';
+import 'package:markeymap/data/database.dart';
+import 'package:markeymap/localization.dart';
+import 'package:markeymap/resources.dart';
+import 'package:markeymap/theme.dart';
 
 Future<void> _launchUrl(final String url) async {
   if (url == null) {
@@ -22,16 +28,9 @@ Future<void> _launchUrl(final String url) async {
 }
 
 class ActionCard extends StatelessWidget {
-  final String name;
-  final List<EdAction> actions;
-  final double totalSecured;
-  final String zipcode;
-  const ActionCard(
-      {@required this.name,
-      @required this.actions,
-      this.totalSecured,
-      this.zipcode,
-      Key key})
+  final Town town;
+  final County county;
+  const ActionCard({@required this.town, @required this.county, Key key})
       : super(key: key);
 
   BoxDecoration get _gradient => BoxDecoration(
@@ -47,15 +46,28 @@ class ActionCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Title(
-        title: name,
+        title: town.name,
         color: Theme.of(context).primaryColor,
         child: DecoratedBox(
           decoration: _gradient,
           child: Column(
             children: <Widget>[
-              _ActionList(
-                  name: name, actions: actions, totalSecured: totalSecured),
-              _CallToActionBar(name: name, zipcode: zipcode),
+              Expanded(
+                child: FutureLoader<List<EdAction>, _ActionList>(
+                  future:
+                      Provider.of<Database>(context).getActions(county, town),
+                  builder: (BuildContext context, List<EdAction> actions) =>
+                      _ActionList(
+                    name: town.name,
+                    actions: actions,
+                    totalSecured: actions.totalSecured,
+                  ),
+                ),
+              ),
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: _CallToActionBar(name: town.name, zipcode: town.zipcode),
+              ),
             ],
           ),
         ),
@@ -66,7 +78,8 @@ class _ActionList extends StatelessWidget {
   final String name;
   final List<EdAction> actions;
   final double totalSecured;
-  const _ActionList({this.name, this.actions, this.totalSecured, Key key})
+  const _ActionList(
+      {@required this.name, @required this.actions, this.totalSecured, Key key})
       : super(key: key);
 
   Widget _builder(BuildContext context, final int index) {
@@ -84,33 +97,31 @@ class _ActionList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ScrollController scrollController = ScrollController();
-    return Expanded(
-      child: Scrollbar(
-        controller: scrollController,
-        isAlwaysShown: true,
-        child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          constraints: const BoxConstraints(maxWidth: 800),
-          alignment: Alignment.center,
-          child: RepaintBoundary(
-            child: CustomScrollView(
-              controller: scrollController,
-              slivers: <Widget>[
-                SliverAppBar(
-                  backgroundColor: Colors.transparent,
-                  expandedHeight: MarkeyMapTheme.cardHeaderHeight,
-                  automaticallyImplyLeading: false,
-                  flexibleSpace: _ActionHeader(name: name),
+    return Scrollbar(
+      controller: scrollController,
+      isAlwaysShown: true,
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        constraints: const BoxConstraints(maxWidth: 800),
+        alignment: Alignment.center,
+        child: RepaintBoundary(
+          child: CustomScrollView(
+            controller: scrollController,
+            slivers: <Widget>[
+              SliverAppBar(
+                backgroundColor: Colors.transparent,
+                expandedHeight: MarkeyMapTheme.cardHeaderHeight,
+                automaticallyImplyLeading: false,
+                flexibleSpace: _ActionHeader(name: name),
+              ),
+              SliverList(
+                delegate: SliverChildBuilderDelegate(
+                  _builder,
+                  childCount: actions.length +
+                      ((totalSecured == null || totalSecured == 0.0) ? 0 : 1),
                 ),
-                SliverList(
-                  delegate: SliverChildBuilderDelegate(
-                    _builder,
-                    childCount: actions.length +
-                        ((totalSecured == null || totalSecured == 0.0) ? 0 : 1),
-                  ),
-                )
-              ],
-            ),
+              )
+            ],
           ),
         ),
       ),
@@ -203,12 +214,15 @@ class _ActionTileCard extends StatelessWidget {
         flex: 5,
         child: RichText(
           text: TextSpan(
-            text: 'Local Endorsements: ',
+            text: 'Local Endorsements:',
             style: MarkeyMapTheme.cardListStyle.copyWith(
               fontStyle: FontStyle.italic,
               fontWeight: FontWeight.w700,
             ),
             children: <TextSpan>[
+              const TextSpan(
+                text: ' ',
+              ),
               TextSpan(
                 text: action.description,
                 style: MarkeyMapTheme.cardListStyle.copyWith(
@@ -249,14 +263,17 @@ class _TotalSecured extends StatelessWidget {
         decimalDigits: 2,
       ).format(totalSecured);
 
-  Widget get _text => RichText(
+  Widget _text(BuildContext context) => RichText(
         text: TextSpan(
-          text: 'Total Secured: ',
+          text: 'Total Secured:',
           style: MarkeyMapTheme.cardListStyle.copyWith(
             fontStyle: FontStyle.italic,
             fontWeight: FontWeight.w700,
           ),
           children: <TextSpan>[
+            const TextSpan(
+              text: ' ',
+            ),
             TextSpan(
               text: _formattedMoney,
               style: MarkeyMapTheme.cardListStyle.copyWith(
@@ -276,7 +293,7 @@ class _TotalSecured extends StatelessWidget {
           children: <Widget>[
             Expanded(
               flex: 5,
-              child: _text,
+              child: _text(context),
             ),
           ],
         ),

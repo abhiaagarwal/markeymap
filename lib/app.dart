@@ -5,9 +5,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:markeymap/components/appbar.dart';
 import 'package:markeymap/components/bottombar.dart';
 import 'package:markeymap/components/map.dart';
-import 'package:markeymap/data.dart';
 import 'package:markeymap/localization.dart';
-import 'package:markeymap/resources.dart';
 import 'package:markeymap/theme.dart';
 import 'package:provider/provider.dart';
 
@@ -31,11 +29,7 @@ class MarkeyMapApp extends StatelessWidget {
           GlobalWidgetsLocalizations.delegate,
         ],
         supportedLocales: MarkeyMapLocalizations.supportedLocales,
-        home: MarkeyMapBuilder(
-          credentialsFile: Provider.of<Resource>(context).data.credentials,
-          sheetId: Provider.of<Resource>(context).data.sheetId,
-          child: const MarkeyScaffold(),
-        ),
+        home: const MarkeyScaffold(),
       );
 }
 

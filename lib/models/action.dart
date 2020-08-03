@@ -20,6 +20,7 @@ extension ActionTypeExtension on String {
       );
 }
 
+@immutable
 class EdAction with DiagnosticableTreeMixin {
   final String date;
   final ActionType type;
@@ -43,14 +44,14 @@ class EdAction with DiagnosticableTreeMixin {
         funding = row[4].isNotEmpty ? double.tryParse(row[4]) : null,
         url = row[5].isNotEmpty ? row[5] : null;
 
-  EdAction.fromMap(Map<String, dynamic> data)
+  EdAction.fromMap(Map<String, Object> data)
       : date = data['date'] as String,
         type = (data['type'] as String).action ?? ActionType.other,
         description = data['description'] as String,
-        funding = data['funding'] as double,
+        funding = double.tryParse(data['funding'].toString()),
         url = data['url'] as String;
 
-  Map<String, dynamic> toMap() => <String, dynamic>{
+  Map<String, dynamic> toMap() => <String, Object>{
         'date': date,
         'type': type.name,
         'description': description,
@@ -60,13 +61,13 @@ class EdAction with DiagnosticableTreeMixin {
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
     properties
       ..add(StringProperty('date', date))
       ..add(EnumProperty<ActionType>('type', type))
       ..add(StringProperty('description', description))
       ..add(DoubleProperty('funding', funding))
       ..add(StringProperty('url', url));
+    super.debugFillProperties(properties);
   }
 }
 

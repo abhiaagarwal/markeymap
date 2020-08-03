@@ -1,36 +1,39 @@
 import 'dart:collection';
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
 import 'package:markeymap/components/action_card.dart';
-import 'package:markeymap/data.dart';
+import 'package:markeymap/components/loading.dart';
+import 'package:markeymap/data/database.dart';
 import 'package:markeymap/models/county.dart';
 import 'package:markeymap/models/town.dart';
 import 'package:markeymap/popup.dart';
 import 'package:markeymap/utils/string.dart';
 
 Future<void> handleSearch(BuildContext context) async {
-  final Town town = await showSearch<Town>(
+  final MapEntry<Town, County> entry = await showSearch<MapEntry<Town, County>>(
     context: context,
-    delegate: TownSearchDelegate(MarkeyMapData.of(context).townsByCounty),
+    delegate: TownSearchDelegate(),
   );
-  if (town == null) {
+  if (entry == null) {
     return;
   }
   showPopup(
     context,
     scaffoldColor: Theme.of(context).primaryColor,
-    body: ActionCard(
-      name: town.name,
-      actions: town.actions,
-      totalSecured: 0,
-      zipcode: town.zipcode,
-    ),
+    body: ActionCard(town: entry.key, county: entry.value),
   );
 }
 
-class TownSearchDelegate extends SearchDelegate<Town> {
-  final SplayTreeMap<Town, County> towns;
-  TownSearchDelegate(this.towns);
+class TownSearchDelegate extends SearchDelegate<MapEntry<Town, County>> {
+  SplayTreeMap<Town, County> _towns;
+  TownSearchDelegate();
+
+  @override
+  ThemeData appBarTheme(BuildContext context) {
+    return super.appBarTheme(context);
+  }
 
   @override
   List<Widget> buildActions(BuildContext context) => <Widget>[
@@ -42,7 +45,7 @@ class TownSearchDelegate extends SearchDelegate<Town> {
 
   @override
   Widget buildLeading(BuildContext context) => IconButton(
-        icon: const Icon(Icons.arrow_back),
+        icon: const Icon(Icons.arrow_back_ios),
         onPressed: () => close(context, null),
       );
 
@@ -51,6 +54,20 @@ class TownSearchDelegate extends SearchDelegate<Town> {
 
   @override
   Widget buildSuggestions(BuildContext context) {
+    if (_towns == null) {
+      return FutureLoader<SplayTreeMap<Town, County>, Widget>(
+        future: Provider.of<Database>(context, listen: false).townsByCounty,
+        builder: (BuildContext context, SplayTreeMap<Town, County> towns) {
+          _towns = towns;
+          return _searchResults(context, towns);
+        },
+      );
+    }
+    return _searchResults(context, _towns);
+  }
+
+  Widget _searchResults(
+      BuildContext context, SplayTreeMap<Town, County> towns) {
     final Map<Town, County> results = Map<Town, County>.from(towns)
       ..removeWhere((Town key, County value) =>
           !key.name.toLowerCase().contains(query.toLowerCase()));
@@ -65,7 +82,7 @@ class TownSearchDelegate extends SearchDelegate<Town> {
           return ListTile(
             title: Text(entry.key.name),
             subtitle: Text(entry.value.name.toCapitalize()),
-            onTap: () => close(context, entry.key),
+            onTap: () => close(context, entry),
           );
         },
       ),

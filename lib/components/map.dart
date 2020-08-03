@@ -5,11 +5,12 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:markeymap/components/svg_map.dart';
 import 'package:markeymap/components/town_list.dart';
-import 'package:markeymap/data.dart';
+import 'package:markeymap/data/database.dart';
 import 'package:markeymap/localization.dart';
 import 'package:markeymap/models/county.dart';
 import 'package:markeymap/popup.dart';
 import 'package:markeymap/utils/string.dart';
+import 'package:provider/provider.dart';
 
 class InteractiveMap extends StatelessWidget {
   const InteractiveMap({Key key}) : super(key: key);
@@ -23,9 +24,8 @@ class InteractiveMap extends StatelessWidget {
             scale: 0.9,
             child: RepaintBoundary(
               child: Stack(
-                children: MarkeyMapData.of(context)
-                    .data
-                    .keys
+                children: Provider.of<Database>(context)
+                    .getCounties()
                     .map<_CountyObject>(
                         (County county) => _CountyObject(county))
                     .toList(),
@@ -54,10 +54,7 @@ class _CountyObject extends StatelessWidget {
           title: MarkeyMapLocalizations.of(context)
               .countyName(county.name.toCapitalize()),
           scaffoldColor: Theme.of(context).primaryColor,
-          body: TownList(
-            county: county,
-            towns: MarkeyMapData.of(context).data[county],
-          ),
+          body: TownList(county: county),
         ),
       );
 

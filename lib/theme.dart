@@ -88,7 +88,7 @@ class MarkeyMapTheme {
 
   static const TextStyle funFactStyle = TextStyle(
     fontFamily: 'Gotham Narrow',
-    color: Colors.black,
+    color: Colors.white,
     fontSize: 24,
   );
 
