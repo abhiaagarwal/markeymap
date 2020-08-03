@@ -77,14 +77,14 @@ packages:
       name: build_runner
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.10.0"
+    version: "1.10.1"
   build_runner_core:
     dependency: transitive
     description:
       name: build_runner_core
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "5.2.0"
+    version: "6.0.1"
   built_collection:
     dependency: transitive
     description:
@@ -203,7 +203,7 @@ packages:
       name: csslib
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.16.1"
+    version: "0.16.2"
   dart_style:
     dependency: transitive
     description:
@@ -238,7 +238,7 @@ packages:
       name: firebase_analytics_platform_interface
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.1"
+    version: "1.0.3"
   firebase_analytics_web:
     dependency: transitive
     description:
@@ -252,7 +252,7 @@ packages:
       name: firebase_core
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.5.0-dev.1"
+    version: "0.5.0-dev.2"
   firebase_core_platform_interface:
     dependency: transitive
     description:
@@ -337,7 +337,7 @@ packages:
       name: gsheets
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.2.4+1"
+    version: "0.2.5"
   html:
     dependency: transitive
     description:
@@ -722,5 +722,5 @@ packages:
     source: hosted
     version: "0.1.2"
 sdks:
-  dart: ">=2.9.0-14.0.dev <3.0.0"
+  dart: ">=2.9.0-21.10.beta <3.0.0"
   flutter: ">=1.16.0 <2.0.0"
