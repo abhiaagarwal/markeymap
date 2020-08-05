@@ -37,16 +37,20 @@ class MarkeyScaffold extends StatelessWidget {
   const MarkeyScaffold({Key key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) => const Scaffold(
-        appBar: MainAppBar(),
-        body: Center(
-          child: Padding(
-            padding: EdgeInsets.all(8),
-            child: FittedBox(
-              child: InteractiveMap(),
+  Widget build(BuildContext context) => Scaffold(
+        appBar: const MainAppBar(),
+        body: Padding(
+          padding: const EdgeInsets.all(8),
+          child: InteractiveViewer(
+            minScale: 1,
+            boundaryMargin: const EdgeInsets.all(32),
+            child: const Center(
+              child: FittedBox(
+                child: InteractiveMap(),
+              ),
             ),
           ),
         ),
-        bottomNavigationBar: BottomBar(),
+        bottomNavigationBar: const BottomBar(),
       );
 }
