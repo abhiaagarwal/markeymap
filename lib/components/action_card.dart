@@ -30,8 +30,11 @@ Future<void> _launchUrl(final String url) async {
 class ActionCard extends StatelessWidget {
   final Town town;
   final County county;
-  const ActionCard({@required this.town, @required this.county, Key key})
-      : super(key: key);
+  const ActionCard({
+    @required this.town,
+    @required this.county,
+    Key key,
+  }) : super(key: key);
 
   BoxDecoration get _gradient => BoxDecoration(
         gradient: LinearGradient(
@@ -78,25 +81,17 @@ class _ActionList extends StatelessWidget {
   final String name;
   final List<EdAction> actions;
   final double totalSecured;
-  const _ActionList(
-      {@required this.name, @required this.actions, this.totalSecured, Key key})
-      : super(key: key);
-
-  Widget _builder(BuildContext context, final int index) {
-    if (index == (actions.length + 1) - 1) {
-      if (totalSecured == null || totalSecured == 0.0) {
-        return null;
-      }
-      return _TotalSecured(totalSecured: totalSecured);
-    }
-    return _ActionTileCard(
-      action: actions[index],
-    );
-  }
+  const _ActionList({
+    @required this.name,
+    @required this.actions,
+    this.totalSecured,
+    Key key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final ScrollController scrollController = ScrollController();
+    final bool showSecured = !(totalSecured == null || totalSecured == 0.0);
     return Scrollbar(
       controller: scrollController,
       isAlwaysShown: true,
@@ -107,6 +102,7 @@ class _ActionList extends StatelessWidget {
         child: RepaintBoundary(
           child: CustomScrollView(
             controller: scrollController,
+            semanticChildCount: 1 + actions.length + (showSecured ? 1 : 0),
             slivers: <Widget>[
               SliverAppBar(
                 backgroundColor: Colors.transparent,
@@ -116,11 +112,16 @@ class _ActionList extends StatelessWidget {
               ),
               SliverList(
                 delegate: SliverChildBuilderDelegate(
-                  _builder,
-                  childCount: actions.length +
-                      ((totalSecured == null || totalSecured == 0.0) ? 0 : 1),
+                  (BuildContext context, final int index) => _ActionTileCard(
+                    action: actions[index],
+                  ),
+                  childCount: actions.length,
                 ),
-              )
+              ),
+              if (showSecured)
+                SliverToBoxAdapter(
+                  child: _TotalSecured(totalSecured: totalSecured),
+                ),
             ],
           ),
         ),
@@ -131,7 +132,10 @@ class _ActionList extends StatelessWidget {
 
 class _ActionHeader extends StatelessWidget {
   final String name;
-  const _ActionHeader({@required this.name, Key key}) : super(key: key);
+  const _ActionHeader({
+    @required this.name,
+    Key key,
+  }) : super(key: key);
 
   Widget image(BuildContext context) => SvgPicture.asset(
         Provider.of<Resource>(context).svg.townSvg(name),
@@ -177,7 +181,10 @@ class _ActionHeader extends StatelessWidget {
 
 class _ActionTileCard extends StatelessWidget {
   final EdAction action;
-  const _ActionTileCard({@required this.action, Key key}) : super(key: key);
+  const _ActionTileCard({
+    @required this.action,
+    Key key,
+  }) : super(key: key);
 
   Widget get _datePart => Expanded(
         flex: 1,
@@ -256,7 +263,10 @@ class _ActionTileCard extends StatelessWidget {
 
 class _TotalSecured extends StatelessWidget {
   final double totalSecured;
-  const _TotalSecured({@required this.totalSecured, Key key}) : super(key: key);
+  const _TotalSecured({
+    @required this.totalSecured,
+    Key key,
+  }) : super(key: key);
 
   String get _formattedMoney => NumberFormat.currency(
         symbol: '\$',
@@ -303,8 +313,11 @@ class _TotalSecured extends StatelessWidget {
 class _CallToActionBar extends StatelessWidget {
   final String name;
   final String zipcode;
-  const _CallToActionBar({@required this.name, this.zipcode, Key key})
-      : super(key: key);
+  const _CallToActionBar({
+    @required this.name,
+    this.zipcode,
+    Key key,
+  }) : super(key: key);
 
   Widget _ctaText(BuildContext context) => Text(
         MarkeyMapLocalizations.of(context).townCTA(name).toUpperCase(),
@@ -345,8 +358,8 @@ class _CallToActionBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Container(
         constraints: const BoxConstraints(maxHeight: 64),
-        decoration: _gradient,
         width: double.infinity,
+        decoration: _gradient,
         padding: const EdgeInsets.all(8),
         child: FittedBox(
           child: Wrap(
@@ -381,9 +394,12 @@ class _CallToActionButton extends StatelessWidget {
   final String text;
   final void Function() onTap;
   final Color color;
-  const _CallToActionButton(
-      {@required this.text, @required this.onTap, this.color, Key key})
-      : super(key: key);
+  const _CallToActionButton({
+    @required this.text,
+    @required this.onTap,
+    this.color,
+    Key key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) => Padding(
