@@ -1,8 +1,11 @@
 import 'dart:math' as math;
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
+
+import 'package:provider/provider.dart';
+
 import 'package:markeymap/components/svg_map.dart';
 import 'package:markeymap/components/town_list.dart';
 import 'package:markeymap/data/database.dart';
@@ -10,7 +13,6 @@ import 'package:markeymap/localization.dart';
 import 'package:markeymap/models/county.dart';
 import 'package:markeymap/popup.dart';
 import 'package:markeymap/utils/string.dart';
-import 'package:provider/provider.dart';
 
 class InteractiveMap extends StatelessWidget {
   const InteractiveMap({Key key}) : super(key: key);
@@ -27,7 +29,8 @@ class InteractiveMap extends StatelessWidget {
                 children: Provider.of<Database>(context)
                     .getCounties()
                     .map<_CountyObject>(
-                        (County county) => _CountyObject(county))
+                      (County county) => _CountyObject(county: county),
+                    )
                     .toList(),
               ),
             ),
@@ -37,26 +40,9 @@ class InteractiveMap extends StatelessWidget {
 }
 
 class _CountyObject extends StatelessWidget {
+  const _CountyObject({this.county, Key key}) : super(key: key);
+
   final County county;
-  @override
-  const _CountyObject(this.county, {Key key}) : super(key: key);
-
-  Widget _painter(BuildContext context) => CustomPaint(
-        painter: _CountyPainter(county),
-      );
-
-  Widget _inkWell(BuildContext context) => InkWell(
-        mouseCursor: SystemMouseCursors.click,
-        hoverColor: Theme.of(context).primaryColor,
-        highlightColor: const Color(0xFF00345C),
-        onTap: () => showPopup(
-          context,
-          title: MarkeyMapLocalizations.of(context)
-              .countyName(county.name.toCapitalize()),
-          scaffoldColor: Theme.of(context).primaryColor,
-          body: TownList(county: county),
-        ),
-      );
 
   @override
   Widget build(BuildContext context) => Semantics(
@@ -64,23 +50,39 @@ class _CountyObject extends StatelessWidget {
         hint: 'Press to view all actions',
         value: county.name,
         child: ClipPath(
+          clipper: _CountyClipper(county),
           child: Material(
             color: const Color(0xFF8BC6FF),
-            child: Stack(
-              children: <Widget>[
-                _painter(context),
-                _inkWell(context),
-              ],
+            child: CustomPaint(
+              painter: _CountyPainter(county),
+              child: InkWell(
+                mouseCursor: SystemMouseCursors.click,
+                hoverColor: Theme.of(context).primaryColor,
+                highlightColor: const Color(0xFF00345C),
+                onTap: () => showPopup(
+                  context,
+                  title: MarkeyMapLocalizations.of(context)
+                      .countyName(county.name.toCapitalize()),
+                  scaffoldColor: Theme.of(context).primaryColor,
+                  body: TownList(county: county),
+                ),
+              ),
             ),
           ),
-          clipper: _CountyClipper(county),
         ),
       );
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    properties.add(EnumProperty<County>('county', county));
+    super.debugFillProperties(properties);
+  }
 }
 
 class _CountyPainter extends CustomPainter {
+  const _CountyPainter(this.county);
+
   final County county;
-  _CountyPainter(this.county);
 
   @override
   void paint(Canvas canvas, Size size) => canvas.drawPath(
@@ -99,8 +101,9 @@ class _CountyPainter extends CustomPainter {
 }
 
 class _CountyClipper extends CustomClipper<Path> {
+  const _CountyClipper(this.county);
+
   final County county;
-  _CountyClipper(this.county);
 
   @override
   Path getClip(Size size) => county.path;

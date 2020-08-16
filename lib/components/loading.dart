@@ -6,16 +6,19 @@ import 'package:flutter/material.dart';
 import 'package:markeymap/localization.dart';
 import 'package:markeymap/theme.dart';
 
-class FutureLoader<T, W extends Widget> extends StatelessWidget {
-  final W Function(BuildContext, T) builder;
-  final Future<T> future;
-  final T initialData;
+typedef DataBuilderCallback<T> = Widget Function(BuildContext, T);
+
+class FutureLoader<T> extends StatelessWidget {
   const FutureLoader(
       {@required this.builder,
       @required this.future,
       this.initialData,
       Key key})
       : super(key: key);
+
+  final DataBuilderCallback<T> builder;
+  final Future<T> future;
+  final T initialData;
 
   @override
   Widget build(BuildContext context) => FutureBuilder<T>(
@@ -37,21 +40,42 @@ class FutureLoader<T, W extends Widget> extends StatelessWidget {
               case ConnectionState.done:
                 if (snapshot.hasData) {
                   return Builder(
-                    key: const ValueKey<int>(0),
+                    key: const ValueKey<ConnectionState>(ConnectionState.done),
                     builder: (BuildContext context) =>
                         builder(context, snapshot.data),
                   );
                 } else {
                   debugPrint(snapshot.error.toString());
-                  return Container();
+                  return Container(
+                    key: const ValueKey<ConnectionState>(ConnectionState.none),
+                  );
                 }
                 break;
               default:
-                return const Loading(key: ValueKey<int>(1));
+                return const Loading(
+                  key: ValueKey<ConnectionState>(ConnectionState.active),
+                );
             }
           }(),
         ),
       );
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    properties
+      ..add(ObjectFlagProperty<DataBuilderCallback<T>>(
+        'builder',
+        builder,
+        ifPresent: 'present',
+      ))
+      ..add(ObjectFlagProperty<Future<T>>(
+        'future',
+        future,
+        ifPresent: 'present',
+      ))
+      ..add(DiagnosticsProperty<T>('initialData', initialData, ifNull: 'none'));
+    super.debugFillProperties(properties);
+  }
 }
 
 class Loading extends StatelessWidget {
@@ -87,9 +111,9 @@ class _DidYouKnow extends StatefulWidget {
 }
 
 class _DidYouKnowState extends State<_DidYouKnow> {
-  Timer _timer;
-  int _index;
-  Random _random;
+  Timer timer;
+  int index;
+  Random random;
 
   // ignore_for_file: lines_longer_than_80_chars
   static const List<String> funFacts = <String>[
@@ -108,15 +132,12 @@ class _DidYouKnowState extends State<_DidYouKnow> {
   @override
   void initState() {
     super.initState();
-    () async {
-      await Future<void>.delayed(const Duration(seconds: 200), () => null);
-    }();
-    _random = Random();
-    _index = _random.nextInt(funFacts.length);
-    _timer = Timer.periodic(
+    random = Random();
+    index = random.nextInt(funFacts.length);
+    timer = Timer.periodic(
       const Duration(seconds: 5),
       (Timer timer) => setState(
-        () => _index = _random.nextInt(funFacts.length),
+        () => index = random.nextInt(funFacts.length),
       ),
     );
   }
@@ -124,7 +145,7 @@ class _DidYouKnowState extends State<_DidYouKnow> {
   @override
   void dispose() {
     super.dispose();
-    _timer.cancel();
+    timer.cancel();
   }
 
   @override
@@ -138,7 +159,7 @@ class _DidYouKnowState extends State<_DidYouKnow> {
               text: ' ',
             ),
             TextSpan(
-              text: funFacts[_index],
+              text: funFacts[index],
               style: MarkeyMapTheme.funFactStyle.copyWith(
                 fontStyle: FontStyle.italic,
                 fontWeight: FontWeight.w300,
@@ -147,4 +168,13 @@ class _DidYouKnowState extends State<_DidYouKnow> {
           ],
         ),
       );
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    properties
+      ..add(IntProperty('timer.tick', timer.tick))
+      ..add(IntProperty('index', index))
+      ..add(DiagnosticsProperty<Random>('random', random));
+    super.debugFillProperties(properties);
+  }
 }

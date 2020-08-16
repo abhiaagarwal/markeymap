@@ -27,8 +27,9 @@ Future<void> handleSearch(BuildContext context) async {
 }
 
 class TownSearchDelegate extends SearchDelegate<MapEntry<Town, County>> {
-  SplayTreeMap<Town, County> _towns;
   TownSearchDelegate();
+
+  SplayTreeMap<Town, County> _towns;
 
   @override
   ThemeData appBarTheme(BuildContext context) {
@@ -55,7 +56,7 @@ class TownSearchDelegate extends SearchDelegate<MapEntry<Town, County>> {
   @override
   Widget buildSuggestions(BuildContext context) {
     if (_towns == null) {
-      return FutureLoader<SplayTreeMap<Town, County>, Widget>(
+      return FutureLoader<SplayTreeMap<Town, County>>(
         future: Provider.of<Database>(context, listen: false).townsByCounty,
         builder: (BuildContext context, SplayTreeMap<Town, County> towns) {
           _towns = towns;

@@ -7,9 +7,10 @@ import 'package:markeymap/models/county.dart';
 import 'package:markeymap/models/town.dart';
 
 class FirebaseApi extends Api {
-  final FirebaseFirestore store;
   FirebaseApi({FirebaseFirestore firestore})
       : store = firestore ?? FirebaseFirestore.instance;
+      
+  final FirebaseFirestore store;
 
   @override
   Future<List<EdAction>> getActions(County county, Town town) async =>

@@ -8,11 +8,12 @@ import 'package:markeymap/models/town.dart';
 
 import 'package:markeymap/data/api.dart';
 
-class Database with DiagnosticableTreeMixin {
-  final Api api;
-  final Map<County, Map<Town, List<EdAction>>> _data;
+class Database with Diagnosticable {
   Database({this.api, Map<County, Map<Town, List<EdAction>>> initialData})
       : _data = initialData ?? <County, Map<Town, List<EdAction>>>{};
+
+  final Api api;
+  final Map<County, Map<Town, List<EdAction>>> _data;
 
   UnmodifiableMapView<County, Map<Town, List<EdAction>>> get data =>
       UnmodifiableMapView<County, Map<Town, List<EdAction>>>(_data);

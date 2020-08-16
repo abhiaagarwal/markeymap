@@ -12,16 +12,16 @@ import 'package:markeymap/models/county.dart';
 import 'package:markeymap/models/town.dart';
 
 class GSheetsApi extends Api {
+  GSheetsApi({Map<dynamic, dynamic> credentials, this.sheetId})
+      : api = gsheets.GSheets(credentials);
+
   final gsheets.GSheets api;
   final String sheetId;
   gsheets.Spreadsheet _spreadsheet;
   Map<County, Map<Town, List<EdAction>>>
       _data; // cannot dynamically query so must be loaded
 
-  GSheetsApi({Map<dynamic, dynamic> credentials, this.sheetId})
-      : api = gsheets.GSheets(credentials);
-
-  FutureOr<gsheets.Spreadsheet> get spreadsheet async {
+  Future<gsheets.Spreadsheet> get spreadsheet async {
     if (_spreadsheet != null) {
       return _spreadsheet;
     }

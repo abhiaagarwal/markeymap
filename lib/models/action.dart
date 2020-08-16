@@ -10,7 +10,7 @@ enum ActionType {
 }
 
 extension StringExtension on ActionType {
-  String get name => toString().split('.').last;
+  String get name => describeEnum(this);
 }
 
 extension ActionTypeExtension on String {
@@ -21,13 +21,7 @@ extension ActionTypeExtension on String {
 }
 
 @immutable
-class EdAction with DiagnosticableTreeMixin {
-  final String date;
-  final ActionType type;
-  final String description;
-  final double funding;
-  final String url;
-
+class EdAction with Diagnosticable {
   const EdAction({
     this.date,
     @required this.type,
@@ -50,6 +44,12 @@ class EdAction with DiagnosticableTreeMixin {
         description = data['description'] as String,
         funding = double.tryParse(data['funding'].toString()),
         url = data['url'] as String;
+
+  final String date;
+  final ActionType type;
+  final String description;
+  final double funding;
+  final String url;
 
   Map<String, dynamic> toMap() => <String, Object>{
         'date': date,

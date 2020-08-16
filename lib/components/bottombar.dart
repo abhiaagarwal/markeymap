@@ -1,5 +1,4 @@
-import 'dart:async';
-
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
@@ -70,16 +69,21 @@ class BottomBar extends StatelessWidget {
 }
 
 class _BottomButton extends StatelessWidget {
-  final String text;
-  final FutureOr<void> Function() onTap;
-  final Color color;
   const _BottomButton(
       {@required this.text, @required this.onTap, this.color, Key key})
       : super(key: key);
 
+  final String text;
+  final VoidCallback onTap;
+  final Color color;
+
   @override
   Widget build(BuildContext context) => RaisedButton(
         color: color,
+        onPressed: onTap,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8),
+        ),
         child: Padding(
           padding: const EdgeInsets.all(4),
           child: Text(
@@ -87,9 +91,18 @@ class _BottomButton extends StatelessWidget {
             style: MarkeyMapTheme.buttonStyle,
           ),
         ),
-        onPressed: onTap,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8),
-        ),
       );
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    properties
+      ..add(StringProperty('text', text))
+      ..add(ObjectFlagProperty<VoidCallback>(
+        'onTap',
+        onTap,
+        ifPresent: 'present',
+      ))
+      ..add(ColorProperty('color', color));
+    super.debugFillProperties(properties);
+  }
 }

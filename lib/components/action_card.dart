@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
@@ -28,13 +29,14 @@ Future<void> _launchUrl(final String url) async {
 }
 
 class ActionCard extends StatelessWidget {
-  final Town town;
-  final County county;
   const ActionCard({
     @required this.town,
     @required this.county,
     Key key,
   }) : super(key: key);
+
+  final Town town;
+  final County county;
 
   BoxDecoration get _gradient => BoxDecoration(
         gradient: LinearGradient(
@@ -56,7 +58,7 @@ class ActionCard extends StatelessWidget {
           child: Column(
             children: <Widget>[
               Expanded(
-                child: FutureLoader<List<EdAction>, _ActionList>(
+                child: FutureLoader<List<EdAction>>(
                   future:
                       Provider.of<Database>(context).getActions(county, town),
                   builder: (BuildContext context, List<EdAction> actions) =>
@@ -75,18 +77,27 @@ class ActionCard extends StatelessWidget {
           ),
         ),
       );
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    properties
+      ..add(DiagnosticsProperty<Town>('town', town))
+      ..add(EnumProperty<County>('county', county));
+    super.debugFillProperties(properties);
+  }
 }
 
 class _ActionList extends StatelessWidget {
-  final String name;
-  final List<EdAction> actions;
-  final double totalSecured;
   const _ActionList({
     @required this.name,
     @required this.actions,
     this.totalSecured,
     Key key,
   }) : super(key: key);
+
+  final String name;
+  final List<EdAction> actions;
+  final double totalSecured;
 
   @override
   Widget build(BuildContext context) {
@@ -128,16 +139,26 @@ class _ActionList extends StatelessWidget {
       ),
     );
   }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    properties
+      ..add(StringProperty('name', name))
+      ..add(IterableProperty<EdAction>('actions', actions))
+      ..add(DoubleProperty('totalSecured', totalSecured));
+    super.debugFillProperties(properties);
+  }
 }
 
 class _ActionHeader extends StatelessWidget {
-  final String name;
   const _ActionHeader({
     @required this.name,
     Key key,
   }) : super(key: key);
 
-  Widget image(BuildContext context) => SvgPicture.asset(
+  final String name;
+
+  Widget _image(BuildContext context) => SvgPicture.asset(
         Provider.of<Resource>(context).svg.townSvg(name),
         bundle: DefaultAssetBundle.of(context),
         height: 1366,
@@ -165,7 +186,7 @@ class _ActionHeader extends StatelessWidget {
             height: MarkeyMapTheme.cardHeaderHeight,
             child: FractionallySizedBox(
               heightFactor: 0.8,
-              child: image(context),
+              child: _image(context),
             ),
           ),
           FittedBox(
@@ -177,14 +198,21 @@ class _ActionHeader extends StatelessWidget {
           ),
         ],
       );
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    properties.add(StringProperty('name', name));
+    super.debugFillProperties(properties);
+  }
 }
 
 class _ActionTileCard extends StatelessWidget {
-  final EdAction action;
   const _ActionTileCard({
     @required this.action,
     Key key,
   }) : super(key: key);
+
+  final EdAction action;
 
   Widget get _datePart => Expanded(
         flex: 1,
@@ -250,23 +278,31 @@ class _ActionTileCard extends StatelessWidget {
           children: <Widget>[
             if (action.date != null) _datePart,
             () {
-              if (action.type == ActionType.endorsement) {
-                return _endorsedPart;
-              } else {
-                return _descriptionPart;
+              switch (action.type) {
+                case ActionType.endorsement:
+                  return _endorsedPart;
+                default:
+                  return _descriptionPart;
               }
             }(),
           ],
         ),
       );
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    properties.add(DiagnosticsProperty<EdAction>('action', action));
+    super.debugFillProperties(properties);
+  }
 }
 
 class _TotalSecured extends StatelessWidget {
-  final double totalSecured;
   const _TotalSecured({
     @required this.totalSecured,
     Key key,
   }) : super(key: key);
+
+  final double totalSecured;
 
   String get _formattedMoney => NumberFormat.currency(
         symbol: '\$',
@@ -308,16 +344,23 @@ class _TotalSecured extends StatelessWidget {
           ],
         ),
       );
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    properties.add(DoubleProperty('totalSecured', totalSecured));
+    super.debugFillProperties(properties);
+  }
 }
 
 class _CallToActionBar extends StatelessWidget {
-  final String name;
-  final String zipcode;
   const _CallToActionBar({
     @required this.name,
     this.zipcode,
     Key key,
   }) : super(key: key);
+
+  final String name;
+  final String zipcode;
 
   Widget _ctaText(BuildContext context) => Text(
         MarkeyMapLocalizations.of(context).townCTA(name).toUpperCase(),
@@ -388,12 +431,17 @@ class _CallToActionBar extends StatelessWidget {
           ),
         ),
       );
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    properties
+      ..add(StringProperty('name', name))
+      ..add(StringProperty('zipcode', zipcode));
+    super.debugFillProperties(properties);
+  }
 }
 
 class _CallToActionButton extends StatelessWidget {
-  final String text;
-  final void Function() onTap;
-  final Color color;
   const _CallToActionButton({
     @required this.text,
     @required this.onTap,
@@ -401,20 +449,37 @@ class _CallToActionButton extends StatelessWidget {
     Key key,
   }) : super(key: key);
 
+  final String text;
+  final VoidCallback onTap;
+  final Color color;
+
   @override
   Widget build(BuildContext context) => Padding(
         padding: const EdgeInsets.symmetric(horizontal: 4),
         child: FlatButton(
           color: color,
-          child: Container(
+          onPressed: onTap,
+          shape: const RoundedRectangleBorder(borderRadius: BorderRadius.zero),
+          child: Padding(
             padding: const EdgeInsets.all(4),
             child: Text(
               text.toUpperCase(),
               style: MarkeyMapTheme.buttonStyle,
             ),
           ),
-          onPressed: onTap,
-          shape: const RoundedRectangleBorder(borderRadius: BorderRadius.zero),
         ),
       );
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    properties
+      ..add(StringProperty('text', text))
+      ..add(ObjectFlagProperty<VoidCallback>(
+        'onTap',
+        onTap,
+        ifPresent: 'present',
+      ))
+      ..add(ColorProperty('color', color));
+    super.debugFillProperties(properties);
+  }
 }

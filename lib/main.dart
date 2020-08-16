@@ -28,7 +28,7 @@ void main() {
         ProxyProvider<Api, Database>(
           update: (BuildContext context, Api api, Database database) =>
               Database(api: api),
-        )
+        ),
       ],
       child: const MarkeyMapApp(),
     ),

@@ -8,7 +8,7 @@ void showPopup(
   Color scaffoldColor,
 }) =>
     Navigator.of(context).push(
-      PopupLayout(
+      PopupLayout<void>(
         child: Scaffold(
           backgroundColor: scaffoldColor,
           appBar: AppBar(
@@ -26,7 +26,15 @@ void showPopup(
       ),
     );
 
-class PopupLayout extends PopupRoute<void> {
+class PopupPage<T> extends Page<T> {
+  const PopupPage({LocalKey key, String name, Object arguments})
+      : super(key: key, name: name, arguments: arguments);
+
+  @override
+  Route<T> createRoute(BuildContext context) => PopupLayout<T>();
+}
+
+class PopupLayout<T> extends PopupRoute<T> {
   final double top;
   final double bottom;
   final double left;

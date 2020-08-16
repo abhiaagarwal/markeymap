@@ -1,3 +1,5 @@
+import 'package:flutter/foundation.dart';
+
 enum County {
   barnstable,
   berkshire,
@@ -17,7 +19,7 @@ enum County {
 }
 
 extension NameExtension on County {
-  String get name => toString().split('.').last;
+  String get name => describeEnum(this);
 }
 
 extension CountyExtension on String {
