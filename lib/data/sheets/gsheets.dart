@@ -12,14 +12,14 @@ import 'package:markeymap/models/county.dart';
 import 'package:markeymap/models/town.dart';
 
 class GSheetsApi extends Api {
-  GSheetsApi({Map<dynamic, dynamic> credentials, this.sheetId})
+  GSheetsApi({dynamic credentials, this.sheetId})
       : api = gsheets.GSheets(credentials);
 
   final gsheets.GSheets api;
   final String sheetId;
   gsheets.Spreadsheet _spreadsheet;
-  Map<County, Map<Town, List<EdAction>>>
-      _data; // cannot dynamically query so must be loaded
+  final Map<County, Map<Town, List<EdAction>>> _data =
+      <County, Map<Town, List<EdAction>>>{};
 
   Future<gsheets.Spreadsheet> get spreadsheet async {
     if (_spreadsheet != null) {
@@ -53,7 +53,7 @@ class GSheetsApi extends Api {
     final List<EdAction> countyActions = <EdAction>[];
 
     for (final List<String> row in await (await spreadsheet)
-        .worksheetByTitle(county.name.toLowerCase())
+        .worksheetByTitle(county.name.toUpperCase())
         .values
         .allRows(fromRow: 2, length: 7)) {
       try {
@@ -78,7 +78,10 @@ class GSheetsApi extends Api {
       towns.map<Town, List<EdAction>>(
         (String townName, List<EdAction> actions) =>
             MapEntry<Town, List<EdAction>>(
-          Town(name: townName, zipcode: townZipcodes[townName]),
+          Town(
+            name: townName,
+            zipcode: townZipcodes[townName],
+          ),
           actions + countyActions,
         ),
       ),

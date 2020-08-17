@@ -86,7 +86,6 @@ class Loading extends StatelessWidget {
         type: MaterialType.transparency,
         child: Container(
           padding: const EdgeInsets.all(8),
-          //color: Colors.white,
           width: double.infinity,
           child: ConstrainedBox(
             constraints: const BoxConstraints(maxWidth: 800),

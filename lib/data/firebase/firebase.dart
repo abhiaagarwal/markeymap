@@ -9,7 +9,7 @@ import 'package:markeymap/models/town.dart';
 class FirebaseApi extends Api {
   FirebaseApi({FirebaseFirestore firestore})
       : store = firestore ?? FirebaseFirestore.instance;
-      
+
   final FirebaseFirestore store;
 
   @override
@@ -18,10 +18,14 @@ class FirebaseApi extends Api {
               .collection(county.name.toLowerCase())
               .doc(town.name.toLowerCase())
               .collection('actions')
+              .orderBy('date')
               .get())
           .docs
-          .map<EdAction>((QueryDocumentSnapshot snapshot) =>
-              EdAction.fromMap(snapshot.data()))
+          .map<EdAction>(
+            (QueryDocumentSnapshot snapshot) => EdAction.fromMap(
+              snapshot.data(),
+            ),
+          )
           .toList();
   @override
   List<County> getCounties() => County.values;
@@ -31,6 +35,9 @@ class FirebaseApi extends Api {
       (await store.collection(county.name.toLowerCase()).get())
           .docs
           .map<Town>(
-              (QueryDocumentSnapshot snapshot) => Town.fromMap(snapshot.data()))
+            (QueryDocumentSnapshot snapshot) => Town.fromMap(
+              snapshot.data(),
+            ),
+          )
           .toList();
 }
