@@ -10,6 +10,7 @@ import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart' as url_launcher;
 
 import 'package:markeymap/components/loading.dart';
+import 'package:markeymap/components/youtube_container.dart';
 import 'package:markeymap/models/action.dart';
 import 'package:markeymap/models/town.dart';
 import 'package:markeymap/models/county.dart';
@@ -270,6 +271,16 @@ class _ActionTileCard extends StatelessWidget {
         ),
       );
 
+  Widget get _youtubePart => Expanded(
+        flex: 5,
+        child: YoutubeContainer(
+          title: action.description,
+          url: action.url,
+          height: double.infinity,
+          width: double.infinity,
+        ),
+      );
+
   @override
   Widget build(BuildContext context) => Padding(
         padding: const EdgeInsets.symmetric(vertical: 8),
@@ -281,6 +292,8 @@ class _ActionTileCard extends StatelessWidget {
               switch (action.type) {
                 case ActionType.endorsement:
                   return _endorsedPart;
+                case ActionType.youtube:
+                  return _youtubePart;
                 default:
                   return _descriptionPart;
               }

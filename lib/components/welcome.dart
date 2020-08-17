@@ -1,10 +1,9 @@
-// ignore: avoid_web_libraries_in_flutter
-import 'dart:html';
-import 'dart:ui' as ui;
-
 import 'package:flutter/material.dart';
+
 import 'package:provider/provider.dart';
+
 import 'package:markeymap/resources.dart';
+import 'package:markeymap/components/youtube_container.dart';
 
 // import 'package:video_player/video_player.dart';
 
@@ -67,23 +66,13 @@ class WelcomeScreen extends StatelessWidget {
       );
 
   @override
-  Widget build(BuildContext context) {
-    final IFrameElement _iframeElement = IFrameElement()
-      ..width = '560'
-      ..height = '315'
-      ..src = 'https://www.youtube.com/embed/mzBePgUCV4I'
-      ..style.border = 'none';
-
-    // ignore: undefined_prefixed_name
-    ui.platformViewRegistry.registerViewFactory(
-      'iframeElement',
-      (int viewId) => _iframeElement,
-    );
-    return Container(
-      decoration: _decoration(context),
-      child: const HtmlElementView(
-        viewType: 'iframeElement',
-      ),
-    );
-  }
+  Widget build(BuildContext context) => DecoratedBox(
+        decoration: _decoration(context),
+        child: const YoutubeContainer(
+          title: 'Welcome to the Markey Map',
+          height: double.infinity,
+          width: double.infinity,
+          url: 'mzBePgUCV4I',
+        ),
+      );
 }

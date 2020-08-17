@@ -6,6 +6,7 @@ enum ActionType {
   endorsement,
   legislation,
   action,
+  youtube,
   other,
 }
 
@@ -55,7 +56,7 @@ class EdAction with Diagnosticable {
         'date': date,
         'type': type.name,
         'description': description,
-        'funding': funding.toString(),
+        'funding': funding,
         'url': url,
       };
 

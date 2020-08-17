@@ -24,15 +24,13 @@ class InteractiveMap extends StatelessWidget {
           angle: (math.pi / 180.0) * -10,
           child: Transform.scale(
             scale: 0.9,
-            child: RepaintBoundary(
-              child: Stack(
-                children: Provider.of<Database>(context)
-                    .getCounties()
-                    .map<_CountyObject>(
-                      (County county) => _CountyObject(county: county),
-                    )
-                    .toList(),
-              ),
+            child: Stack(
+              children: Provider.of<Database>(context)
+                  .getCounties()
+                  .map<_CountyObject>(
+                    (County county) => _CountyObject(county: county),
+                  )
+                  .toList(),
             ),
           ),
         ),
