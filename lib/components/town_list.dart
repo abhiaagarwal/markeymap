@@ -32,6 +32,7 @@ class TownList extends StatelessWidget {
                 itemExtent: 50,
                 itemCount: towns.length,
                 controller: scrollController,
+                addRepaintBoundaries: false,
                 itemBuilder: (BuildContext context, final int index) =>
                     ListTile(
                   title: Text(

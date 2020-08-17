@@ -128,6 +128,7 @@ class _ActionList extends StatelessWidget {
                     action: actions[index],
                   ),
                   childCount: actions.length,
+                  addRepaintBoundaries: false,
                 ),
               ),
               if (showSecured)
