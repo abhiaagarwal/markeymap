@@ -12,18 +12,38 @@ import 'package:markeymap/models/town.dart';
 import 'package:markeymap/popup.dart';
 import 'package:markeymap/utils/string.dart';
 
-class TownList extends StatelessWidget {
+class TownList extends StatefulWidget {
   const TownList({@required this.county, Key key}) : super(key: key);
 
   final County county;
 
   @override
+  _TownListState createState() => _TownListState();
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    properties.add(EnumProperty<County>('county', county));
+    super.debugFillProperties(properties);
+  }
+}
+
+class _TownListState extends State<TownList> {
+  Future<List<Town>> _towns;
+
+  @override
+  void initState() {
+    super.initState();
+    _towns =
+        Provider.of<Database>(context, listen: false).getTowns(widget.county);
+  }
+
+  @override
   Widget build(BuildContext context) => Title(
         title: MarkeyMapLocalizations.of(context)
-            .countyName(county.name.toCapitalize()),
+            .countyName(widget.county.name.toCapitalize()),
         color: Theme.of(context).primaryColor,
         child: FutureLoader<List<Town>>(
-          future: Provider.of<Database>(context).getTowns(county),
+          future: _towns,
           builder: (BuildContext context, List<Town> towns) {
             final ScrollController scrollController = ScrollController();
             return Scrollbar(
@@ -46,7 +66,7 @@ class TownList extends StatelessWidget {
                     scaffoldColor: Theme.of(context).primaryColor,
                     body: ActionCard(
                       town: towns[index],
-                      county: county,
+                      county: widget.county,
                     ),
                   ),
                 ),
@@ -55,10 +75,4 @@ class TownList extends StatelessWidget {
           },
         ),
       );
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    properties.add(EnumProperty<County>('county', county));
-    super.debugFillProperties(properties);
-  }
 }

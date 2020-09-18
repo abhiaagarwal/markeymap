@@ -57,7 +57,7 @@ class TownSearchDelegate extends SearchDelegate<MapEntry<Town, County>> {
   Widget buildSuggestions(BuildContext context) {
     if (_towns == null) {
       return FutureLoader<SplayTreeMap<Town, County>>(
-        future: Provider.of<Database>(context, listen: false).townsByCounty,
+        future: Provider.of<Database>(context, listen: false).townsByCounty(),
         builder: (BuildContext context, SplayTreeMap<Town, County> towns) {
           _towns = towns;
           return _searchResults(context, towns);

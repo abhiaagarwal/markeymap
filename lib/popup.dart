@@ -35,13 +35,6 @@ class PopupPage<T> extends Page<T> {
 }
 
 class PopupLayout<T> extends PopupRoute<T> {
-  final double top;
-  final double bottom;
-  final double left;
-  final double right;
-  final Color backgroundColor;
-  final Widget child;
-
   PopupLayout({
     this.backgroundColor,
     @required this.child,
@@ -50,6 +43,13 @@ class PopupLayout<T> extends PopupRoute<T> {
     this.left = 30,
     this.right = 30,
   });
+
+  final double top;
+  final double bottom;
+  final double left;
+  final double right;
+  final Color backgroundColor;
+  final Widget child;
 
   @override
   Duration get transitionDuration => MarkeyMapTheme.animationDuration;

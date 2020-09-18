@@ -34,13 +34,13 @@ class YoutubeContainer extends StatefulWidget {
 }
 
 class _YoutubeContainerState extends State<YoutubeContainer> {
-  String elementName;
+  String _elementName;
 
   @override
   void initState() {
-    elementName = widget.title ?? widget.key.toString();
+    _elementName = widget.title ?? widget.key.toString();
     final IFrameElement _iframeElement = IFrameElement()
-      ..title = elementName
+      ..title = _elementName
       ..height = widget.height?.toString()
       ..width = widget.width?.toString()
       ..src = widget.url.contains('youtube.com')
@@ -49,7 +49,7 @@ class _YoutubeContainerState extends State<YoutubeContainer> {
       ..style.border = 'none';
 
     ui.platformViewRegistry.registerViewFactory(
-      elementName,
+      _elementName,
       (int viewId) => _iframeElement,
     );
     super.initState();
@@ -61,7 +61,7 @@ class _YoutubeContainerState extends State<YoutubeContainer> {
       height: widget.height,
       width: widget.width,
       child: HtmlElementView(
-        viewType: elementName,
+        viewType: _elementName,
       ),
     );
   }

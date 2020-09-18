@@ -1,4 +1,4 @@
-import 'dart:ui';
+import 'dart:ui' as ui;
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -29,7 +29,7 @@ Future<void> _launchUrl(final String url) async {
   return;
 }
 
-class ActionCard extends StatelessWidget {
+class ActionCard extends StatefulWidget {
   const ActionCard({
     @required this.town,
     @required this.county,
@@ -38,6 +38,28 @@ class ActionCard extends StatelessWidget {
 
   final Town town;
   final County county;
+
+  @override
+  _ActionCardState createState() => _ActionCardState();
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    properties
+      ..add(DiagnosticsProperty<Town>('town', town))
+      ..add(EnumProperty<County>('county', county));
+    super.debugFillProperties(properties);
+  }
+}
+
+class _ActionCardState extends State<ActionCard> {
+  Future<List<EdAction>> _actions;
+
+  @override
+  void initState() {
+    super.initState();
+    _actions = Provider.of<Database>(context, listen: false)
+        .getActions(widget.county, widget.town);
+  }
 
   BoxDecoration get _gradient => BoxDecoration(
         gradient: LinearGradient(
@@ -52,7 +74,7 @@ class ActionCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Title(
-        title: town.name,
+        title: widget.town.name,
         color: Theme.of(context).primaryColor,
         child: DecoratedBox(
           decoration: _gradient,
@@ -60,11 +82,10 @@ class ActionCard extends StatelessWidget {
             children: <Widget>[
               Expanded(
                 child: FutureLoader<List<EdAction>>(
-                  future:
-                      Provider.of<Database>(context).getActions(county, town),
+                  future: _actions,
                   builder: (BuildContext context, List<EdAction> actions) =>
                       _ActionList(
-                    name: town.name,
+                    name: widget.town.name,
                     actions: actions,
                     totalSecured: actions.totalSecured,
                   ),
@@ -72,20 +93,15 @@ class ActionCard extends StatelessWidget {
               ),
               Align(
                 alignment: Alignment.bottomCenter,
-                child: _CallToActionBar(name: town.name, zipcode: town.zipcode),
+                child: _CallToActionBar(
+                  name: widget.town.name,
+                  zipcode: widget.town.zipcode,
+                ),
               ),
             ],
           ),
         ),
       );
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    properties
-      ..add(DiagnosticsProperty<Town>('town', town))
-      ..add(EnumProperty<County>('county', county));
-    super.debugFillProperties(properties);
-  }
 }
 
 class _ActionList extends StatelessWidget {
@@ -226,8 +242,8 @@ class _ActionTileCard extends StatelessWidget {
               textAlign: TextAlign.right,
               style: MarkeyMapTheme.cardListStyle.copyWith(
                 fontWeight: FontWeight.w700,
-                fontFeatures: <FontFeature>[
-                  const FontFeature.tabularFigures(),
+                fontFeatures: const <ui.FontFeature>[
+                  ui.FontFeature.tabularFigures(),
                 ],
               ),
             ),

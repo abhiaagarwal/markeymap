@@ -18,12 +18,12 @@ class Database with Diagnosticable {
   UnmodifiableMapView<County, Map<Town, List<EdAction>>> get data =>
       UnmodifiableMapView<County, Map<Town, List<EdAction>>>(_data);
 
-  Future<SplayTreeMap<Town, County>> get townsByCounty async {
+  Future<SplayTreeMap<Town, County>> townsByCounty() async {
     await loadAllTowns();
     final SplayTreeMap<Town, County> map = SplayTreeMap<Town, County>();
     for (final MapEntry<County, Map<Town, List<EdAction>>> entry
         in data.entries) {
-      for (final Town town in entry.value.keys.toList()) {
+      for (final Town town in entry.value.keys) {
         map[town] = entry.key;
       }
     }
@@ -51,7 +51,13 @@ class Database with Diagnosticable {
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    properties.add(StringProperty('api', api.toString()));
+    properties
+      ..add(StringProperty('api', api.toString()))
+      ..add(DiagnosticsProperty<
+          UnmodifiableMapView<County, Map<Town, List<EdAction>>>>(
+        'data',
+        data,
+      ));
     super.debugFillProperties(properties);
   }
 }
